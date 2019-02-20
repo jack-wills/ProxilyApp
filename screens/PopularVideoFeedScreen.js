@@ -12,8 +12,40 @@ export default class PopularVideoFeedScreen extends React.Component {
     render() {
       return (
             <View>
-              <View style={styles.container}>
-              <VideoFeed  data={[{id: 1},{id: 2},{id: 3}]} navigation={this.props.navigation} />
+              <View style={styles.container}>{}
+              <VideoFeed  data={[
+              {
+                id: 1, 
+                media: {
+                  video: {
+                    url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
+                  }
+                }
+              },
+              {
+                id: 2, 
+                media: {
+                  text: {
+                    content: 'Test 123',
+                  }
+                }
+              },
+              {
+                id: 3, 
+                media: {
+                  image: {
+                    url: 'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg',
+                  }
+                }
+              },
+              {
+                id: 4, 
+                media: {
+                  text: {
+                    content: 'This is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post',
+                  }
+                }
+              }]} navigation={this.props.navigation} />
               </View>
             </View>
       );

@@ -13,9 +13,16 @@ export default class NewVideoFeedScreen extends React.Component {
       return (
             <View>
               <View style={styles.container}>
-              <VideoFeed  data={[{id: 5}]} />
+              <VideoFeed  data={[
+              {
+                id: 1, 
+                media: {
+                  video: {
+                    url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
+                  }
+                }
+              }]} />
               </View>
-              <Text>Welcome to React Native!</Text>
             </View>
       );
     }
