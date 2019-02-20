@@ -43,61 +43,7 @@ class ListItem extends React.PureComponent {
       );
     }
   }
-class ListItemExtended extends React.PureComponent {
-    state = {
-      user: "test",
-      videoPlaying: false,
-    }
-    _onPressVideo = () => {
-      var videoPlayingTemp = this.state.videoPlaying
-      this.setState({videoPlaying: !videoPlayingTemp})
-    };
-    _onPressComments = () => {
-      this.setState({user: "Jack"});
-      this.props.openItemComments(this.props.item);
-    };
-    
-    render() {
-      return (
-        <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-        <TouchableOpacity style={styles.video} onPress={this._onPressVideo}>
-            <VideoCompenent style={styles.video} playing={!this.state.videoPlaying} url='file:///Users/Jack/Desktop/videoApp/assets/sample.mp4'/>
-            
-        </TouchableOpacity>
-        <View style={styles.comments}>
-            <View style={styles.left}>
-            <Text style={styles.subByText}>Submitted By {this.state.user}</Text>
-            </View>
-            <View style={styles.right}>
-            </View>
-            </View>
-            <FlatList
-              data={[{user: 'Jack', body: 'Hello'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}, 
-                    {user: 'Jack2', body: 'Hello World'}]}
-              renderItem={({item}) => (
-                <View style={styles.comment}>
-                <Text>{item.user}</Text>
-                <Text>{item.body}</Text>
-                </View>
-              )}
-            />
-          </View>
-          </ScrollView>
-      );
-    }
-  }
+
   
 export default class VideoFeed extends React.Component {
   state = {
@@ -129,7 +75,11 @@ export default class VideoFeed extends React.Component {
   );
 
   _openItemComments = (item) => {
-    this.setState({commentsOpen: item});
+    this.props.navigation.navigate(
+      'Expanded',
+      {item: item}
+    );
+    //this.setState({commentsOpen: item});
   };
 
   render() {
@@ -140,7 +90,6 @@ export default class VideoFeed extends React.Component {
           id={item.id}
           onPressItem={this._onPressItem}
           openItemComments={this._openItemComments}
-          selected={!this.state.selected.get(item.id)}
           title={item.title}
           item={item}
         />
@@ -174,7 +123,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(230,230,230)',
     padding:0,
     marginTop: 10,
-    marginBottom: 50,
   },
   video: {
     flex: 1,

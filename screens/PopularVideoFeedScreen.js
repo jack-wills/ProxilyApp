@@ -13,7 +13,7 @@ export default class PopularVideoFeedScreen extends React.Component {
       return (
             <View>
               <View style={styles.container}>
-              <VideoFeed  data={[{id: 1},{id: 2},{id: 3}]} />
+              <VideoFeed  data={[{id: 1},{id: 2},{id: 3}]} navigation={this.props.navigation} />
               </View>
             </View>
       );
