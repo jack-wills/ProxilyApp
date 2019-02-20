@@ -9,23 +9,23 @@ import {
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { createAppContainer } from 'react-navigation'
-import LocalVideoFeedScreen from './LocalVideoFeedScreen';
-import GlobalVideoFeedScreen from './GlobalVideoFeedScreen';
+import PopularVideoFeedScreen from './PopularVideoFeedScreen';
+import NewVideoFeedScreen from './NewVideoFeedScreen';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const LocationTabNavigator = createMaterialTopTabNavigator({
-  Local: {
-    screen: LocalVideoFeedScreen,
+  Popular: {
+    screen: PopularVideoFeedScreen,
   },
-  Global: {
-    screen: GlobalVideoFeedScreen,
-    tabBarLabel: 'Global'
+  New: {
+    screen: NewVideoFeedScreen,
+    tabBarLabel: 'New'
   }
 }, {
-    initialRouteName: 'Local',
+    initialRouteName: 'Popular',
     // order: ['Settings', 'Home'],
     swipeEnabled: false,
     animationEnabled: false,
@@ -33,21 +33,20 @@ const LocationTabNavigator = createMaterialTopTabNavigator({
       activeTintColor: 'red',
       inactiveTintColor: 'grey',
       style: {
-        backgroundColor: '#f2f2f2',
-        height: Dimensions.get('window').height*0.05,
+        backgroundColor: '#fff',
+        height: Dimensions.get('window').height*0.06,
       },
       tabStyle: {
         height: Dimensions.get('window').height*0.05,
-        margin: 12,
+        margin: 16,
+        fontFamily: 'Avenir',
       },
       labelStyle: {
         height: Dimensions.get('window').height*0.05,
-        fontFamily: 'Avenir',
       },
       indicatorStyle: {
         backgroundColor: 'red',
       },
-      safeAreaInset: { bottom: 'never', top: 'never' }
     }
   })
 
@@ -56,7 +55,8 @@ const LocationTabContainer = createAppContainer(LocationTabNavigator);
 export default class VideoFeedScreen extends React.Component {
   render() {
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#F2B45B'}}>
+        <Text style={styles.topBar}>Title</Text>
         <LocationTabContainer />
         </SafeAreaView>
     );
@@ -68,15 +68,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     height: SCREEN_HEIGHT*0.8,
   },
-  welcome: {
+  topBar: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: '#F2B45B',
+    fontFamily: 'Avenir',
+    textAlign: "left",
+    padding: 10,
+    paddingLeft: 20,
   },
 });
 

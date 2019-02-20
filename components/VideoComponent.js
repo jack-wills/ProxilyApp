@@ -11,8 +11,8 @@ export default class VideoComponent extends React.Component {
           source={{uri: this.props.url}}
           style={{ 
               width: videoWidth, 
-              height: videoWidth*3/4,
-              borderRadius: 12,
+              height: videoWidth*3.5/4,
+              borderRadius: 30,
             }}
           muted={true}
           paused={this.props.playing}
@@ -25,7 +25,6 @@ export default class VideoComponent extends React.Component {
         />
       )
   }
-//'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4'
   render () {
     return (
       <View style={styles.backgroundVideo}>
@@ -39,7 +38,9 @@ export default class VideoComponent extends React.Component {
 var styles = StyleSheet.create({
   backgroundVideo: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    borderRadius: 30,
+    borderWidth:0,
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
