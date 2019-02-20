@@ -5,7 +5,7 @@ import Video from 'react-native-video'
 export default class VideoComponent extends React.Component {
 
   renderVideo () {
-      var videoWidth = Dimensions.get('window').width*0.96;
+      var videoWidth = Dimensions.get('window').width*0.96-2;
       return(
         <Video
           source={{uri: this.props.url}}

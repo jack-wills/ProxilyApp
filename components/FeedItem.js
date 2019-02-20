@@ -5,15 +5,19 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  TouchableHighlight,
+  Image,
   Text,
   View,
 } from 'react-native';
 import FeedMediaItem from './FeedMediaItem';
+import { Icon1 } from 'react-native-vector-icons/Ionicons';
 
 export default class FeedItem extends React.Component {
     state = {
       user: "test",
       videoPlaying: false,
+      userVote: 0
     }
     _onPressVideo = () => {
       var videoPlayingTemp = this.state.videoPlaying
@@ -22,6 +26,21 @@ export default class FeedItem extends React.Component {
     _onPressComments = () => {
       this.setState({user: "Jack"});
       this.props.openItemComments(this.props.item);
+    };
+
+    _onPressUpvote = () => {
+        if (this.state.userVote == 1) {
+            this.setState({userVote: 0});
+        } else {
+            this.setState({userVote: 1});
+        }
+    };
+    _onPressDownvote = () => {
+        if (this.state.userVote == -1) {
+            this.setState({userVote: 0});
+        } else {
+            this.setState({userVote: -1});
+        }
     };
     
     render() {
@@ -35,10 +54,22 @@ export default class FeedItem extends React.Component {
             <FeedMediaItem itemInfo={mediaItem}/>
             <View style={styles.info}>
                 <View style={styles.left}>
-                    <Text style={styles.subByText}>Submitted By {this.state.user}</Text>
+                    <Text style={styles.subByText}>Submitted by {this.state.user}</Text>
                     <Text style={styles.commentsText} onPress={this._onPressComments}>Comments...</Text>
                 </View>
-                    <View style={styles.right}>
+                <View style={styles.right}>
+                    <TouchableOpacity onPress={this._onPressUpvote}>
+                    <Image 
+                        style={{flex:0, height: 26, width: 26}}
+                        source={this.state.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
+                    />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._onPressDownvote}>
+                    <Image 
+                        style={{flex:0, height: 26, width: 26, marginLeft: 10, marginTop: 2}}
+                        source={this.state.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
+                    />
+                    </TouchableOpacity>
                 </View>
             </View>
           </View>
@@ -75,6 +106,10 @@ export default class FeedItem extends React.Component {
     right: {
   
       width: Dimensions.get('window').width*0.415,
+      justifyContent: 'center',
+      flexDirection: 'row',
+      marginTop: 10,
+      marginLeft: 20,
       //backgroundColor: 'red',
     },
     subByText: {
@@ -86,21 +121,6 @@ export default class FeedItem extends React.Component {
       color: 'grey',
       fontFamily: 'Avenir',
       fontSize: 13,
-    },
-    comments: {
-      flex: 1,
-      width: Dimensions.get('window').width*0.83,
-      paddingTop: 10,
-      paddingBottom: 5,
-      flexDirection: "row",
-    },
-    comment: {
-      flex: 1,
-      borderTopWidth: 1,
-      borderTopColor: 'lightgrey',
-      padding: 10,
-      width: Dimensions.get('window').width*0.9,
-      height: Dimensions.get('window').height*0.1,
     }
   });
   

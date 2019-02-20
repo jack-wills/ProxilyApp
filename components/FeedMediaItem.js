@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginRight: -3,
     borderWidth: 1,
     borderColor: 'rgb(220,220,220)',
-    width: Dimensions.get('window').width*0.96, 
+    width: Dimensions.get('window').width*0.96-2, 
     height: Dimensions.get('window').width*0.96*3.5/4,
     overflow: 'hidden',
   },
@@ -76,9 +76,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(220,220,220)',
     backgroundColor: 'rgb(250,250,250)', 
-    width: Dimensions.get('window').width*0.96, 
+    width: Dimensions.get('window').width*0.96-4, 
   },
   text: {
+    fontFamily: 'Avenir',
     padding: 20,
     textAlign: 'left',
   }

@@ -22,7 +22,7 @@ import CameraScreen from './screens/CameraScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PopularVideoFeedScreen from './screens/PopularVideoFeedScreen';
 import NewVideoFeedScreen from './screens/NewVideoFeedScreen';
-import ExpandedFeedItemScreen from './screens/ExpandedFeedItem';
+import ExpandedFeedItemScreen from './screens/ExpandedFeedItemScreen';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
