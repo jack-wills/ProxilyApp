@@ -134,7 +134,8 @@ export default class FeedItem extends React.Component {
       borderWidth: 1,
       borderColor: 'rgb(230,230,230)',
       padding:0,
-      marginTop: 10,
+      marginTop: 5,
+      marginBottom: 5,
     },
     info: {
       flex: 1,

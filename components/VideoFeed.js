@@ -47,7 +47,8 @@ export default class VideoFeed extends React.Component {
 
   render() {
     return (
-      <FlatList style={styles.mainContent} 
+      <View style={styles.mainContent} >
+      <FlatList 
           data={this.props.data}
           extraData={this.state}
           keyExtractor={this._keyExtractor}
@@ -55,12 +56,13 @@ export default class VideoFeed extends React.Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
       />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   mainContent: {
-    marginBottom: Dimensions.get('window').height*0.09,
+    //height: Dimensions.get('window').height*0.74,
   },
 });

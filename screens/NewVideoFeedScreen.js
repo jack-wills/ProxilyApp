@@ -35,7 +35,6 @@ export default class NewVideoFeedScreen extends React.Component {
     container: {
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
-      height: SCREEN_HEIGHT*0.8,
     },
   });
   

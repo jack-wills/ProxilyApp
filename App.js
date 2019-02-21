@@ -27,87 +27,12 @@ import ExpandedFeedItemScreen from './screens/ExpandedFeedItemScreen';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-
-const PopularStackNavigator = createStackNavigator({
+const FeedTabNavigator = createMaterialTopTabNavigator({
   Popular: {
     screen: PopularVideoFeedScreen,
-    navigationOptions: ({ navigation }) => ({
-      header: null,
-    })
   },
-  Expanded: {
-    screen: ExpandedFeedItemScreen,
-    navigationOptions: ({ navigation }) => ({
-      tabBarVisible: false,
-      headerStyle: { 
-        marginTop: -40,
-        backgroundColor: 'white',
-      },
-      headerLeft : (
-        <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
-              <Icon name="ios-arrow-back" color={'blue'} size={34} />
-            </View>
-        </TouchableOpacity>
-    ),
-    })
-  }
-}, {
-  transitionConfig: () => ({
-    transitionSpec: {
-      duration: 0,  // Set the animation duration time as 0 !!
-    },
-  }),
-});
-
-const NewStackNavigator = createStackNavigator({
   New: {
     screen: NewVideoFeedScreen,
-    navigationOptions: ({ navigation }) => ({
-      header: null,
-    })
-  },
-  Expanded: {
-    screen: ExpandedFeedItemScreen,
-    navigationOptions: ({ navigation }) => ({
-      tabBarVisible: false,
-      headerStyle: { 
-        marginTop: -40,
-        backgroundColor: 'white',
-      },
-      headerLeft : (
-        <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
-              <Icon name="ios-arrow-back" color={'blue'} size={34} />
-            </View>
-        </TouchableOpacity>
-    ),
-    })
-  }
-}, {
-  transitionConfig: () => ({
-    transitionSpec: {
-      duration: 0,  // Set the animation duration time as 0 !!
-    },
-  }),
-});
-
-PopularStackNavigator.navigationOptions = ({navigation}) => {
-  let tabBarVisible = true;
-  if (navigation.state.index > 0) {
-    tabBarVisible = false;
-  }
-
-  return {
-    tabBarVisible,
-  };
-};
-const LocationTabNavigator = createMaterialTopTabNavigator({
-  Popular: {
-    screen: PopularStackNavigator,
-  },
-  New: {
-    screen: NewStackNavigator,
     tabBarLabel: 'New'
   }
 }, {
@@ -137,8 +62,51 @@ const LocationTabNavigator = createMaterialTopTabNavigator({
     }
   })
 
+  const ExpandedStackNavigator = createStackNavigator({
+    Feed: {
+      screen: FeedTabNavigator,
+      navigationOptions: ({ navigation }) => ({
+        headerStyle: { 
+          marginTop: -40,
+          backgroundColor: 'white',
+        },
+        header: null,
+      })
+    },
+    Expanded: {
+      screen: ExpandedFeedItemScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerStyle: { 
+          marginTop: -40,
+          backgroundColor: 'white',
+        },
+        headerLeft : (
+          <TouchableOpacity onPress={() => { navigation.goBack() }}>
+              <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
+                <Icon name="ios-arrow-back" color={'grey'} size={34} />
+              </View>
+          </TouchableOpacity>
+      ),
+      })
+    }
+  }, {
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 0,
+      },
+        screenInterpolator: (props) => {
+          const translateX = 0
+          const translateY = 0
+
+          return {
+              transform: [{translateX}, {translateY}]
+          }
+        } 
+    }),
+  });
+
 class FeedScreen extends React.Component {
-  static router = LocationTabNavigator.router;
+  static router = ExpandedStackNavigator.router;
 
   render() {
     return (
@@ -146,7 +114,7 @@ class FeedScreen extends React.Component {
       <View style={{}}>
           <Text style={styles.topBar}>Title</Text>
       </View>
-      <LocationTabNavigator navigation={this.props.navigation} />
+      <ExpandedStackNavigator navigation={this.props.navigation} />
     </SafeAreaView>
     );
   }

@@ -55,9 +55,6 @@ export default class PopularVideoFeedScreen extends React.Component {
           userVote: 1,
           totalVotes: 62100,
         }]
-      if (this.props.navigation.state.params) {
-        feedData.append(this.props.navigation.state.params.item);
-      }
       return (
             <View>
               <View style={styles.container}>{}
@@ -72,7 +69,7 @@ export default class PopularVideoFeedScreen extends React.Component {
     container: {
       alignItems: 'center',
       backgroundColor: '#F0F6F9',
-      height: SCREEN_HEIGHT*0.8,
+      //height: SCREEN_HEIGHT*0.735,
     },
   });
   
