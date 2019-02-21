@@ -12,17 +12,17 @@ export default class ExpandedFeedItemScreen extends React.Component {
       render() {
         item = this.props.navigation.state.params.item;
         item.comments = [
-                          {user: 'Jack', body: 'Hello'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}, 
-                          {user: 'Jack2', body: 'Hello World'}
+                          {id: 1, user: 'Jack', body: 'Hello'}, 
+                          {id: 2, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 3, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 4, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 5, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 6, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 7, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 8, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 9, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 10, user: 'Jack2', body: 'Hello World'}, 
+                          {id: 11, user: 'Jack2', body: 'Hello World'}
                         ];
         return (
             <View style={styles.mainContainer}>

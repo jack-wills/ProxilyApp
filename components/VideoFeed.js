@@ -16,7 +16,7 @@ export default class VideoFeed extends React.Component {
     selected: (new Map(): Map<string, boolean>),
   };
 
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor =  (item, index) => index.toString();
 
   _onPressItem = (id: string) => {
       // updater functions are preferred for transactional updates

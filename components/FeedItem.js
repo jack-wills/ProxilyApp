@@ -92,8 +92,8 @@ export default class FeedItem extends React.Component {
         <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-        <FeedMediaItem itemInfo={mediaItem}/>
+        <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3,}]}>
+        <FeedMediaItem styles={{width: Dimensions.get('window').width*0.96, }}itemInfo={mediaItem}/>
         <View style={styles.comments}>
             <View style={styles.left}>
             <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
@@ -109,6 +109,7 @@ export default class FeedItem extends React.Component {
                 <Text>{item.body}</Text>
                 </View>
               )}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
           </ScrollView>
@@ -136,6 +137,7 @@ export default class FeedItem extends React.Component {
       padding:0,
       marginTop: 5,
       marginBottom: 5,
+      
     },
     info: {
       flex: 1,
