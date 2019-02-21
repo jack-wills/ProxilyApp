@@ -34,8 +34,6 @@ export default class VideoFeed extends React.Component {
         onPressItem={this._onPressItem}
         openItemComments={this._openItemComments}
         selected={!this.state.selected.get(item.id)}
-        mediaItem={item.media}
-        title={item.title}
         item={item}
       />
   );

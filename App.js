@@ -60,6 +60,38 @@ const PopularStackNavigator = createStackNavigator({
   }),
 });
 
+const NewStackNavigator = createStackNavigator({
+  New: {
+    screen: NewVideoFeedScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+    })
+  },
+  Expanded: {
+    screen: ExpandedFeedItemScreen,
+    navigationOptions: ({ navigation }) => ({
+      tabBarVisible: false,
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      headerLeft : (
+        <TouchableOpacity onPress={() => { navigation.goBack() }}>
+            <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
+              <Icon name="ios-arrow-back" color={'blue'} size={34} />
+            </View>
+        </TouchableOpacity>
+    ),
+    })
+  }
+}, {
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 0,  // Set the animation duration time as 0 !!
+    },
+  }),
+});
+
 PopularStackNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
@@ -75,7 +107,7 @@ const LocationTabNavigator = createMaterialTopTabNavigator({
     screen: PopularStackNavigator,
   },
   New: {
-    screen: NewVideoFeedScreen,
+    screen: NewStackNavigator,
     tabBarLabel: 'New'
   }
 }, {

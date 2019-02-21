@@ -10,42 +10,58 @@ import VideoFeed from '../components/VideoFeed';
 
 export default class PopularVideoFeedScreen extends React.Component {
     render() {
+      let feedData = [
+        {
+          id: 1, 
+          media: {
+            video: {
+              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 1,
+          totalVotes: 12130,
+        },
+        {
+          id: 2, 
+          media: {
+            text: {
+              content: 'Test 123',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 1,
+          totalVotes: 782130,
+        },
+        {
+          id: 3, 
+          media: {
+            image: {
+              url: 'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 1,
+          totalVotes: 14120,
+        },
+        {
+          id: 4, 
+          media: {
+            text: {
+              content: 'This is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 1,
+          totalVotes: 62100,
+        }]
+      if (this.props.navigation.state.params) {
+        feedData.append(this.props.navigation.state.params.item);
+      }
       return (
             <View>
               <View style={styles.container}>{}
-              <VideoFeed  data={[
-              {
-                id: 1, 
-                media: {
-                  video: {
-                    url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
-                  }
-                }
-              },
-              {
-                id: 2, 
-                media: {
-                  text: {
-                    content: 'Test 123',
-                  }
-                }
-              },
-              {
-                id: 3, 
-                media: {
-                  image: {
-                    url: 'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg',
-                  }
-                }
-              },
-              {
-                id: 4, 
-                media: {
-                  text: {
-                    content: 'This is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post',
-                  }
-                }
-              }]} navigation={this.props.navigation} />
+              <VideoFeed  data={feedData} navigation={this.props.navigation} />
               </View>
             </View>
       );
@@ -57,16 +73,6 @@ export default class PopularVideoFeedScreen extends React.Component {
       alignItems: 'center',
       backgroundColor: '#F0F6F9',
       height: SCREEN_HEIGHT*0.8,
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    },
-    instructions: {
-      textAlign: 'center',
-      color: '#333333',
-      marginBottom: 5,
     },
   });
   

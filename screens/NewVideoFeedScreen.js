@@ -20,8 +20,11 @@ export default class NewVideoFeedScreen extends React.Component {
                   video: {
                     url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
                   }
-                }
-              }]} />
+                },
+                submitter: 'Jack',
+                userVote: 1,
+                totalVotes: 12130,
+              }]} navigation={this.props.navigation}/>
               </View>
             </View>
       );
@@ -33,16 +36,6 @@ export default class NewVideoFeedScreen extends React.Component {
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
       height: SCREEN_HEIGHT*0.8,
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    },
-    instructions: {
-      textAlign: 'center',
-      color: '#333333',
-      marginBottom: 5,
     },
   });
   

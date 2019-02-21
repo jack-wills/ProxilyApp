@@ -4,21 +4,33 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import ExtendedFeedItem from '../components/ExtendedFeedItem.js';
+import FeedItem from '../components/FeedItem.js';
 
 
 export default class ExpandedFeedItemScreen extends React.Component {
     
       render() {
         item = this.props.navigation.state.params.item;
+        item.comments = [
+                          {user: 'Jack', body: 'Hello'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}, 
+                          {user: 'Jack2', body: 'Hello World'}
+                        ];
         return (
             <View style={styles.mainContainer}>
-                <ExtendedFeedItem
+                <FeedItem
+                extended={true}
                 id={item.id}
                 onPressItem={this._onPressItem}
                 openItemComments={this._openItemComments}
-                title={item.title}
-                mediaItem={item.media}
                 item={item}
             />
             </View>
