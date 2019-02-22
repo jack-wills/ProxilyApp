@@ -1,5 +1,5 @@
 import React from 'react'
-import { AsyncStorage, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
+import { AsyncStorage, Dimensions, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
 
 export default class DrawerComponent extends React.Component {
 
@@ -15,7 +15,7 @@ export default class DrawerComponent extends React.Component {
   render() {
     const navigation = this.props.navigation
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: '#87B7CB', flex:1}}>
       <View style={styles.drawerHeader}>
           <Image
             style={styles.drawerImage}
@@ -23,19 +23,24 @@ export default class DrawerComponent extends React.Component {
           <Text>UserName</Text>
       </View>
       <View style={styles.container}>
+        <View style={styles.lineBreak}/>
         <TouchableOpacity>
-        <Text
-          onPress={() => {this.signOut();
-            navigation.navigate('AuthLoading');}}
-          style={styles.uglyDrawerItem}>
-          Sign Out
-        </Text>
+          <Text
+            onPress={() => {this.signOut();
+              navigation.navigate('AuthLoading');}}
+            style={styles.drawerItem}>
+            Sign Out
+          </Text>
+        <View style={styles.lineBreak}/>
         </TouchableOpacity>
-        <Text
-          onPress={() => navigation.navigate('screen2')}
-          style={styles.uglyDrawerItem}>
-          Screen 2
-        </Text>
+        <TouchableOpacity>
+          <Text
+            onPress={() => navigation.navigate('screen2')}
+            style={styles.drawerItem}>
+            Screen 2
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.lineBreak}/>
       </View>
     </SafeAreaView>
     )
@@ -44,27 +49,31 @@ export default class DrawerComponent extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    flex: 1,
+    backgroundColor: 'white',
+    height: Dimensions.get('window').height*0.9,
   },
-  uglyDrawerItem: {
-    backgroundColor: '#f6f6f6',
+  drawerItem: {
     fontSize: 18,
     fontFamily: 'Avenir',
     color: 'black',
     height: 50,
     paddingLeft: 10,
     paddingTop: 13,
-    marginTop: 10,
   },
   drawerHeader: {
-    height: 60,
-    backgroundColor: 'white',
-    marginTop: 15,
+    height: Dimensions.get('window').height*0.1,
+    backgroundColor: '#87B7CB',
+    paddingTop: 15,
     flexDirection: "row",
   },
   drawerImage: {
     height: 50,
     width: 50,
     borderRadius: 25,
+  },
+  lineBreak: {
+    backgroundColor: 'black', 
+    height: 1,
   }
 })

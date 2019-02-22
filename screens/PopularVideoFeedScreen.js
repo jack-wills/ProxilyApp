@@ -68,8 +68,7 @@ export default class PopularVideoFeedScreen extends React.Component {
   const styles = StyleSheet.create({
     container: {
       alignItems: 'center',
-      backgroundColor: '#F0F6F9',
-      //height: SCREEN_HEIGHT*0.735,
+      backgroundColor: '#D7E7ED',
     },
   });
   

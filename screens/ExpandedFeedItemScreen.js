@@ -43,6 +43,5 @@ const styles = StyleSheet.create({
     mainContainer: {
       alignItems: 'center',
       backgroundColor: '#F0F6F9',
-      height: SCREEN_HEIGHT*0.8,
     }
   });

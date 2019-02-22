@@ -41,10 +41,10 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
     swipeEnabled: false,
     animationEnabled: false,
     tabBarOptions: {
-      activeTintColor: 'black',
+      activeTintColor: '#FF1654',
       inactiveTintColor: 'black',
       style: {
-        backgroundColor: '#fff',
+        backgroundColor: '#A4D7CE',
         height: Dimensions.get('window').height*0.06,
       },
       tabStyle: {
@@ -56,7 +56,7 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
         height: Dimensions.get('window').height*0.05,
       },
       indicatorStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#FF1654',
       },
     }
   })
@@ -109,7 +109,7 @@ class FeedScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{backgroundColor: '#F2B45B', flex: 1}}>
+      <SafeAreaView style={{backgroundColor: '#70C1B3', flex: 1}}>
       <View style={{flexDirection:'row'}}>
           <Icon style={{paddingTop: 7, paddingLeft: 20}} name='ios-menu' color='black' size={32} onPress={this.props.navigation.openDrawer}/>
           <Text style={styles.topBar}>Title</Text>
@@ -124,15 +124,24 @@ class FeedScreen extends React.Component {
 const AuthStackNavigator = createStackNavigator({
   SignUp: {
     screen: SignUpScreen,
-    navigationOptions: {
-      title: "Sign Up"
-    }
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
   },
   SignIn: {
     screen: SignInScreen,
-    navigationOptions: {
-      title: "Sign In"
-    }
+
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
   }},
   {
     initialRouteName: 'SignIn',
@@ -163,12 +172,12 @@ const AppTabNavigator = createMaterialTopTabNavigator({
       )
     }
   },
-  Settings: {
+  Camera: {
     screen: CameraScreen,
     navigationOptions: {
-      tabBarLabel: 'Settings',
+      tabBarLabel: 'Camera',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-settings" color={tintColor} size={24} />
+        <Icon name="ios-camera" color={tintColor} size={24} />
       )
     }
   }
@@ -179,10 +188,10 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: 'orange',
-      inactiveTintColor: 'grey',
+      activeTintColor: '#E8144D',
+      inactiveTintColor: 'black',
       style: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#A4D7CE',
         height: SCREEN_HEIGHT*0.09,
       },
       indicatorStyle: {
@@ -233,13 +242,11 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
     flex: 1,
-    backgroundColor: '#fff',
     alignContent: "center",
   },
   topBar: {
     flex: 0,
     fontSize: 20,
-    backgroundColor: '#F2B45B',
     fontFamily: 'Avenir',
     textAlign: "left",
     padding: 10,
@@ -260,10 +267,5 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     fontFamily: 'Avenir',
     fontSize: 15,
-  },
-  indicator: {
-    height: 1,
-    backgroundColor: 'red',
-    marginTop: (Dimensions.get('window').height*0.02)-6,
   }
 });
