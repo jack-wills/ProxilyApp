@@ -1,28 +1,27 @@
 import React from 'react';
 import { 
   Dimensions,
-  Platform, 
   Button,
-  ScrollView, 
-  StatusBar, 
+  Image, 
   StyleSheet, 
   View,
-  ViewOverflow,
-  TouchableWithoutFeedback,
   TouchableOpacity,
   Text,
   SafeAreaView, } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
-import { createMaterialTopTabNavigator, createStackNavigator, Header } from 'react-navigation'
+import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
   
-import VideoFeedScreen from './screens/VideoFeedScreen';
 import CameraScreen from './screens/CameraScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PopularVideoFeedScreen from './screens/PopularVideoFeedScreen';
 import NewVideoFeedScreen from './screens/NewVideoFeedScreen';
 import ExpandedFeedItemScreen from './screens/ExpandedFeedItemScreen';
+import SignInScreen from './screens/SignInScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import AuthLoadingScreen from './screens/AuthLoadingScreen';
+import DrawerComponent from './components/DrawerComponent.js';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -111,7 +110,8 @@ class FeedScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{backgroundColor: '#F2B45B', flex: 1}}>
-      <View style={{}}>
+      <View style={{flexDirection:'row'}}>
+          <Icon style={{paddingTop: 7, paddingLeft: 20}} name='ios-menu' color='black' size={32} onPress={this.props.navigation.openDrawer}/>
           <Text style={styles.topBar}>Title</Text>
       </View>
       <ExpandedStackNavigator navigation={this.props.navigation} />
@@ -120,9 +120,42 @@ class FeedScreen extends React.Component {
   }
 }
 
+
+const AuthStackNavigator = createStackNavigator({
+  SignUp: {
+    screen: SignUpScreen,
+    navigationOptions: {
+      title: "Sign Up"
+    }
+  },
+  SignIn: {
+    screen: SignInScreen,
+    navigationOptions: {
+      title: "Sign In"
+    }
+  }},
+  {
+    initialRouteName: 'SignIn',
+  }
+);
+
+const SettingsDrawerNavigator = createDrawerNavigator({
+  Home: FeedScreen,
+  //AuthLoading: CameraScreen,
+  screen2: CameraScreen,
+}, {
+  initialRouteName: 'Home',
+  drawerPosition: 'left',
+  contentComponent: DrawerComponent,
+  drawerOpenRoute: 'DrawerOpen',
+  drawerCloseRoute: 'DrawerClose',
+  drawerToggleRoute: 'DrawerToggle',
+
+});
+
 const AppTabNavigator = createMaterialTopTabNavigator({
   Home: {
-    screen: FeedScreen,
+    screen: SettingsDrawerNavigator,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
@@ -159,7 +192,17 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     }
   })
 
-const AppContainer = createAppContainer(AppTabNavigator);
+
+const AppContainer = createAppContainer(createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppTabNavigator,
+    Auth: AuthStackNavigator,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+));
 
 export default class App extends React.Component {
   state = {
