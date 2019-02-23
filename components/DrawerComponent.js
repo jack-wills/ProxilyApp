@@ -1,5 +1,5 @@
 import React from 'react'
-import { AsyncStorage, Dimensions, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
+import { AsyncStorage, Dimensions, StyleSheet, SafeAreaView, Text, TouchableHighlight, View, Image } from 'react-native'
 
 export default class DrawerComponent extends React.Component {
 
@@ -20,26 +20,23 @@ export default class DrawerComponent extends React.Component {
           <Image
             style={styles.drawerImage}
             source={require('../assets/mountains.jpg')} />
-          <Text>UserName</Text>
+          <Text style={styles.drawerHeaderText}>UserName</Text>
       </View>
       <View style={styles.container}>
-        <View style={styles.lineBreak}/>
-        <TouchableOpacity>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => {this.signOut();
+                                                                        navigation.navigate('AuthLoading');}}>
           <Text
-            onPress={() => {this.signOut();
-              navigation.navigate('AuthLoading');}}
             style={styles.drawerItem}>
             Sign Out
           </Text>
+        </TouchableHighlight>
         <View style={styles.lineBreak}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('screen2')}>
           <Text
-            onPress={() => navigation.navigate('screen2')}
             style={styles.drawerItem}>
             Screen 2
           </Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
         <View style={styles.lineBreak}/>
       </View>
     </SafeAreaView>
@@ -49,9 +46,9 @@ export default class DrawerComponent extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: 'white',
     height: Dimensions.get('window').height*0.9,
+    flex: 1,
   },
   drawerItem: {
     fontSize: 18,
@@ -63,17 +60,24 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     height: Dimensions.get('window').height*0.1,
-    backgroundColor: '#87B7CB',
-    paddingTop: 15,
     flexDirection: "row",
+    alignItems: 'center',
+  },
+  drawerHeaderText: {
+    fontSize: 18,
+    fontFamily: 'Avenir',
+    paddingLeft: 15,
   },
   drawerImage: {
     height: 50,
     width: 50,
     borderRadius: 25,
+    marginLeft: 15,
   },
   lineBreak: {
+    alignSelf: 'center',
     backgroundColor: 'black', 
     height: 1,
+    width: Dimensions.get('window').width*0.7,
   }
 })

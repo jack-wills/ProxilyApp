@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Dimensions,
   FlatList,
+  RefreshControl,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -13,7 +14,10 @@ import FeedItem from './FeedItem';
 export default class VideoFeed extends React.Component {
   state = {
     commentsOpen: null,
+    data: this.props.data,
     selected: (new Map(): Map<string, boolean>),
+    videoPlaying: {},
+    refreshing: false,
   };
 
   _keyExtractor =  (item, index) => index.toString();
@@ -38,6 +42,51 @@ export default class VideoFeed extends React.Component {
       />
   );
 
+  fetchData() {
+    let newData = [
+        {
+          id: 1, 
+          media: {
+            text: {
+              content: 'This is new data',
+            }
+          },
+          submitter: 'Jack',
+          userVote: -1,
+          totalVotes: 2130,
+        },
+        {
+          id: 2, 
+          media: {
+            video: {
+              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 0,
+          totalVotes: 12130,
+        },
+        {
+          id: 3, 
+          media: {
+            video: {
+              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
+            }
+          },
+          submitter: 'Jack',
+          userVote: 1,
+          totalVotes: 782130,
+        }]
+    this.setState({data: newData});
+    return;
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.fetchData();
+    this.setState({refreshing: false});
+  }
+
   _openItemComments = (item) => {
     this.props.navigation.navigate(
       'Expanded',
@@ -49,12 +98,19 @@ export default class VideoFeed extends React.Component {
     return (
       <View style={styles.mainContent} >
       <FlatList 
-          data={this.props.data}
+          data={this.state.data}
           extraData={this.state}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+              <RefreshControl
+                  colors={["#9Bd35A", "#689F38"]}
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+              />
+          }
       />
       </View>
     );
