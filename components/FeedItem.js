@@ -14,12 +14,14 @@ import FeedMediaItem from './FeedMediaItem';
 
 export default class FeedItem extends React.Component {
     state = {
-      videoPlaying: false,
       userVote: this.props.item.userVote,
     }
     _onPressVideo = () => {
-      var videoPlayingTemp = this.state.videoPlaying
-      this.setState({videoPlaying: !videoPlayingTemp})
+      if (this.props.videoPlaying) {
+        this.props.changeVideoPlaying(-1)
+      } else {
+        this.props.changeVideoPlaying(this.props.id)
+      }
     };
     _onPressComments = () => {
       this.props.openItemComments(this.props.item);
@@ -51,7 +53,7 @@ export default class FeedItem extends React.Component {
     renderNormal() {
       var mediaItem = this.props.item.media;
       if (mediaItem.hasOwnProperty('video')){
-          mediaItem.video.videoPlaying = this.state.videoPlaying;
+          mediaItem.video.videoPlaying = this.props.videoPlaying;
           mediaItem.video.onPressVideo = this._onPressVideo;
       }
       return (
@@ -85,7 +87,7 @@ export default class FeedItem extends React.Component {
     renderExtended() {
         var mediaItem = this.props.item.media;
         if (mediaItem.hasOwnProperty('video')){
-            mediaItem.video.videoPlaying = this.state.videoPlaying;
+            mediaItem.video.videoPlaying = this.props.videoPlaying;
             mediaItem.video.onPressVideo = this._onPressVideo;
         }
       return (

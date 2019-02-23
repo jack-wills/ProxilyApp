@@ -166,33 +166,42 @@ const AppTabNavigator = createMaterialTopTabNavigator({
   Home: {
     screen: SettingsDrawerNavigator,
     navigationOptions: {
-      tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-home" color={tintColor} size={24} />
+        <Icon name="ios-home" color={tintColor} size={37} />
       )
     }
   },
   Camera: {
     screen: CameraScreen,
     navigationOptions: {
-      tabBarLabel: 'Camera',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-camera" color={tintColor} size={24} />
+        <Icon name="ios-camera" color={tintColor} size={37} />
       )
     }
   }
 }, {
     initialRouteName: 'Home',
-    // order: ['Settings', 'Home'],
     tabBarPosition: 'bottom',
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
       activeTintColor: '#E8144D',
       inactiveTintColor: 'black',
+      showLabel: false,
       style: {
         backgroundColor: '#A4D7CE',
-        height: SCREEN_HEIGHT*0.09,
+        height: SCREEN_HEIGHT*0.07,
+      },
+      tabStyle: {
+          padding: 0, 
+          margin:0,
+          paddingTop:5,
+      },
+      iconStyle: {
+        width: 40,
+        height: 40,
+        padding:0, 
+        margin: 0,
       },
       indicatorStyle: {
         height: 0

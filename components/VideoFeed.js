@@ -16,7 +16,7 @@ export default class VideoFeed extends React.Component {
     commentsOpen: null,
     data: this.props.data,
     selected: (new Map(): Map<string, boolean>),
-    videoPlaying: {},
+    videoPlaying: -1,
     refreshing: false,
   };
 
@@ -32,12 +32,18 @@ export default class VideoFeed extends React.Component {
       });
   };
 
+  _changeVideoPlaying = (itemId) => {
+    this.setState({videoPlaying: itemId});
+  }
+
   _renderItem = ({item}) => (
       <FeedItem
         id={item.id}
         onPressItem={this._onPressItem}
         openItemComments={this._openItemComments}
         selected={!this.state.selected.get(item.id)}
+        videoPlaying={this.state.videoPlaying == item.id}
+        changeVideoPlaying={this._changeVideoPlaying}
         item={item}
       />
   );

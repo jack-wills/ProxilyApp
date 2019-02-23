@@ -8,7 +8,14 @@ import FeedItem from '../components/FeedItem.js';
 
 
 export default class ExpandedFeedItemScreen extends React.Component {
-    
+  state = {
+    videoPlaying: false,
+  };
+
+  _changeVideoPlaying = (itemId) => {
+    this.setState({videoPlaying: !this.state.videoPlaying});
+  }
+
       render() {
         item = this.props.navigation.state.params.item;
         item.comments = [
@@ -31,6 +38,8 @@ export default class ExpandedFeedItemScreen extends React.Component {
                 id={item.id}
                 onPressItem={this._onPressItem}
                 openItemComments={this._openItemComments}
+                videoPlaying={this.state.videoPlaying}
+                changeVideoPlaying={this._changeVideoPlaying}
                 item={item}
             />
             </View>
