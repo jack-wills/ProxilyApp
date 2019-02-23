@@ -22,6 +22,8 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
 import DrawerComponent from './components/DrawerComponent.js';
+import AddButton from './components/AddMediaButton.js';
+import FooterTabs from './components/CustomFooter';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -165,47 +167,20 @@ const SettingsDrawerNavigator = createDrawerNavigator({
 const AppTabNavigator = createMaterialTopTabNavigator({
   Home: {
     screen: SettingsDrawerNavigator,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-home" color={tintColor} size={37} />
-      )
-    }
   },
-  Camera: {
-    screen: CameraScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-camera" color={tintColor} size={37} />
-      )
-    }
+  Settings: {
+    screen: SettingsScreen,
   }
 }, {
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
+    tabBarComponent: (props) => (
+      <FooterTabs{...props} />
+    ),
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: '#E8144D',
-      inactiveTintColor: 'black',
-      showLabel: false,
-      style: {
-        backgroundColor: '#A4D7CE',
-        height: SCREEN_HEIGHT*0.07,
-      },
-      tabStyle: {
-          padding: 0, 
-          margin:0,
-          paddingTop:5,
-      },
-      iconStyle: {
-        width: 40,
-        height: 40,
-        padding:0, 
-        margin: 0,
-      },
-      indicatorStyle: {
-        height: 0
-      },
+      activeTintColor: '#247BA0',
       showIcon: true
     }
   })
