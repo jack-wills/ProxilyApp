@@ -7,7 +7,7 @@ import {
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
 
-export default class CameraScreen extends React.Component {
+export default class CameraPictureScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>

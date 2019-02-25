@@ -23,7 +23,7 @@ export default class SignInScreen extends React.Component {
   
     render() {
       return (
-      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#B2DBBF', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
+      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
         <KeyboardAvoidingView style={styles.container}>
             <Text style={{fontSize: 50, position: 'absolute', top: 100}}>videoApp</Text>
             <Text style={styles.formText}>Username</Text>

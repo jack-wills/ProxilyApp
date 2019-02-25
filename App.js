@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNaviga
 import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
   
-import CameraScreen from './screens/CameraScreen';
+import SavedLocationsScreen from './screens/SavedLocationsScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PopularVideoFeedScreen from './screens/PopularVideoFeedScreen';
 import NewVideoFeedScreen from './screens/NewVideoFeedScreen';
@@ -22,8 +22,10 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
 import DrawerComponent from './components/DrawerComponent.js';
-import AddButton from './components/AddMediaButton.js';
 import FooterTabs from './components/CustomFooter';
+import SubmitTextScreen from './screens/SubmitTextScreen'
+import CameraVideoScreen from './screens/CameraVideoScreen'
+import CameraPictureScreen from './screens/CameraPictureScreen'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -48,6 +50,10 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
       style: {
         backgroundColor: '#A4D7CE',
         height: Dimensions.get('window').height*0.06,
+        shadowRadius: 4,
+        shadowColor: 'grey',
+        shadowOffset: {height: 2, width: 0},
+        shadowOpacity: 1.0
       },
       tabStyle: {
         height: Dimensions.get('window').height*0.05,
@@ -111,8 +117,14 @@ class FeedScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{backgroundColor: '#70C1B3', flex: 1}}>
-      <View style={{flexDirection:'row'}}>
+      <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
+      <View style={{flexDirection:'row', 
+                    backgroundColor: '#02b875',
+                    shadowRadius: 4,
+                    shadowColor: 'grey',
+                    shadowOffset: {height: 6, width: 0},
+                    shadowOpacity: 0.3,
+                    zIndex: 1}}>
           <Icon style={{paddingTop: 7, paddingLeft: 20}} name='ios-menu' color='black' size={32} onPress={this.props.navigation.openDrawer}/>
           <Text style={styles.topBar}>Title</Text>
       </View>
@@ -152,8 +164,7 @@ const AuthStackNavigator = createStackNavigator({
 
 const SettingsDrawerNavigator = createDrawerNavigator({
   Home: FeedScreen,
-  //AuthLoading: CameraScreen,
-  screen2: CameraScreen,
+  Settings: SettingsScreen,
 }, {
   initialRouteName: 'Home',
   drawerPosition: 'left',
@@ -165,12 +176,11 @@ const SettingsDrawerNavigator = createDrawerNavigator({
 });
 
 const AppTabNavigator = createMaterialTopTabNavigator({
-  Home: {
-    screen: SettingsDrawerNavigator,
-  },
-  Settings: {
-    screen: SettingsScreen,
-  }
+  Home: SettingsDrawerNavigator,
+  SavedLocations:  SavedLocationsScreen,
+  CameraPicture:  CameraPictureScreen,
+  CameraVideo:  CameraVideoScreen,
+  SubmitText:  SubmitTextScreen,
 }, {
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
@@ -180,7 +190,7 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: '#247BA0',
+      activeTintColor: '#e74c3c',
       showIcon: true
     }
   })

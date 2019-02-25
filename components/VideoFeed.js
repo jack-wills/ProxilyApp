@@ -126,5 +126,7 @@ export default class VideoFeed extends React.Component {
 const styles = StyleSheet.create({
   mainContent: {
     //height: Dimensions.get('window').height*0.74,
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
   },
 });

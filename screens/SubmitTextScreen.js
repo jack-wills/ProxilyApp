@@ -2,14 +2,17 @@ import React from 'react';
 import {
   Button,
   StyleSheet,
+  SafeAreaView,
   Text,
   View,
 } from 'react-native';
 
-export default class SettingsScreen extends React.Component {
+export default class SubmitTextScreen extends React.Component {
   render() {
     return (
-      <Text style={styles.container}>This is Settings</Text>
+        <SafeAreaView>
+        <Text>This is Submit text</Text>
+        </SafeAreaView>
     );
   }
 }

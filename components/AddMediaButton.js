@@ -1,6 +1,7 @@
 import React from 'react';
-import {Animated, TouchableHighlight, View} from "react-native";
+import {Animated, TouchableHighlight, View, Text} from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons'
+
 const SIZE = 70;
 
 export default class AddButton extends React.Component {
@@ -75,6 +76,7 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
+                            this.props.navigation.navigate('CameraVideo')
                         }}
                         style={{
                             alignItems: 'center',
@@ -82,7 +84,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
-                            backgroundColor: '#247BA0'
+                            backgroundColor: '#e74c3c'
                         }}
                     >
                         <Icon name="md-videocam" size={16} color="#F8F8F8"/>
@@ -97,6 +99,7 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
+                            this.props.navigation.navigate('CameraPicture')
                         }}
                         style={{
                             position: 'absolute',
@@ -105,7 +108,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
-                            backgroundColor: '#247BA0'
+                            backgroundColor: '#e74c3c'
                         }}
                     >
                         <Icon name="md-camera" size={16} color="#F8F8F8"/>
@@ -120,6 +123,7 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
+                            this.props.navigation.navigate('SubmitText')
                         }}
                         style={{
                             position: 'absolute',
@@ -128,7 +132,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
-                            backgroundColor: '#247BA0'
+                            backgroundColor: '#e74c3c'
                         }}
                     >
                         <Icon name="md-create" size={16} color="#F8F8F8"/>
@@ -136,7 +140,7 @@ export default class AddButton extends React.Component {
                 </Animated.View>
                 <TouchableHighlight
                     onPress={this.toggleView}
-                    underlayColor="#2882D8"
+                    underlayColor="#c0392b"
                     style={{
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -144,7 +148,11 @@ export default class AddButton extends React.Component {
                         width: SIZE,
                         height: SIZE,
                         borderRadius: SIZE / 2,
-                        backgroundColor: '#247BA0'
+                        backgroundColor: '#e74c3c',
+                        shadowRadius: 2,
+                        shadowColor: 'grey',
+                        shadowOffset: {height: -2, width: 0},
+                        shadowOpacity: 0.5,
                     }}
                 >
                     <Animated.View style={{

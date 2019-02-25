@@ -31,10 +31,10 @@ export default class DrawerComponent extends React.Component {
           </Text>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
-        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('screen2')}>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Settings')}>
           <Text
             style={styles.drawerItem}>
-            Screen 2
+            Settings
           </Text>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>

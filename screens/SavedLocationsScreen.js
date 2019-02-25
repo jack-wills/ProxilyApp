@@ -6,10 +6,10 @@ import {
   View,
 } from 'react-native';
 
-export default class SettingsScreen extends React.Component {
+export default class SavedLocationsScreen extends React.Component {
   render() {
     return (
-      <Text style={styles.container}>This is Settings</Text>
+        <Text>This is Saved locations</Text>
     );
   }
 }
