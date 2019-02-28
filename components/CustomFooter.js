@@ -20,7 +20,7 @@ export default class CustomFooter extends React.Component {
             <SafeAreaView
             style={{
                 height: 60,
-                backgroundColor: '#02b875',
+                backgroundColor: '#E3e3e3',
                 flexDirection: 'row',
                 shadowRadius: 4,
                 shadowColor: 'grey',
@@ -49,8 +49,6 @@ export default class CustomFooter extends React.Component {
                 underlayColor={'#00b489'}
                 style={[styles.tabButton, {
                     paddingRight: 20, 
-                    backgroundColor: '#02b875',
-                    borderBottomColor: '#e74c3c',
                     borderBottomWidth: index === 0 ? 3 : 0}]}
             >
             <Icon name="home" color={index === 0 ? '#e74c3c' : '#555'} size={30} />
@@ -62,9 +60,7 @@ export default class CustomFooter extends React.Component {
                     paddingLeft: 20, 
                     borderLeftWidth: 1,
                     borderLeftColor: 'black', 
-                    borderBottomColor: '#e74c3c',
-                    borderBottomWidth: index === 1 ? 3 : 0,
-                borderColor: '#e74c3c'}]}
+                    borderBottomWidth: index === 1 ? 3 : 0}]}
             >
             <Icon name="directions" color={index === 1 ? '#e74c3c' : '#555'} size={30} />
             </TouchableHighlight>
@@ -80,6 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: Dimensions.get('window').width*0.5,
+        borderBottomColor: '#e74c3c',
     },
     mediaButton: {
         position: 'absolute',

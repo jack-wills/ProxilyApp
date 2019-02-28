@@ -1,25 +1,66 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet, 
+  Text, 
+  View} from 'react-native';
+  import { RNCamera } from 'react-native-camera';
 
-export default class CameraVideoScreen extends React.Component {
+export default class CameraPictureScreen extends React.Component {
   render() {
     return (
-      <Text>This is Video</Text>
+      <SafeAreaView>
+      <View style={styles.container}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          permissionDialogTitle={'Permission to use camera'}
+          permissionDialogMessage={'We need your permission to use your camera phone'}
+          onGoogleVisionBarcodesDetected={({ barcodes }) => {
+            console.log(barcodes);
+          }}
+        />
+        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={this.record.bind(this)} style={styles.capture}>
+            <Text style={{ fontSize: 14 }}> RECORD </Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      </SafeAreaView>
     );
   }
+  record = async function() {
+    if (this.camera) {
+      const options = { quality: RNCamera.Constants.VideoQuality["720p"] };
+      const data = await this.camera.recordAsync(options);
+      console.log(data.uri);
+    }
+  };
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
   },
 });

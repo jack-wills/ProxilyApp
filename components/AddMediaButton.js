@@ -76,7 +76,8 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
-                            this.props.navigation.navigate('CameraVideo')
+                            this.props.navigation.navigate('CameraVideo');
+                            this.toggleView();
                         }}
                         style={{
                             alignItems: 'center',
@@ -99,7 +100,8 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
-                            this.props.navigation.navigate('CameraPicture')
+                            this.props.navigation.navigate('CameraPicture');
+                            this.toggleView();
                         }}
                         style={{
                             position: 'absolute',
@@ -123,7 +125,8 @@ export default class AddButton extends React.Component {
                 }}>
                     <TouchableHighlight
                         onPress={() => {
-                            this.props.navigation.navigate('SubmitText')
+                            this.props.navigation.navigate('SubmitText');
+                            this.toggleView();
                         }}
                         style={{
                             position: 'absolute',

@@ -35,7 +35,7 @@ export default class SignInScreen extends React.Component {
             </TouchableOpacity>
             <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={[styles.signUpText, {color: 'black'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Don't have an account? </Text>
-            <Text style={[styles.signUpText, {color: '#ff1654'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up.</Text>
+            <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up.</Text>
             </View>
         </KeyboardAvoidingView>
       </LinearGradient>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         margin: 15,
     },
     submitButton: {
-        backgroundColor: '#ff1654',
+        backgroundColor: '#e74c3c',
         borderRadius: 35,
         width: Dimensions.get('window').width*0.7,
         margin: 15,

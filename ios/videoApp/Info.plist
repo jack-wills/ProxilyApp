@@ -41,9 +41,9 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone access for camera</string>
+	<string></string>
 	<key>NSCameraUsageDescription</key>
-	<string>Camera Access</string>
+	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

@@ -2,14 +2,30 @@ import React from 'react';
 import {
   Button,
   StyleSheet,
+  SafeAreaView,
   Text,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class SettingsScreen extends React.Component {
   render() {
     return (
-      <Text style={styles.container}>This is Settings</Text>
+      <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
+      <View style={{flexDirection:'row', 
+                    backgroundColor: '#02b875',
+                    shadowRadius: 4,
+                    shadowColor: 'grey',
+                    shadowOffset: {height: 6, width: 0},
+                    shadowOpacity: 0.3,
+                    zIndex: 1}}>
+          <Icon style={{paddingTop: 7, paddingLeft: 20}} name='ios-menu' color='black' size={32} onPress={this.props.navigation.openDrawer}/>
+          <Text style={styles.topBar}>Title</Text>
+      </View>
+        <View style={styles.container}>
+          <Text>This is Settings</Text>
+        </View>
+    </SafeAreaView>
     );
   }
 }
@@ -21,5 +37,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  topBar: {
+    flex: 0,
+    fontSize: 20,
+    fontFamily: 'Avenir',
+    textAlign: "left",
+    padding: 10,
+    paddingLeft: 20,
   },
 });

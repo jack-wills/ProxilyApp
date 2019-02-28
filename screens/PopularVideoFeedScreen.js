@@ -10,7 +10,8 @@ import VideoFeed from '../components/VideoFeed';
 
 export default class PopularVideoFeedScreen extends React.Component {
     render() {
-      let feedData = [
+      let feedData = [{"id":0,"userVote":0,"totalVotes":500,"media":{text: {content:"test"}},"submitter":"Home"},{"id":1,"userVote":0,"totalVotes":400,"media":"{image: \"test\"}","submitter":"Jack123"},{"id":2,"userVote":0,"totalVotes":200,"media":"{video: \"test\"}","submitter":"Jack"},{"id":3,"userVote":0,"totalVotes":90,"media":"{text: \"test1\"}","submitter":"Home"}];
+      /*let feedData = [
         {
           id: 1, 
           media: {
@@ -54,7 +55,7 @@ export default class PopularVideoFeedScreen extends React.Component {
           submitter: 'Jack',
           userVote: 1,
           totalVotes: 62100,
-        }]
+        }]*/
       return (
             <View>
               <View style={styles.container}>{}

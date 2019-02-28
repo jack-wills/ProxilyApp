@@ -23,11 +23,10 @@ export default class DrawerComponent extends React.Component {
           <Text style={styles.drawerHeaderText}>UserName</Text>
       </View>
       <View style={styles.container}>
-        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => {this.signOut();
-                                                                        navigation.navigate('AuthLoading');}}>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Feed')}>
           <Text
             style={styles.drawerItem}>
-            Sign Out
+            Local Feed
           </Text>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
@@ -35,6 +34,14 @@ export default class DrawerComponent extends React.Component {
           <Text
             style={styles.drawerItem}>
             Settings
+          </Text>
+        </TouchableHighlight>
+        <View style={styles.lineBreak}/>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => {this.signOut();
+                                                                        navigation.navigate('AuthLoading');}}>
+          <Text
+            style={styles.drawerItem}>
+            Sign Out
           </Text>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
@@ -62,6 +69,12 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height*0.1,
     flexDirection: "row",
     alignItems: 'center',
+    backgroundColor: '#87B7CB',
+    shadowRadius: 3,
+    shadowColor: 'grey',
+    shadowOffset: {height: 4, width: 0},
+    shadowOpacity: 0.5,
+    zIndex: 3,
   },
   drawerHeaderText: {
     fontSize: 18,

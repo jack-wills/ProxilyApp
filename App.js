@@ -40,8 +40,6 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
   }
 }, {
     initialRouteName: 'Popular',
-    //tabBarComponent: TabBar,
-    // order: ['Settings', 'Home'],
     swipeEnabled: false,
     animationEnabled: false,
     tabBarOptions: {
@@ -163,10 +161,10 @@ const AuthStackNavigator = createStackNavigator({
 );
 
 const SettingsDrawerNavigator = createDrawerNavigator({
-  Home: FeedScreen,
+  Feed: FeedScreen,
   Settings: SettingsScreen,
 }, {
-  initialRouteName: 'Home',
+  initialRouteName: 'Feed',
   drawerPosition: 'left',
   contentComponent: DrawerComponent,
   drawerOpenRoute: 'DrawerOpen',
@@ -187,8 +185,8 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     tabBarComponent: (props) => (
       <FooterTabs{...props} />
     ),
-    swipeEnabled: true,
-    animationEnabled: true,
+    swipeEnabled: false,
+    animationEnabled: false,
     tabBarOptions: {
       activeTintColor: '#e74c3c',
       showIcon: true
