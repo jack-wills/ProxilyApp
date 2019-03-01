@@ -153,24 +153,20 @@ export default class FeedItem extends React.Component {
       paddingTop: 10,
       paddingBottom: 5,
       flexDirection: "row",
-      //width: 350,
     },
     left: {
-      width: Dimensions.get('window').width*0.415,
-      //backgroundColor: 'blue',
+      width: Dimensions.get('window').width*0.565,
     },
     right: {
-  
-      width: Dimensions.get('window').width*0.415,
+      width: Dimensions.get('window').width*0.265,
       justifyContent: 'center',
       flexDirection: 'row',
       marginTop: 10,
       marginLeft: 20,
-      //backgroundColor: 'red',
     },
     subByText: {
       fontFamily: 'Avenir',
-      fontSize: 15,
+      fontSize: 12,
     },
     commentsText: {
       marginTop: 7,

@@ -9,59 +9,48 @@ import {
 import VideoFeed from '../components/VideoFeed';
 
 export default class PopularVideoFeedScreen extends React.Component {
+  state = {
+    feedData: [],
+  }
+
+  _getFeedData = () =>  {
+    fetch('http://localhost:8080/getPopularFeedItems', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude: "51.923187",
+        longitude: "-0.226379",
+        getPostsFrom: "0",
+        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrdzUzNTE5QGdtYWlsLmNvLnVrIiwiZmlyc3ROYW1lIjoiamFjayIsImxhc3ROYW1lIjoid2lsbGlhbXMiLCJpYXQiOjE1NTEzNTc2NjcsImV4cCI6MTU1MTQ0NDA2N30.3TO3MlyE38yanWBrNfTfahtrVAZIClMD50PmcKgRpbc",
+        getPostsTo: "20"
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty("error")) {
+        console.log("Couldn't get feed data because: " + responseJson.error)
+      } else {
+        this.setState({feedData: responseJson});
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+
+  componentDidMount() {
+    this._getFeedData();
+  }
+
     render() {
-      let feedData = [{"id":0,"userVote":0,"totalVotes":500,"media":{text: {content:"test"}},"submitter":"Home"},{"id":1,"userVote":0,"totalVotes":400,"media":"{image: \"test\"}","submitter":"Jack123"},{"id":2,"userVote":0,"totalVotes":200,"media":"{video: \"test\"}","submitter":"Jack"},{"id":3,"userVote":0,"totalVotes":90,"media":"{text: \"test1\"}","submitter":"Home"}];
-      /*let feedData = [
-        {
-          id: 1, 
-          media: {
-            video: {
-              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 1,
-          totalVotes: 12130,
-        },
-        {
-          id: 2, 
-          media: {
-            text: {
-              content: 'Test 123',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 1,
-          totalVotes: 782130,
-        },
-        {
-          id: 3, 
-          media: {
-            image: {
-              url: 'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 1,
-          totalVotes: 14120,
-        },
-        {
-          id: 4, 
-          media: {
-            text: {
-              content: 'This is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post\nThis is a multi line text post',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 1,
-          totalVotes: 62100,
-        }]*/
       return (
-            <View>
-              <View style={styles.container}>{}
-              <VideoFeed  data={feedData} navigation={this.props.navigation} />
-              </View>
-            </View>
+          <View style={styles.container}>
+            <VideoFeed data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
+          </View>
       );
     }
   }

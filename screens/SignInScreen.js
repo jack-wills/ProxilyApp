@@ -43,8 +43,30 @@ export default class SignInScreen extends React.Component {
     }
   
     _signInAsync = async () => {
-      await AsyncStorage.setItem('userToken', 'abc');
-      this.props.navigation.navigate('App');
+      try {
+        let response = await fetch('http://localhost:8080/signin', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: "jackw53519@gmail.co.uk",
+            password: "test123",
+          }),
+        })
+        let responseJson = await response.json();
+        responseJson.firstName;
+        responseJson.lastName;
+        if (responseJson.jwt == "") {
+          
+        } else {
+          await AsyncStorage.setItem('userToken', responseJson.jwt);
+          this.props.navigation.navigate('App');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     };
   }
 

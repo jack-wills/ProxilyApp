@@ -18,7 +18,31 @@ export default class SubmitTextScreen extends React.Component {
     }
 
     _submitText = () => {
-        console.log(this.state.text);
+      fetch('http://localhost:8080/uploadItem', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          latitude: "51.923187",
+          longitude: "-0.226379",
+          jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrdzUzNTE5QGdtYWlsLmNvLnVrIiwiZmlyc3ROYW1lIjoiamFjayIsImxhc3ROYW1lIjoid2lsbGlhbXMiLCJpYXQiOjE1NTEzNTc2NjcsImV4cCI6MTU1MTQ0NDA2N30.3TO3MlyE38yanWBrNfTfahtrVAZIClMD50PmcKgRpbc",
+          mediaType: "text",
+          media: this.state.text,
+        }),
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.hasOwnProperty("error")) {
+          console.log("Couldn't get feed data because: " + responseJson.error)
+        } else if (responseJson.hasOwnProperty("success") && responseJson.success) {
+          this.props.navigation.navigate('New');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     };
       
     render() {

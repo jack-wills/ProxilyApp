@@ -122,9 +122,13 @@ class FeedScreen extends React.Component {
                     shadowColor: 'grey',
                     shadowOffset: {height: 6, width: 0},
                     shadowOpacity: 0.3,
-                    zIndex: 1}}>
-          <Icon style={{paddingTop: 7, paddingLeft: 20}} name='ios-menu' color='black' size={32} onPress={this.props.navigation.openDrawer}/>
-          <Text style={styles.topBar}>Title</Text>
+                    justifyContent: 'center',
+                    zIndex: 1, height: 42}}>
+          <Icon style={{paddingTop: 2, paddingLeft: 20}} name='ios-menu' color='white' size={32} onPress={this.props.navigation.openDrawer}/>
+
+          <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38, marginRight: 38}}/>
+
+          
       </View>
       <ExpandedStackNavigator navigation={this.props.navigation} />
     </SafeAreaView>
@@ -238,11 +242,13 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flex: 0,
-    fontSize: 20,
+    width: 10,
+    height: 10
+    /*fontSize: 20,
     fontFamily: 'Avenir',
     textAlign: "left",
     padding: 10,
-    paddingLeft: 20,
+    paddingLeft: 20,*/
   },
   topNavBar: {
     backgroundColor: 'white',

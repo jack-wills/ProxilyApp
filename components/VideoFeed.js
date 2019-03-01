@@ -5,6 +5,7 @@ import {
   RefreshControl,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
   TouchableOpacity,
   Text,
   View,
@@ -18,6 +19,7 @@ export default class VideoFeed extends React.Component {
     selected: (new Map(): Map<string, boolean>),
     videoPlaying: -1,
     refreshing: false,
+    showEndSpinner: true,
   };
 
   _keyExtractor =  (item, index) => index.toString();
@@ -48,48 +50,23 @@ export default class VideoFeed extends React.Component {
       />
   );
 
-  fetchData() {
-    let newData = [
-        {
-          id: 1, 
-          media: {
-            text: {
-              content: 'This is new data',
-            }
-          },
-          submitter: 'Jack',
-          userVote: -1,
-          totalVotes: 2130,
-        },
-        {
-          id: 2, 
-          media: {
-            video: {
-              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 0,
-          totalVotes: 12130,
-        },
-        {
-          id: 3, 
-          media: {
-            video: {
-              url: 'file:///Users/Jack/Desktop/videoApp/assets/sample.mp4',
-            }
-          },
-          submitter: 'Jack',
-          userVote: 1,
-          totalVotes: 782130,
-        }]
-    this.setState({data: newData});
-    return;
+  _renderFooter = () => {
+    if (!this.state.showEndSpinner) return null
+
+    return (
+      <ActivityIndicator style={{marginBottom: 30}}/>
+    )
+  }
+
+  _loadMoreData = () => {
+    this.setState({showEndSpinner: true});
+    this.props.getFeedData();
+    this.setState({showEndSpinner: false});
   }
 
   _onRefresh = () => {
     this.setState({refreshing: true});
-    this.fetchData();
+    this.props.getFeedData();
     this.setState({refreshing: false});
   }
 
@@ -104,7 +81,7 @@ export default class VideoFeed extends React.Component {
     return (
       <View style={styles.mainContent} >
       <FlatList 
-          data={this.state.data}
+          data={this.props.data}
           extraData={this.state}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
@@ -117,6 +94,9 @@ export default class VideoFeed extends React.Component {
                   onRefresh={this._onRefresh}
               />
           }
+          onEndReached={this.props.getFeedData}
+          onEndReachedThreshold={10}
+          ListFooterComponent={this._renderFooter}
       />
       </View>
     );
