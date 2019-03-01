@@ -14,8 +14,25 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchUserToken} from '../actions/UpdateUserToken';
 
-export default class SignInScreen extends React.Component {
+function fetchProducts() {
+  return dispatch => {
+    dispatch(fetchProductsBegin());
+    return fetch("/products")
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchProductsSuccess(json.products));
+        return json.products;
+      })
+      .catch(error => dispatch(fetchProductsFailure(error)));
+  };
+}
+
+class SignInScreen extends React.Component {
     state = {
         username: '',
         password: '',
@@ -42,7 +59,8 @@ export default class SignInScreen extends React.Component {
       );
     }
   
-    _signInAsync = async () => {
+    _signInAsync = () => {
+      this.props.dispatch( async (dispatch) => {
       try {
         let response = await fetch('http://localhost:8080/signin', {
           method: 'POST',
@@ -56,20 +74,19 @@ export default class SignInScreen extends React.Component {
           }),
         })
         let responseJson = await response.json();
-        responseJson.firstName;
-        responseJson.lastName;
         if (responseJson.jwt == "") {
           
         } else {
           await AsyncStorage.setItem('userToken', responseJson.jwt);
+          dispatch(fetchUserToken(responseJson.jwt, responseJson.firstName, responseJson.lastName, responseJson.email));
           this.props.navigation.navigate('App');
         }
       } catch (error) {
         console.error(error);
       }
-    };
+    })
   }
-
+  }
 
 const styles = StyleSheet.create({
     linearGradient: {
@@ -115,4 +132,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     }
   })
+
+  const mapStateToProps = (state) => {
+    const {userToken} = state.main;
+    return {userToken};
+  }
+
+  
+  export default connect(mapStateToProps)(SignInScreen);
   

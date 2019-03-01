@@ -6,8 +6,9 @@ import {
   Text, 
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
+  import {connect} from 'react-redux';
 
-export default class CameraPictureScreen extends React.Component {
+class CameraVideoScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>
@@ -64,3 +65,10 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
+
+const mapStateToProps = (state) => {
+  const {userToken} = state.main;
+  return {userToken};
+}
+
+export default connect(mapStateToProps)(CameraVideoScreen);

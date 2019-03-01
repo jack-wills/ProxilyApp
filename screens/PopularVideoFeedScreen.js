@@ -6,9 +6,10 @@ import {
   Text,
   View,
 } from 'react-native';
+import {connect} from 'react-redux';
 import VideoFeed from '../components/VideoFeed';
 
-export default class PopularVideoFeedScreen extends React.Component {
+class PopularVideoFeedScreen extends React.Component {
   state = {
     feedData: [],
   }
@@ -24,7 +25,7 @@ export default class PopularVideoFeedScreen extends React.Component {
         latitude: "51.923187",
         longitude: "-0.226379",
         getPostsFrom: "0",
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrdzUzNTE5QGdtYWlsLmNvLnVrIiwiZmlyc3ROYW1lIjoiamFjayIsImxhc3ROYW1lIjoid2lsbGlhbXMiLCJpYXQiOjE1NTEzNTc2NjcsImV4cCI6MTU1MTQ0NDA2N30.3TO3MlyE38yanWBrNfTfahtrVAZIClMD50PmcKgRpbc",
+        jwt: this.props.userToken,
         getPostsTo: "20"
       }),
     })
@@ -46,20 +47,26 @@ export default class PopularVideoFeedScreen extends React.Component {
     this._getFeedData();
   }
 
-    render() {
-      return (
-          <View style={styles.container}>
-            <VideoFeed data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
-          </View>
-      );
-    }
+  render() {
+    return (
+        <View style={styles.container}>
+          <VideoFeed data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
+        </View>
+    );
   }
-  const SCREEN_HEIGHT = Dimensions.get('window').height;
-  const styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      backgroundColor: '#D7E7ED',
-    },
-  });
-  
-  
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: '#D7E7ED',
+  },
+});
+
+const mapStateToProps = (state) => {
+  const {userToken} = state.main;
+  return {userToken};
+}
+
+export default connect(mapStateToProps)(PopularVideoFeedScreen);

@@ -11,8 +11,9 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import {connect} from 'react-redux';
 
-export default class SubmitTextScreen extends React.Component {
+class SubmitTextScreen extends React.Component {
     state = {
         text: ''
     }
@@ -27,7 +28,7 @@ export default class SubmitTextScreen extends React.Component {
         body: JSON.stringify({
           latitude: "51.923187",
           longitude: "-0.226379",
-          jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrdzUzNTE5QGdtYWlsLmNvLnVrIiwiZmlyc3ROYW1lIjoiamFjayIsImxhc3ROYW1lIjoid2lsbGlhbXMiLCJpYXQiOjE1NTEzNTc2NjcsImV4cCI6MTU1MTQ0NDA2N30.3TO3MlyE38yanWBrNfTfahtrVAZIClMD50PmcKgRpbc",
+          jwt: this.props.userToken,
           mediaType: "text",
           media: this.state.text,
         }),
@@ -114,3 +115,10 @@ const styles = StyleSheet.create({
       textAlign: 'center',
   },
 });
+
+const mapStateToProps = (state) => {
+  const {userToken} = state.main;
+  return {userToken};
+}
+
+export default connect(mapStateToProps)(SubmitTextScreen);

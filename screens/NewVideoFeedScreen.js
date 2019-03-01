@@ -7,8 +7,9 @@ import {
   View,
 } from 'react-native';
 import VideoFeed from '../components/VideoFeed';
+import {connect} from 'react-redux';
 
-export default class NewVideoFeedScreen extends React.Component {
+class NewVideoFeedScreen extends React.Component {
   state = {
     feedData: [],
   }
@@ -24,7 +25,7 @@ export default class NewVideoFeedScreen extends React.Component {
         latitude: "51.923187",
         longitude: "-0.226379",
         getPostsFrom: "0",
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNrdzUzNTE5QGdtYWlsLmNvLnVrIiwiZmlyc3ROYW1lIjoiamFjayIsImxhc3ROYW1lIjoid2lsbGlhbXMiLCJpYXQiOjE1NTEzNTc2NjcsImV4cCI6MTU1MTQ0NDA2N30.3TO3MlyE38yanWBrNfTfahtrVAZIClMD50PmcKgRpbc",
+        jwt: this.props.userToken,
         getPostsTo: "20"
       }),
     })
@@ -64,4 +65,9 @@ const styles = StyleSheet.create({
   },
 });
   
-  
+const mapStateToProps = (state) => {
+  const {userToken} = state.main;
+  return {userToken};
+}
+
+export default connect(mapStateToProps)(NewVideoFeedScreen);

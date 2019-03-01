@@ -8,6 +8,10 @@ import {
   TouchableOpacity,
   Text,
   SafeAreaView, } from 'react-native';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import { createAppContainer } from 'react-navigation'
@@ -26,9 +30,9 @@ import FooterTabs from './components/CustomFooter';
 import SubmitTextScreen from './screens/SubmitTextScreen'
 import CameraVideoScreen from './screens/CameraVideoScreen'
 import CameraPictureScreen from './screens/CameraPictureScreen'
+import MainReducer from './reducers/MainReducer'
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const store = createStore(MainReducer, applyMiddleware(thunk, logger));
 
 const FeedTabNavigator = createMaterialTopTabNavigator({
   Popular: {
@@ -210,28 +214,15 @@ const AppContainer = createAppContainer(createSwitchNavigator(
 ));
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
-
   render() {
       return (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
+      
+      <Provider store={store}>
       <AppContainer />
         
-      </View>
+      </Provider>
       );
   }
-
-  _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
-  };
-
-  _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
-  };
 }
 
 const styles = StyleSheet.create({

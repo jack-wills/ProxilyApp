@@ -1,11 +1,20 @@
 import React from 'react'
-import { AsyncStorage, Dimensions, StyleSheet, SafeAreaView, Text, TouchableHighlight, View, Image } from 'react-native'
+import { 
+  AsyncStorage, 
+  Dimensions, 
+  StyleSheet, 
+  SafeAreaView, 
+  Text, 
+  TouchableHighlight, 
+  View, 
+  Image 
+} from 'react-native'
+import {connect} from 'react-redux';
 
-export default class DrawerComponent extends React.Component {
+class DrawerComponent extends React.Component {
 
     async signOut(navigation) {
         try {
-            console.log(navigation)
             await AsyncStorage.removeItem('userToken');
         } catch(error) {
             console.log('error: ', error);
@@ -20,7 +29,7 @@ export default class DrawerComponent extends React.Component {
           <Image
             style={styles.drawerImage}
             source={require('../assets/mountains.jpg')} />
-          <Text style={styles.drawerHeaderText}>UserName</Text>
+          <Text style={styles.drawerHeaderText}>{this.props.firstName} {this.props.lastName}</Text>
       </View>
       <View style={styles.container}>
         <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Feed')}>
@@ -94,3 +103,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width*0.7,
   }
 })
+
+const mapStateToProps = (state) => {
+  const {userToken, firstName, lastName} = state.main;
+  return {userToken, firstName, lastName};
+}
+
+export default connect(mapStateToProps)(DrawerComponent);
