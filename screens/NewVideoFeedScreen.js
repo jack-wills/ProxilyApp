@@ -22,8 +22,8 @@ class NewVideoFeedScreen extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        latitude: "51.923187",
-        longitude: "-0.226379",
+        latitude: this.props.screenProps.latitude,
+        longitude: this.props.screenProps.longitude,
         getPostsFrom: "0",
         jwt: this.props.userToken,
         getPostsTo: "20"

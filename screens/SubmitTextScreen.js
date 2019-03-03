@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   KeyboardAvoidingView,
+  Image,
   Text,
   TextInput,
   TouchableOpacity,
@@ -49,15 +50,25 @@ class SubmitTextScreen extends React.Component {
     render() {
         return (
         <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
-            <View style={{flexDirection:'row', 
+          <View style={{flexDirection:'row', 
                         backgroundColor: '#02b875',
                         shadowRadius: 4,
                         shadowColor: 'grey',
                         shadowOffset: {height: 6, width: 0},
                         shadowOpacity: 0.3,
-                        zIndex: 1}}>
-                <Text style={styles.topBar}>Title</Text>
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        zIndex: 1, height: 42}}>
+            <TouchableOpacity onPress={() => { this.props.navigation.openDrawer }}>
+              <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
+                <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
+              </View>
+            </TouchableOpacity>
+            <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+            <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
             </View>
+              
+          </View>
         <KeyboardAvoidingView style={styles.container}>
                 <TextInput multiline={true} placeholder="Enter Text.." placeholderTextColor="grey" style={styles.formInput} onChangeText={(text) => this.setState({text: text})}/>
                 <TouchableOpacity style={styles.submitButton} onPress={this._submitText}>

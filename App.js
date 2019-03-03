@@ -18,6 +18,7 @@ import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
   
 import SavedLocationsScreen from './screens/SavedLocationsScreen';
+import SavedLocationsAddScreen from './screens/SavedLocationsAddScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PopularVideoFeedScreen from './screens/PopularVideoFeedScreen';
 import NewVideoFeedScreen from './screens/NewVideoFeedScreen';
@@ -127,19 +128,115 @@ class FeedScreen extends React.Component {
                     shadowOffset: {height: 6, width: 0},
                     shadowOpacity: 0.3,
                     justifyContent: 'center',
+                    flexDirection: 'row',
                     zIndex: 1, height: 42}}>
-          <Icon style={{paddingTop: 2, paddingLeft: 20}} name='ios-menu' color='white' size={32} onPress={this.props.navigation.openDrawer}/>
-
-          <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38, marginRight: 38}}/>
-
+        <TouchableOpacity onPress={() => { this.props.navigation.openDrawer() }}>
+          <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
+            <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
+          </View>
+        </TouchableOpacity>
+        <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+        <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
+        </View>
           
       </View>
-      <ExpandedStackNavigator navigation={this.props.navigation} />
+      <ExpandedStackNavigator navigation={this.props.navigation} screenProps={{ latitude: "51.923187", longitude: "-0.226379"}}/>
     </SafeAreaView>
     );
   }
 }
 
+
+class SavedLocationsFeedScreen extends React.Component {
+  static router = ExpandedStackNavigator.router;
+
+  render() {
+    return (
+      <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
+      <View style={{flexDirection:'row', 
+                    backgroundColor: '#02b875',
+                    shadowRadius: 4,
+                    shadowColor: 'grey',
+                    shadowOffset: {height: 6, width: 0},
+                    shadowOpacity: 0.3,
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    zIndex: 1, height: 42}}>
+        <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
+          <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
+            <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-arrow-back' color='white' size={32}/>
+          </View>
+        </TouchableOpacity>
+        <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+        <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
+        </View>
+      </View>
+      <ExpandedStackNavigator navigation={this.props.navigation} screenProps={{ latitude: this.props.navigation.state.params.latitude, longitude: this.props.navigation.state.params.longitude}}/>
+    </SafeAreaView>
+    );
+  }
+}
+
+const SavedLocationsStackNavigator = createStackNavigator({
+  SavedLocations: {
+    screen: SavedLocationsScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  },
+  SavedLocationsFeed: {
+    screen: SavedLocationsFeedScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  },
+  SavedLocationsAdd: {
+    screen: SavedLocationsAddScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  }
+}, {
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 0,
+    },
+      screenInterpolator: (props) => {
+        const translateX = 0
+        const translateY = 0
+
+        return {
+            transform: [{translateX}, {translateY}]
+        }
+      } 
+  }),
+});
+SavedLocationsStackNavigator.navigationOptions = ({ navigation }) => {
+
+  let tabBarVisible = true;
+
+  let routeName = navigation.state.routes[navigation.state.index].routeName
+
+  if ( routeName == 'SavedLocationsAdd' ) {
+      tabBarVisible = false
+  }
+
+  return {
+      tabBarVisible,
+  }
+}
 
 const AuthStackNavigator = createStackNavigator({
   SignUp: {
@@ -168,25 +265,23 @@ const AuthStackNavigator = createStackNavigator({
   }
 );
 
-const SettingsDrawerNavigator = createDrawerNavigator({
-  Feed: FeedScreen,
-  Settings: SettingsScreen,
-}, {
-  initialRouteName: 'Feed',
-  drawerPosition: 'left',
-  contentComponent: DrawerComponent,
-  drawerOpenRoute: 'DrawerOpen',
-  drawerCloseRoute: 'DrawerClose',
-  drawerToggleRoute: 'DrawerToggle',
-
-});
-
 const AppTabNavigator = createMaterialTopTabNavigator({
-  Home: SettingsDrawerNavigator,
-  SavedLocations:  SavedLocationsScreen,
-  CameraPicture:  CameraPictureScreen,
-  CameraVideo:  CameraVideoScreen,
+  Home: FeedScreen,
+  SavedLocations:  SavedLocationsStackNavigator,
+  CameraPicture:  {
+    screen: CameraPictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      tabBarVisible: false,
+    })
+  },
+  CameraVideo:  {
+    screen: CameraVideoScreen,
+    navigationOptions: ({ navigation }) => ({
+      tabBarVisible: false,
+    })
+  },
   SubmitText:  SubmitTextScreen,
+  Settings: SettingsScreen,
 }, {
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
@@ -202,10 +297,23 @@ const AppTabNavigator = createMaterialTopTabNavigator({
   })
 
 
+  const SettingsDrawerNavigator = createDrawerNavigator({
+    Feed: AppTabNavigator,
+    Settings: SettingsScreen,
+  }, {
+    initialRouteName: 'Feed',
+    drawerPosition: 'left',
+    contentComponent: DrawerComponent,
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
+  
+  });
+
 const AppContainer = createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: AppTabNavigator,
+    App: SettingsDrawerNavigator,
     Auth: AuthStackNavigator,
   },
   {
