@@ -15,7 +15,8 @@ class PopularVideoFeedScreen extends React.Component {
     feedData: [],
   }
 
-  _getFeedData = () =>  {
+  _getFeedData = (continuous = false, errorCallback = () => {}) =>  {
+    let postsFrom = continuous ? this.state.feedData.length : 0;
     fetch('http://localhost:8080/getPopularFeedItems', {
       method: 'POST',
       headers: {
@@ -25,17 +26,22 @@ class PopularVideoFeedScreen extends React.Component {
       body: JSON.stringify({
         latitude: this.props.screenProps.latitude,
         longitude: this.props.screenProps.longitude,
-        getPostsFrom: "0",
+        getPostsFrom: postsFrom,
         jwt: this.props.userToken,
-        getPostsTo: "20"
+        getPostsTo: postsFrom+20
       }),
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.hasOwnProperty("error")) {
-        console.log("Couldn't get feed data because: " + responseJson.error)
+      if (!responseJson.hasOwnProperty('error')) {
+        if (continuous) {
+          this.setState({feedData: this.state.feedData.concat(responseJson)});
+        } else {
+          this.setState({feedData: responseJson});
+        }
+        errorCallback(responseJson);
       } else {
-        this.setState({feedData: responseJson});
+        errorCallback(responseJson);
       }
     })
     .catch((error) => {

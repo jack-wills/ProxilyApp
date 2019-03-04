@@ -15,12 +15,18 @@ import FeedItem from './FeedItem';
 export default class VideoFeed extends React.Component {
   state = {
     commentsOpen: null,
-    data: this.props.data,
     selected: (new Map(): Map<string, boolean>),
     videoPlaying: -1,
     refreshing: false,
     showEndSpinner: true,
+    hasScrolled: false,
+    outOfData: false,
   };
+
+  constructor(props) {
+    super(props);
+    this.onEndReachedCalledDuringMomentum = true;
+  }
 
   _keyExtractor =  (item, index) => index.toString();
 
@@ -51,22 +57,41 @@ export default class VideoFeed extends React.Component {
   );
 
   _renderFooter = () => {
-    if (!this.state.showEndSpinner) return null
+    if (!this.state.showEndSpinner) {
+      if (!this.state.outOfData) return <ActivityIndicator style={{marginBottom: 30}}/>
 
+      return (
+        <Text style={{marginBottom: 30, textAlign: "center", fontFamily: 'Avenir', fontSize: 15}}>Sorry, that's it for now!</Text>
+      )
+    }
     return (
       <ActivityIndicator style={{marginBottom: 30}}/>
     )
   }
 
+  _loadDataCallback = (responseJson) => {
+    if (responseJson.hasOwnProperty('error')) {
+      if (responseJson.error === "OBJECT_NOT_FOUND") {
+        this.setState({outOfData: true});
+      } else {
+        console.log("Couldn't get feed data because: " + responseJson.error);
+      }
+    } else {
+      this.setState({outOfData: false});
+    }
+  }
+
   _loadMoreData = async () => {
+    if(!this.state.hasScrolled || this.onEndReachedCalledDuringMomentum){ return null; }
     this.setState({showEndSpinner: true});
-    await this.props.getFeedData();
+    await this.props.getFeedData(true, this._loadDataCallback);
     this.setState({showEndSpinner: false});
+    this.onEndReachedCalledDuringMomentum = true;
   }
 
   _onRefresh = async () => {
     this.setState({refreshing: true});
-    await this.props.getFeedData();
+    await this.props.getFeedData(false, this._loadDataCallback);
     this.setState({refreshing: false});
   }
 
@@ -94,8 +119,12 @@ export default class VideoFeed extends React.Component {
                   onRefresh={this._onRefresh}
               />
           }
+          onScroll={() => {
+            this.setState({hasScrolled: true})
+           }}
+          onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
           onEndReached={this._loadMoreData}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.3}
           ListFooterComponent={this._renderFooter}
       />
       </View>

@@ -79,8 +79,6 @@ export default class SavedLocationsScreen extends React.Component {
               <Icon style={{paddingTop: 2, paddingLeft: 20}} name='ios-add' color='white' size={32}/>
             </View>
           </TouchableOpacity>
-
-            
         </View>
         <View style={styles.container}>
           <SavedLocationsFeed data={this.state.data} navigateToFeed={this._navigateToFeed} deleteItem={this._deleteSavedLocation}/>
