@@ -31,10 +31,11 @@ export default class SavedLocationsScreen extends React.Component {
       name: 'Should Work'
     }]
   }
-  _navigateToFeed = (lat, long) => {
+  _navigateToFeed = (lat, long, name) => {
     this.props.navigation.navigate('SavedLocationsFeed',{
         latitude: lat,
         longitude: long,
+        name: name,
     })
   }
 

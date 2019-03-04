@@ -167,7 +167,7 @@ class SavedLocationsFeedScreen extends React.Component {
             <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-arrow-back' color='white' size={32}/>
           </View>
         </TouchableOpacity>
-        <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+        <Text style={{flex:1, height: 38, textAlign: 'center', color: 'white', fontFamily: 'Avenir', fontSize: 30, fontWeight: 'bold'}}>{this.props.navigation.state.params.name}</Text>
         <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
         </View>
       </View>

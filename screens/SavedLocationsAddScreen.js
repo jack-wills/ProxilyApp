@@ -25,6 +25,8 @@ export default class SavedLocationsAddScreen extends React.Component {
       latitudeDelta: 0.2522,
       longitudeDelta: 0.2522*ASPECT_RATIO
     },
+    name: "",
+    needEnterName: false,
   };
   constructor(props) {
     super(props);
@@ -117,10 +119,16 @@ export default class SavedLocationsAddScreen extends React.Component {
             <Image resizeMode={'cover'} style={styles.marker} source={{uri: 'file:///Users/Jack/Desktop/videoApp/assets/marker.png'}} />
           </View>
           </View>
-          <TextInput style={[styles.bubble, styles.latlng, {bottom: 90}]} placeholder={"Location Name"} onChangeText={(text) => this.setState({name: text})}/>
+          <Text style={{position: 'absolute', bottom:135, zIndex: this.state.needEnterName ? 100 : -1, color: 'red', fontFamily: 'Avenir', fontSize: 16}}>Please enter a name for the location</Text>
+          <TextInput style={[styles.bubble, styles.latlng, {bottom: 90, borderColor: 'red', borderWidth: this.state.needEnterName ? 1 : 0}]} placeholder={"Location Name"} maxLength={14} onChangeText={(text) => this.setState({name: text})}/>
           <TouchableOpacity style={[styles.bubble, styles.latlng]} onPress={() => { 
-            this.props.navigation.state.params.addSavedLocation(this.state.region.latitude, this.state.region.longitude, this.state.name);
-            this.props.navigation.goBack()
+            if (this.state.name) {
+              this.props.navigation.state.params.addSavedLocation(this.state.region.latitude, this.state.region.longitude, this.state.name);
+              this.setState({needEnterName: false});
+              this.props.navigation.goBack();
+            } else {
+              this.setState({needEnterName: true});
+            }
           }}>
             <Text style={{ textAlign: 'center', fontFamily: 'Avenir', fontSize: 17}}>Save Location</Text>
           </TouchableOpacity>

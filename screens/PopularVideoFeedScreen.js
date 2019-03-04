@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   SafeAreaView,
   StyleSheet,
@@ -48,11 +49,19 @@ class PopularVideoFeedScreen extends React.Component {
   }
 
   render() {
-    return (
-        <View style={styles.container}>
-          <VideoFeed data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
-        </View>
-    );
+    if (!this.state.feedData.length) {
+      return (
+          <View style={[styles.container, {height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
+          <ActivityIndicator size="large" style={{marginTop: 20}}/>
+          </View>
+      );
+    } else {
+      return (
+          <View style={styles.container}>
+          <VideoFeed  data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
+          </View>
+      );
+    }
   }
 }
 

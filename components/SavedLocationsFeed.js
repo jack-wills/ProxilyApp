@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 class MyListItem extends React.PureComponent {
     _onPress = () => {
-      this.props.navigateToFeed(this.props.lat, this.props.long);
+      this.props.navigateToFeed(this.props.lat, this.props.long, this.props.name);
     };
 
     _deleteItem = () => {

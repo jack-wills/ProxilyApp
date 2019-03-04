@@ -49,11 +49,9 @@ class NewVideoFeedScreen extends React.Component {
 
   render() {
     return (
-          <View>
-            <View style={styles.container}>
-            <VideoFeed  data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
-            </View>
-          </View>
+        <View style={styles.container}>
+        <VideoFeed  data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />
+        </View>
     );
   }
 }

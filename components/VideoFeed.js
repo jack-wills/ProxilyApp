@@ -58,15 +58,15 @@ export default class VideoFeed extends React.Component {
     )
   }
 
-  _loadMoreData = () => {
+  _loadMoreData = async () => {
     this.setState({showEndSpinner: true});
-    this.props.getFeedData();
+    await this.props.getFeedData();
     this.setState({showEndSpinner: false});
   }
 
-  _onRefresh = () => {
+  _onRefresh = async () => {
     this.setState({refreshing: true});
-    this.props.getFeedData();
+    await this.props.getFeedData();
     this.setState({refreshing: false});
   }
 
@@ -94,8 +94,8 @@ export default class VideoFeed extends React.Component {
                   onRefresh={this._onRefresh}
               />
           }
-          onEndReached={this.props.getFeedData}
-          onEndReachedThreshold={10}
+          onEndReached={this._loadMoreData}
+          onEndReachedThreshold={0.5}
           ListFooterComponent={this._renderFooter}
       />
       </View>
@@ -105,7 +105,6 @@ export default class VideoFeed extends React.Component {
 
 const styles = StyleSheet.create({
   mainContent: {
-    //height: Dimensions.get('window').height*0.74,
     width: Dimensions.get('window').width,
     alignItems: 'center',
   },
