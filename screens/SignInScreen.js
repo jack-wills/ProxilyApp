@@ -15,27 +15,30 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
 
-function fetchProducts() {
-  return dispatch => {
-    dispatch(fetchProductsBegin());
-    return fetch("/products")
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(fetchProductsSuccess(json.products));
-        return json.products;
-      })
-      .catch(error => dispatch(fetchProductsFailure(error)));
-  };
-}
+import { LoginManager } from 'react-native-fbsdk'
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 class SignInScreen extends React.Component {
     state = {
         username: '',
         password: '',
+    }
+
+    handleFacebookLogin () {
+      LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+        function (result) {
+          if (result.isCancelled) {
+            console.log('Login cancelled')
+          } else {
+            console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+          }
+        },
+        function (error) {
+          console.log('Login fail with error: ' + error)
+        }
+      )
     }
   
     render() {
@@ -43,12 +46,15 @@ class SignInScreen extends React.Component {
       <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
         <KeyboardAvoidingView style={styles.container}>
             <Text style={{fontSize: 50, position: 'absolute', top: 100}}>videoApp</Text>
-            <Text style={styles.formText}>Username</Text>
+            <Text style={styles.formText}>Username/Email</Text>
             <TextInput style={styles.formInput} onChangeText={(text) => this.setState({username: text})}/>
             <Text style={styles.formText}>Password</Text>
             <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
             <TouchableOpacity style={styles.submitButton} onPress={this._signInAsync}>
                 <Text style={styles.buttonText}>Sign In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.submitButton} onPress={this.handleFacebookLogin}>
+                <Text style={styles.buttonText}>Facebook</Text>
             </TouchableOpacity>
             <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={[styles.signUpText, {color: 'black'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Don't have an account? </Text>

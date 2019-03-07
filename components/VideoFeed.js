@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import FeedItem from './FeedItem';
+import {AdsManager} from '../App'
 
 export default class VideoFeed extends React.Component {
   state = {

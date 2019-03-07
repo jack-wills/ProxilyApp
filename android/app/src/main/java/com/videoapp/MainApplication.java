@@ -3,6 +3,8 @@ package com.videoapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.lottie.LottiePackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.wix.interactable.Interactable;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LottiePackage(),
+            new FBSDKPackage(),
             new Interactable(),
             new MapsPackage(),
             new LinearGradientPackage(),

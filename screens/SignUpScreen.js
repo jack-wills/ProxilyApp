@@ -11,51 +11,134 @@ import {
     StyleSheet,
     TextInput,
     Text,
+    TouchableOpacity,
     View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+import LinearGradient from 'react-native-linear-gradient';
+import {connect} from 'react-redux';
+import {fetchUserToken} from '../actions/UpdateUserToken';
 
-export default class SignInScreen extends React.Component {
-    state = {
-        username: '',
-        password: '',
-    }
-  
-    render() {
-      return (
-        <KeyboardAvoidingView style={styles.container}>
-            <Icon style={{position: 'absolute', top: 40, left: 20}} name="ios-arrow-back" color={'grey'} size={34} onPress={() => this.props.navigation.goBack()}/>
-            <TextInput style={styles.textInput} placeholder="Username" onChangeText={(text) => this.setState({username: text})}/>
-            <TextInput style={styles.textInput} placeholder="Password" onChangeText={(text) => this.setState({password: text})}/>
-            <Text>{this.state.username}</Text>
-            <Button title="Sign up!" onPress={this._signInAsync} />
-        </KeyboardAvoidingView>
-      );
-    }
-  
-    _signInAsync = async () => {
-      await AsyncStorage.setItem('userToken', 'abc');
-      this.props.navigation.navigate('App');
-    };
+class SignUpScreen extends React.Component {
+  state = {
+    email: '',
+    username: '',
+    password: '',
+    passwordAgain: '',
+    firstName: '',
+    lastName: '',
+}
+
+render() {
+  return (
+  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
+    <KeyboardAvoidingView style={styles.container}>
+        <Text style={{fontSize: 50, position: 'absolute', top: 50}}>videoApp</Text>
+        <Text style={styles.formText}>First Name</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({firstName: text})}/>
+        <Text style={styles.formText}>Last Name</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({lastName: text})}/>
+        <Text style={styles.formText}>Email</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({email: text})}/>
+        <Text style={styles.formText}>Username</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({username: text})}/>
+        <Text style={styles.formText}>Password</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
+        <Text style={styles.formText}>Password Again</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({passwordAgain: text})}/>
+        <TouchableOpacity style={styles.submitButton} onPress={this._signUpAsync}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+            <Text style={[styles.signUpText, {color: 'black'}]} onPress={() => this.props.navigation.navigate('SignIn')}>Already have an account? </Text>
+            <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignIn')}>Sign In.</Text>
+        </View>
+    </KeyboardAvoidingView>
+  </LinearGradient>
+  );
+}
+
+_signUpAsync = () => {
+  if (this.state.passwordAgain != this.state.password) {
+    return;
   }
-
+  this.props.dispatch( async (dispatch) => {
+  try {
+    let response = await fetch('http://localhost:8080/register', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: "jackw53519@gmail.co.uk",
+        password: "test123",
+      }),
+    })
+    let responseJson = await response.json();
+    if (responseJson.jwt == "") {
+      
+    } else {
+      await AsyncStorage.setItem('userToken', responseJson.jwt);
+      dispatch(fetchUserToken(responseJson.jwt, responseJson.firstName, responseJson.lastName, responseJson.email));
+      this.props.navigation.navigate('App');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+})
+}
+}
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#F4C484',
-      flex: 1,
-      height: Dimensions.get('window').height,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textInput: {
-        width: Dimensions.get('window').width*0.65,
-        textAlign: 'center',
-        fontSize: 25,
-        fontFamily: 'Avenir',
-        borderBottomWidth: 3,
-        borderRadius: 4,
-        margin: 15,
-    }
-  })
+linearGradient: {
+  flex: 1,
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height,
+},
+container: {
+  backgroundColor: 'transparent',
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: 50,
+},
+formText: {
+    fontSize: 20,
+    fontFamily: 'Avenir',
+},
+formInput: {
+    width: Dimensions.get('window').width*0.58,
+    textAlign: 'center',
+    fontSize: 15,
+    borderBottomWidth: 3,
+    borderRadius: 4,
+    margin: 10,
+},
+submitButton: {
+    backgroundColor: '#e74c3c',
+    borderRadius: 35,
+    width: Dimensions.get('window').width*0.7,
+    margin: 15,
+},
+buttonText: {
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontSize: 20,
+    padding: 13,
+    textAlign: 'center',
+},
+signUpText: {
+    fontFamily: 'Avenir',
+    fontSize: 15,
+    textAlign: 'center',
+}
+})
+
+const mapStateToProps = (state) => {
+const {userToken} = state.main;
+return {userToken};
+}
+
+
+export default connect(mapStateToProps)(SignUpScreen);

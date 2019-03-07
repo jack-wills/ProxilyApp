@@ -134,6 +134,8 @@ android {
 }
 
 dependencies {
+    implementation project(':lottie-react-native')
+    implementation project(':react-native-fbsdk')
     implementation project(':react-native-interactable')
     implementation project(':react-native-maps')
     implementation project(':react-native-linear-gradient')
