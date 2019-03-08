@@ -10,9 +10,10 @@ import {
   Text,
   View,
 } from 'react-native';
+import {connect} from 'react-redux';
 import FeedMediaItem from './FeedMediaItem';
 
-export default class FeedItem extends React.Component {
+class FeedItem extends React.Component {
     state = {
       userVote: this.props.item.userVote,
     }
@@ -27,26 +28,50 @@ export default class FeedItem extends React.Component {
       this.props.openItemComments(this.props.item);
     };
 
+    registerUserVote(vote) {
+      fetch('http://localhost:8080/registerVote', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jwt: this.props.userToken,
+          postID: this.props.item.postId,
+          vote: vote
+        }),
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.hasOwnProperty('error')) {
+          //TODO error
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+
     _onPressUpvote = () => {
         if (this.state.userVote == 1) {
-            //TODO call service to set state
-            this.setState({userVote: 0});
-            this.props.item.userVote = 0;
+          this.registerUserVote(0);
+          this.setState({userVote: 0});
+          this.props.item.userVote = 0;
         } else {
-            this.setState({userVote: 1});
-            //TODO call service to set state
-            this.props.item.userVote = 1;
+          this.registerUserVote(1);
+          this.setState({userVote: 1});
+          this.props.item.userVote = 1;
         }
     };
     _onPressDownvote = () => {
         if (this.state.userVote == -1) {
-            this.setState({userVote: 0});
-            //TODO call service to set state
-            this.props.item.userVote = 0;
+          this.registerUserVote(0);
+          this.setState({userVote: 0});
+          this.props.item.userVote = 0;
         } else {
-            this.setState({userVote: -1});
-            //TODO call service to set state
-            this.props.item.userVote = -1;
+          this.registerUserVote(-1);
+          this.setState({userVote: -1});
+          this.props.item.userVote = -1;
         }
     };
     
@@ -194,4 +219,11 @@ export default class FeedItem extends React.Component {
         fontFamily: 'Avenir',
     }
   });
+
+  const mapStateToProps = (state) => {
+    const {userToken} = state.main;
+    return {userToken};
+  }
+  
+  export default connect(mapStateToProps)(FeedItem);
   
