@@ -1,56 +1,88 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   StyleSheet,
   View,
 } from 'react-native';
+import {connect} from 'react-redux';
 import FeedItem from '../components/FeedItem.js';
 
-
-export default class ExpandedFeedItemScreen extends React.Component {
+class ExpandedFeedItemScreen extends React.Component {
   state = {
     videoPlaying: false,
+    comments: [],
+    item: this.props.navigation.state.params.item,
+    commentsLoading: true,
   };
 
   _changeVideoPlaying = (itemId) => {
     this.setState({videoPlaying: !this.state.videoPlaying});
   }
 
-      render() {
-        item = this.props.navigation.state.params.item;
-        item.comments = [
-                          {id: 1, user: 'Jack', body: 'Hello'}, 
-                          {id: 2, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 3, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 4, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 5, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 6, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 7, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 8, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 9, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 10, user: 'Jack2', body: 'Hello World'}, 
-                          {id: 11, user: 'Jack2', body: 'Hello World'}
-                        ];
-        return (
-            <View style={styles.mainContainer}>
-                <FeedItem
-                extended={true}
-                id={item.id}
-                onPressItem={this._onPressItem}
-                openItemComments={this._openItemComments}
-                videoPlaying={this.state.videoPlaying}
-                changeVideoPlaying={this._changeVideoPlaying}
-                item={item}
-            />
-            </View>
-        );
+  _getComments = async (postID) => {
+    this.setState({commentsLoading: true});
+    await fetch('http://localhost:8080/getComments', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jwt: this.props.userToken,
+        postID: postID,
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        console.error(responseJson.error);
+      } else {
+        this.props.navigation.state.params.item.comments = responseJson;
+        this.setState({comments: responseJson})
       }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    this.setState({commentsLoading: false});
+  }
+
+  componentDidMount() {
+    this._getComments(this.state.item.postId);
+  }
+
+  render() {
+    item = this.state.item;
+    return (
+        <View style={styles.mainContainer}>
+          <FeedItem
+            extended={true}
+            id={this.state.item.id}
+            onPressItem={this._onPressItem}
+            openItemComments={this._openItemComments}
+            videoPlaying={this.state.videoPlaying}
+            item={item}
+            comments={this.state.comments}
+            commentsLoading={this.state.commentsLoading}
+            reloadComments={this._getComments}
+            changeVideoPlaying={this._changeVideoPlaying}
+          />
+        </View>
+    );
+  }
 }
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     mainContainer: {
       alignItems: 'center',
       backgroundColor: '#F0F6F9',
     }
   });
+
+  const mapStateToProps = (state) => {
+    const {userToken} = state.main;
+    return {userToken};
+  }
+  
+  export default connect(mapStateToProps)(ExpandedFeedItemScreen);

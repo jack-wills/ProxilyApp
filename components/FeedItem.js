@@ -1,13 +1,16 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
+  RefreshControl,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
   Image,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -16,6 +19,7 @@ import FeedMediaItem from './FeedMediaItem';
 class FeedItem extends React.Component {
     state = {
       userVote: this.props.item.userVote,
+      newComment: "",
     }
     _onPressVideo = () => {
       if (this.props.videoPlaying) {
@@ -24,12 +28,44 @@ class FeedItem extends React.Component {
         this.props.changeVideoPlaying(this.props.id)
       }
     };
+
     _onPressComments = () => {
       this.props.openItemComments(this.props.item);
     };
 
-    registerUserVote(vote) {
-      fetch('http://localhost:8080/registerVote', {
+    async submitComment() {
+      await fetch('http://localhost:8080/postComment', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jwt: this.props.userToken,
+          postID: this.props.item.postId,
+          content: this.state.newComment,
+        }),
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.hasOwnProperty('error')) {
+          console.log(responseJson.error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+
+    _submitComment = async () => {
+      await this.submitComment();
+      this.setState({newComment: ""});
+      this.commentTextInput.clear();
+      await this.props.reloadComments(this.props.item.postId);
+    };
+
+    async registerUserVote(vote) {
+      await fetch('http://localhost:8080/registerVote', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -43,8 +79,8 @@ class FeedItem extends React.Component {
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (!responseJson.hasOwnProperty('error')) {
-          //TODO error
+        if (responseJson.hasOwnProperty('error')) {
+          console.log(responseJson.error);
         }
       })
       .catch((error) => {
@@ -52,24 +88,24 @@ class FeedItem extends React.Component {
       });
     }
 
-    _onPressUpvote = () => {
+    _onPressUpvote = async () => {
         if (this.state.userVote == 1) {
-          this.registerUserVote(0);
+          await this.registerUserVote(0);
           this.setState({userVote: 0});
           this.props.item.userVote = 0;
         } else {
-          this.registerUserVote(1);
+          await this.registerUserVote(1);
           this.setState({userVote: 1});
           this.props.item.userVote = 1;
         }
     };
-    _onPressDownvote = () => {
+    _onPressDownvote = async () => {
         if (this.state.userVote == -1) {
-          this.registerUserVote(0);
+          await this.registerUserVote(0);
           this.setState({userVote: 0});
           this.props.item.userVote = 0;
         } else {
-          this.registerUserVote(-1);
+          await this.registerUserVote(-1);
           this.setState({userVote: -1});
           this.props.item.userVote = -1;
         }
@@ -109,12 +145,52 @@ class FeedItem extends React.Component {
       );
     }
 
+    _onRefresh = async () => {
+      this.setState({refreshing: true});
+      await this.props.reloadComments(this.props.item.postId);
+      this.setState({refreshing: false});
+    }
+
+    renderComments() {
+      if (this.props.commentsLoading) {
+        return (
+          <ActivityIndicator size="large" style={{marginTop: 20}}/>
+        );
+      }
+      if (this.props.comments.length < 1) {
+        return (
+          <Text>No comments to show</Text>
+        );
+      }
+      return (
+        <FlatList
+              data={this.props.comments}
+              renderItem={({item}) => (
+                <View style={styles.comment}>
+                  <Text>{item.submitter}</Text>
+                  <Text>{item.comment}</Text>
+                  <Text>{item.totalVotes}</Text>
+                  <Text>{item.userVote}</Text>
+                </View>
+              )}
+              refreshControl={
+                  <RefreshControl
+                      colors={["#9Bd35A", "#689F38"]}
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}
+                  />
+              }
+              keyExtractor={(item, index) => index.toString()}
+            />
+      );
+    }
+
     renderExtended() {
-        var mediaItem = this.props.item.media;
-        if (mediaItem.hasOwnProperty('video')){
-            mediaItem.video.videoPlaying = this.props.videoPlaying;
-            mediaItem.video.onPressVideo = this._onPressVideo;
-        }
+      var mediaItem = this.props.item.media;
+      if (mediaItem.hasOwnProperty('video')){
+          mediaItem.video.videoPlaying = this.props.videoPlaying;
+          mediaItem.video.onPressVideo = this._onPressVideo;
+      }
       return (
         <ScrollView
         showsHorizontalScrollIndicator={false}
@@ -128,16 +204,13 @@ class FeedItem extends React.Component {
             <View style={styles.right}>
             </View>
             </View>
-            <FlatList
-              data={item.comments}
-              renderItem={({item}) => (
-                <View style={styles.comment}>
-                <Text>{item.user}</Text>
-                <Text>{item.body}</Text>
-                </View>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
+              <View style={styles.commentInputBox}>
+                <TextInput ref={input => { this.commentTextInput = input }} style={styles.commentInput} multiline={true} placeholder="Enter Comment..." onChangeText={(text) => this.setState({newComment: text})}/>
+                <TouchableOpacity style={styles.submitButton} onPress={this._submitComment}>
+                  <Text style={styles.submitButtonText}>Submit Comment</Text>
+                </TouchableOpacity>
+              </View>
+            {this.renderComments()}
           </View>
           </ScrollView>
       );
@@ -212,12 +285,38 @@ class FeedItem extends React.Component {
       borderTopColor: 'lightgrey',
       padding: 10,
       width: Dimensions.get('window').width*0.9,
-      height: Dimensions.get('window').height*0.1,
     },
     voteText: {
-        marginTop: 5,
-        fontFamily: 'Avenir',
-    }
+      marginTop: 5,
+      fontFamily: 'Avenir',
+    },
+    commentInput: {
+      flex: 1,
+      width: Dimensions.get('window').width*0.9-40,
+    },
+    commentInputBox: {
+      flex: 1,
+      borderRadius: 25, 
+      borderWidth: 1, 
+      borderColor: 'lightgrey',
+      padding: 10,
+      alignItems: 'center',
+      width: Dimensions.get('window').width*0.9-20,
+      minHeight: Dimensions.get('window').height*0.1,
+    },
+    submitButton: {
+      backgroundColor: '#e74c3c',
+      borderRadius: 35,
+      marginTop: 25,
+      width: Dimensions.get('window').width*0.9-40,
+    },
+    submitButtonText: {
+      fontFamily: 'Avenir',
+      color: 'white',
+      fontSize: 15,
+      padding: 5,
+      textAlign: 'center',
+    },
   });
 
   const mapStateToProps = (state) => {

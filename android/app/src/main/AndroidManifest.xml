@@ -21,7 +21,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" /> 
+      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+      <provider android:authorities="com.facebook.app.FacebookContentProvider2350739938543404"
+          android:name="com.facebook.FacebookContentProvider"
+          android:exported="true" />
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDXKwnNmO0OSS0z_IcinqQm13ln6Jy6w6I"/>
     </application>
 
 </manifest>
