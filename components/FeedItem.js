@@ -16,6 +16,8 @@ import {
 import {connect} from 'react-redux';
 import FeedMediaItem from './FeedMediaItem';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class FeedItem extends React.Component {
     state = {
       userVote: this.props.item.userVote,
@@ -34,7 +36,7 @@ class FeedItem extends React.Component {
     };
 
     async submitComment() {
-      await fetch('http://localhost:8080/postComment', {
+      await fetch(FRONT_SERVICE_URL + '/postComment', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -65,7 +67,7 @@ class FeedItem extends React.Component {
     };
 
     async registerUserVote(vote) {
-      await fetch('http://localhost:8080/registerVote', {
+      await fetch(FRONT_SERVICE_URL + '/registerVote', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

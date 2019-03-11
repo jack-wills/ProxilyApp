@@ -8,6 +8,8 @@ import {
 import {connect} from 'react-redux';
 import FeedItem from '../components/FeedItem.js';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class ExpandedFeedItemScreen extends React.Component {
   state = {
     videoPlaying: false,
@@ -22,7 +24,7 @@ class ExpandedFeedItemScreen extends React.Component {
 
   _getComments = async (postID) => {
     this.setState({commentsLoading: true});
-    await fetch('http://localhost:8080/getComments', {
+    await fetch(FRONT_SERVICE_URL + '/getComments', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

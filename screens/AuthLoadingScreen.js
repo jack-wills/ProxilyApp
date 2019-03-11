@@ -10,6 +10,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class AuthLoadingScreen extends React.Component {
   _checkTokenAsync = async (userToken) => {
     this.props.dispatch( async (dispatch) => {
       try {
-        let response = await fetch('http://localhost:8080/checkToken', {
+        let response = await fetch(FRONT_SERVICE_URL + '/checkToken', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

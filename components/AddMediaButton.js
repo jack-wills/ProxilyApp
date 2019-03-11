@@ -85,6 +85,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
+                            zIndex: 2,
                             backgroundColor: '#e74c3c'
                         }}
                     >
@@ -110,6 +111,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
+                            zIndex: 2,
                             backgroundColor: '#e74c3c'
                         }}
                     >
@@ -135,6 +137,7 @@ export default class AddButton extends React.Component {
                             width: SIZE / 2,
                             height: SIZE / 2,
                             borderRadius: SIZE / 4,
+                            zIndex: 2,
                             backgroundColor: '#e74c3c'
                         }}
                     >

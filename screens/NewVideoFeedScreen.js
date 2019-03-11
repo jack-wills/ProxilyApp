@@ -9,6 +9,8 @@ import {
 import VideoFeed from '../components/VideoFeed';
 import {connect} from 'react-redux';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class NewVideoFeedScreen extends React.Component {
   state = {
     feedData: [],
@@ -16,7 +18,7 @@ class NewVideoFeedScreen extends React.Component {
 
   _getFeedData = (continuous = false, errorCallback = () => {}) =>  {
     let postsFrom = continuous ? this.state.feedData.length : 0;
-    fetch('http://localhost:8080/getLatestFeedItems', {
+    fetch(FRONT_SERVICE_URL + '/getLatestFeedItems', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

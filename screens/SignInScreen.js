@@ -20,6 +20,8 @@ import {fetchUserToken} from '../actions/UpdateUserToken';
 import { LoginManager } from 'react-native-fbsdk'
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class SignInScreen extends React.Component {
     state = {
         username: '',
@@ -45,7 +47,7 @@ class SignInScreen extends React.Component {
       return (
       <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
         <KeyboardAvoidingView style={styles.container}>
-            <Text style={{fontSize: 50, position: 'absolute', top: 100}}>videoApp</Text>
+            <Text style={{fontSize: 50, position: 'absolute', top: 100}}>Proxily</Text>
             <Text style={styles.formText}>Username/Email</Text>
             <TextInput style={styles.formInput} onChangeText={(text) => this.setState({username: text})}/>
             <Text style={styles.formText}>Password</Text>
@@ -68,7 +70,7 @@ class SignInScreen extends React.Component {
     _signInAsync = () => {
       this.props.dispatch( async (dispatch) => {
       try {
-        let response = await fetch('http://localhost:8080/signin', {
+        let response = await fetch(FRONT_SERVICE_URL + '/signin', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

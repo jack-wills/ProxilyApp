@@ -3,7 +3,8 @@ import {
   Dimensions,
   Button,
   Image, 
-  StyleSheet, 
+  StyleSheet,
+  PixelRatio, 
   View,
   TouchableOpacity,
   Text,
@@ -52,19 +53,17 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
       inactiveTintColor: 'black',
       style: {
         backgroundColor: '#A4D7CE',
-        height: Dimensions.get('window').height*0.06,
+        //height: Dimensions.get('window').height*0.06,
         shadowRadius: 4,
         shadowColor: 'grey',
         shadowOffset: {height: 2, width: 0},
-        shadowOpacity: 1.0
-      },
-      tabStyle: {
-        height: Dimensions.get('window').height*0.05,
-        margin: 16,
-        fontFamily: 'Avenir',
+        shadowOpacity: 1.0,
       },
       labelStyle: {
-        height: Dimensions.get('window').height*0.05,
+        fontSize: 10 + (Dimensions.get('window').height/150),
+      },
+      tabStyle: {
+        fontFamily: 'Avenir',
       },
       indicatorStyle: {
         backgroundColor: '#FF1654',
@@ -135,7 +134,7 @@ class FeedScreen extends React.Component {
             <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
           </View>
         </TouchableOpacity>
-        <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+        <Image resizeMode={'contain'} source={require('./assets/logo4.png')} style={{flex:1, height: 32, marginTop: 5}}/>
         <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
         </View>
           

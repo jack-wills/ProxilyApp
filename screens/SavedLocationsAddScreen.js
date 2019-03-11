@@ -116,7 +116,7 @@ export default class SavedLocationsAddScreen extends React.Component {
             borderWidth: 1,
           }} />
           <View pointerEvents="none" style={styles.markerFixed}>
-            <Image resizeMode={'cover'} style={styles.marker} source={{uri: 'file:///Users/Jack/Desktop/videoApp/assets/marker.png'}} />
+            <Image resizeMode={'cover'} style={styles.marker} source={require('../assets/marker.png')} />
           </View>
           </View>
           <Text style={{position: 'absolute', bottom:135, zIndex: this.state.needEnterName ? 100 : -1, color: 'red', fontFamily: 'Avenir', fontSize: 16}}>Please enter a name for the location</Text>

@@ -73,7 +73,7 @@ export default class SavedLocationsScreen extends React.Component {
               <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
             </View>
           </TouchableOpacity>
-          <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+          <Image resizeMode={'contain'} source={require('../assets/logo4.png')} style={{flex:1, height: 32, marginTop: 5}}/>
           <TouchableOpacity onPress={() => { this.props.navigation.navigate('SavedLocationsAdd', {addSavedLocation: this._addSavedLocation}) }}>
             <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
               <Icon style={{paddingTop: 2, paddingLeft: 20}} name='ios-add' color='white' size={32}/>

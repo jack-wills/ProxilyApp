@@ -1,13 +1,13 @@
 {
-  "name": "videoApp",
+  "name": "Proxily",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
     "test": "jest"
   },
   "dependencies": {
+    "@babel/runtime": "^7.3.4",
     "adm-zip": "^0.4.13",
     "lottie-react-native": "^2.5.11",
     "plist": "^3.0.1",
@@ -32,10 +32,10 @@
     "xcode": "^2.0.0"
   },
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "24.1.0",
-    "jest": "24.1.0",
-    "metro-react-native-babel-preset": "0.51.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "24.3.1",
+    "jest": "24.3.1",
+    "metro-react-native-babel-preset": "0.53.0",
     "react-test-renderer": "16.6.3"
   },
   "jest": {

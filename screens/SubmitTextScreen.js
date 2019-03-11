@@ -14,13 +14,15 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class SubmitTextScreen extends React.Component {
     state = {
         text: ''
     }
 
     _submitText = () => {
-      fetch('http://localhost:8080/uploadItem', {
+      fetch(FRONT_SERVICE_URL + '/uploadItem', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -64,7 +66,7 @@ class SubmitTextScreen extends React.Component {
                 <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
               </View>
             </TouchableOpacity>
-            <Image resizeMode={'contain'} source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/logo4.png"}} style={{flex:1, height: 38}}/>
+            <Image resizeMode={'contain'} source={require('../assets/logo4.png')} style={{flex:1, height: 32, marginTop: 5}}/>
             <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
             </View>
               

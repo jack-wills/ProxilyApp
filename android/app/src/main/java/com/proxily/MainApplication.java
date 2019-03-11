@@ -1,11 +1,10 @@
-package com.videoapp;
+package com.proxily;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.wix.interactable.Interactable;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -44,7 +43,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new LottiePackage(),
             new FBSDKPackage(mCallbackManager),
-            new Interactable(),
             new MapsPackage(),
             new LinearGradientPackage(),
             new RNGestureHandlerPackage(),

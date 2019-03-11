@@ -18,6 +18,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
 
+import {FRONT_SERVICE_URL} from '../Constants';
+
 class SignUpScreen extends React.Component {
   state = {
     email: '',
@@ -32,7 +34,7 @@ render() {
   return (
   <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
     <KeyboardAvoidingView style={styles.container}>
-        <Text style={{fontSize: 50, position: 'absolute', top: 50}}>videoApp</Text>
+        <Text style={{fontSize: 50, position: 'absolute', top: 50}}>Proxily</Text>
         <Text style={styles.formText}>First Name</Text>
         <TextInput style={styles.formInput} onChangeText={(text) => this.setState({firstName: text})}/>
         <Text style={styles.formText}>Last Name</Text>
@@ -63,7 +65,7 @@ _signUpAsync = () => {
   }
   this.props.dispatch( async (dispatch) => {
   try {
-    let response = await fetch('http://localhost:8080/register', {
+    let response = await fetch(FRONT_SERVICE_URL + '/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
