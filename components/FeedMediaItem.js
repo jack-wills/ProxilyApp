@@ -16,13 +16,15 @@ export default class FeedMediaItem extends React.Component {
     render(){
         if (this.props.itemInfo.hasOwnProperty('video')) {
             return(
+              <View style={[styles.video, {overflow: 'hidden'}]}>
                 <TouchableOpacity style={styles.video} onPress={this.props.itemInfo.video.onPressVideo}>
                     <VideoCompenent 
-                        style={styles.video} 
+                        style={[styles.video, {overflow: 'hidden'}]} 
                         playing={!this.props.itemInfo.video.videoPlaying} 
                         url={this.props.itemInfo.video.url}
                     />
                 </TouchableOpacity>
+              </View>
             )
         }
         if (this.props.itemInfo.hasOwnProperty('image')) {
