@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(220,220,220)',
     width: Dimensions.get('window').width*0.96-2, 
-    height: Dimensions.get('window').width*0.96*3.5/4,
+    height: Dimensions.get('window').width*0.96-2,
     overflow: 'hidden',
   },
   textBox: {

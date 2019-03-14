@@ -2,7 +2,7 @@
 import React from "react";
 import { Animated, Dimensions, View, SafeAreaView, StyleSheet, TouchableOpacity, TouchableHighlight } from "react-native";
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
-import Icon1 from 'react-native-vector-icons/Ionicons'
+import IonIcon from 'react-native-vector-icons/Ionicons'
 const SIZE = 70;
 
 export default class CustomFooter extends React.Component {
@@ -98,7 +98,7 @@ export default class CustomFooter extends React.Component {
                             backgroundColor: '#e74c3c',
                         }}
                     >
-                        <Icon1 name="md-videocam" size={16} color="#F8F8F8"/>
+                        <IonIcon name="md-videocam" size={16} color="#F8F8F8"/>
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View style={{
@@ -124,7 +124,7 @@ export default class CustomFooter extends React.Component {
                             backgroundColor: '#e74c3c'
                         }}
                     >
-                        <Icon1 name="md-camera" size={16} color="#F8F8F8"/>
+                        <IonIcon name="md-camera" size={16} color="#F8F8F8"/>
                     </TouchableHighlight>
                 </Animated.View>
                 <Animated.View style={{
@@ -150,27 +150,9 @@ export default class CustomFooter extends React.Component {
                             backgroundColor: '#e74c3c',
                         }}
                     >
-                        <Icon1 name="md-create" size={16} color="#F8F8F8"/>
+                        <IonIcon name="md-create" size={16} color="#F8F8F8"/>
                     </TouchableHighlight>
                 </Animated.View>
-                    <Animated.View style={{
-                        transform: [
-                            {rotate: rotation}
-                        ],
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 31,
-                        width: SIZE,
-                        height: SIZE,
-                        borderRadius: SIZE / 2,
-                        backgroundColor: 'yellow',
-                        shadowRadius: 2,
-                        shadowColor: 'grey',
-                        shadowOffset: {height: -2, width: 0},
-                        shadowOpacity: 0.5,
-                        overflow: 'hidden'
-                        
-                    }}>
                 <TouchableHighlight
                     onPress={this.toggleView}
                     underlayColor="#c0392b"
@@ -191,9 +173,26 @@ export default class CustomFooter extends React.Component {
                         shadowOpacity: 0.5,
                     }}
                 >
-                        <Icon1 name="md-add" size={35} color="#F8F8F8"/>
-                </TouchableHighlight>
+                <Animated.View style={{
+                    transform: [
+                        {rotate: rotation}
+                    ],
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 31,
+                    width: SIZE,
+                    height: SIZE,
+                    borderRadius: SIZE / 2,
+                    shadowRadius: 2,
+                    shadowColor: 'grey',
+                    shadowOffset: {height: -2, width: 0},
+                    shadowOpacity: 0.5,
+                    overflow: 'hidden'
+                    
+                }}>
+                        <IonIcon name="md-add" size={35} color="#F8F8F8"/>
                     </Animated.View>
+                </TouchableHighlight>
             </View>
         );
     }

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   formInput: {
-    width: Dimensions.get('window').width*0.8,
+    width: Dimensions.get('window').width,
     height: Dimensions.get('window').height*0.3,
     textAlign: 'left',
     textAlignVertical: 'top',

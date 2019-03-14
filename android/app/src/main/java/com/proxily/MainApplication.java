@@ -19,6 +19,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
+import com.shahenlibrary.RNVideoProcessingPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
             new RNCameraPackage(),
-            new ReactVideoPackage()
+            new ReactVideoPackage(),
+            new RNVideoProcessingPackage()
       );
     }
 

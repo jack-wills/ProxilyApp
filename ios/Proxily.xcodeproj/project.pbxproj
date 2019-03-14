@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -13,6 +12,32 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* ProxilyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ProxilyTests.m */; };
+		047E2B6B223996F500CF5271 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; };
+		047E2B6C223996F500CF5271 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04895357223A76A400A7ED87 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04895356223A76A400A7ED87 /* CoreMedia.framework */; };
+		04895359223A76AA00A7ED87 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04895358223A76AA00A7ED87 /* CoreVideo.framework */; };
+		0489535B223A76B400A7ED87 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0489535A223A76B400A7ED87 /* OpenGLES.framework */; };
+		0489535D223A76BC00A7ED87 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0489535C223A76BC00A7ED87 /* AVFoundation.framework */; };
+		0489535F223A76C600A7ED87 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0489535E223A76C600A7ED87 /* QuartzCore.framework */; };
+		04895362223A76D400A7ED87 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04895361223A76D400A7ED87 /* MobileCoreServices.framework */; };
+		048953B8223A798800A7ED87 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953B7223A798800A7ED87 /* test.m */; };
+		048953B9223A798C00A7ED87 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953B7223A798800A7ED87 /* test.m */; };
+		048953BC223A7ACF00A7ED87 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953BB223A7ACF00A7ED87 /* File.swift */; };
+		048953DB223A7E3D00A7ED87 /* RNVideoProcessingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953C0223A7E3C00A7ED87 /* RNVideoProcessingManager.swift */; };
+		048953DC223A7E3D00A7ED87 /* RNTrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953C2223A7E3C00A7ED87 /* RNTrimmerView.swift */; };
+		048953DD223A7E3D00A7ED87 /* RNTrimmerViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953C3223A7E3C00A7ED87 /* RNTrimmerViewManager.swift */; };
+		048953DE223A7E3D00A7ED87 /* RNTrimmerViewBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953C4223A7E3C00A7ED87 /* RNTrimmerViewBridge.m */; };
+		048953DF223A7E3D00A7ED87 /* ICGRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953C9223A7E3C00A7ED87 /* ICGRulerView.m */; };
+		048953E0223A7E3D00A7ED87 /* ICGVideoTrimmerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953CA223A7E3C00A7ED87 /* ICGVideoTrimmerView.m */; };
+		048953E1223A7E3D00A7ED87 /* ICGThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953CC223A7E3C00A7ED87 /* ICGThumbView.m */; };
+		048953E2223A7E3D00A7ED87 /* RNVideoProcessingBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953CF223A7E3C00A7ED87 /* RNVideoProcessingBridge.m */; };
+		048953E3223A7E3D00A7ED87 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953D2223A7E3C00A7ED87 /* SDAVAssetExportSession.m */; };
+		048953E4223A7E3D00A7ED87 /* RNVideoTrimmerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 048953D3223A7E3C00A7ED87 /* RNVideoTrimmerBridge.m */; };
+		048953E5223A7E3D00A7ED87 /* AVUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953D4223A7E3C00A7ED87 /* AVUtilities.swift */; };
+		048953E6223A7E3D00A7ED87 /* RNVideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953D5223A7E3C00A7ED87 /* RNVideoTrimmer.swift */; };
+		048953E7223A7E3D00A7ED87 /* RNVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953D8223A7E3C00A7ED87 /* RNVideoPlayer.swift */; };
+		048953E8223A7E3D00A7ED87 /* VideoProcessingGPUFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953DA223A7E3C00A7ED87 /* VideoProcessingGPUFilters.swift */; };
+		048953F3223A80B000A7ED87 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048953F2223A7E6000A7ED87 /* GPUImage.framework */; };
 		09412F73D76044C899F82488 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD14E807504E49DDAEA7CAAC /* MaterialIcons.ttf */; };
 		11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -114,6 +139,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = Proxily;
+		};
+		047E2B6D223996F500CF5271 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94F62BD9049740FD8AF33C6C /* Lottie.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62CA59B71E3C173B002D7188;
+			remoteInfo = Lottie_iOS;
+		};
+		048953EF223A7E6000A7ED87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		048953F1223A7E6000A7ED87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCE209E51943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
 		};
 		04BCE66522359E23001BBA7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -460,6 +506,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		047E2BA0223996F600CF5271 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				047E2B6C223996F500CF5271 /* Lottie.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -470,6 +530,40 @@
 		00E356EE1AD99517003FC87E /* ProxilyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProxilyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ProxilyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProxilyTests.m; sourceTree = "<group>"; };
+		04895356223A76A400A7ED87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		04895358223A76AA00A7ED87 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		0489535A223A76B400A7ED87 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		0489535C223A76BC00A7ED87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0489535E223A76C600A7ED87 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		04895361223A76D400A7ED87 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		048953B7223A798800A7ED87 /* test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		048953BA223A7ACE00A7ED87 /* Proxily-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proxily-Bridging-Header.h"; sourceTree = "<group>"; };
+		048953BB223A7ACF00A7ED87 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		048953C0223A7E3C00A7ED87 /* RNVideoProcessingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNVideoProcessingManager.swift; sourceTree = "<group>"; };
+		048953C2223A7E3C00A7ED87 /* RNTrimmerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNTrimmerView.swift; sourceTree = "<group>"; };
+		048953C3223A7E3C00A7ED87 /* RNTrimmerViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNTrimmerViewManager.swift; sourceTree = "<group>"; };
+		048953C4223A7E3C00A7ED87 /* RNTrimmerViewBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTrimmerViewBridge.m; sourceTree = "<group>"; };
+		048953C5223A7E3C00A7ED87 /* RNTrimmerView-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNTrimmerView-Bridging-Header.h"; sourceTree = "<group>"; };
+		048953C6223A7E3C00A7ED87 /* RNTrimmerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTrimmerView.h; sourceTree = "<group>"; };
+		048953C8223A7E3C00A7ED87 /* ICGThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGThumbView.h; sourceTree = "<group>"; };
+		048953C9223A7E3C00A7ED87 /* ICGRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICGRulerView.m; sourceTree = "<group>"; };
+		048953CA223A7E3C00A7ED87 /* ICGVideoTrimmerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICGVideoTrimmerView.m; sourceTree = "<group>"; };
+		048953CB223A7E3C00A7ED87 /* ICGVideoTrimmer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGVideoTrimmer.h; sourceTree = "<group>"; };
+		048953CC223A7E3C00A7ED87 /* ICGThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICGThumbView.m; sourceTree = "<group>"; };
+		048953CD223A7E3C00A7ED87 /* ICGRulerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGRulerView.h; sourceTree = "<group>"; };
+		048953CE223A7E3C00A7ED87 /* ICGVideoTrimmerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGVideoTrimmerView.h; sourceTree = "<group>"; };
+		048953CF223A7E3C00A7ED87 /* RNVideoProcessingBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNVideoProcessingBridge.m; sourceTree = "<group>"; };
+		048953D1223A7E3C00A7ED87 /* RNVideoTrimmer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNVideoTrimmer-Bridging-Header.h"; sourceTree = "<group>"; };
+		048953D2223A7E3C00A7ED87 /* SDAVAssetExportSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAVAssetExportSession.m; sourceTree = "<group>"; };
+		048953D3223A7E3C00A7ED87 /* RNVideoTrimmerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNVideoTrimmerBridge.m; sourceTree = "<group>"; };
+		048953D4223A7E3C00A7ED87 /* AVUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVUtilities.swift; sourceTree = "<group>"; };
+		048953D5223A7E3C00A7ED87 /* RNVideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNVideoTrimmer.swift; sourceTree = "<group>"; };
+		048953D6223A7E3C00A7ED87 /* SDAVAssetExportSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAVAssetExportSession.h; sourceTree = "<group>"; };
+		048953D7223A7E3C00A7ED87 /* RNVideoProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNVideoProcessing.h; sourceTree = "<group>"; };
+		048953D8223A7E3C00A7ED87 /* RNVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNVideoPlayer.swift; sourceTree = "<group>"; };
+		048953D9223A7E3C00A7ED87 /* RNVideoProcessing-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNVideoProcessing-Bridging-Header.h"; sourceTree = "<group>"; };
+		048953DA223A7E3C00A7ED87 /* VideoProcessingGPUFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessingGPUFilters.swift; sourceTree = "<group>"; };
+		048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../node_modules/react-native-video-processing/ios/GPUImage/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
 		065939B0A9094F1B95CCD80E /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -543,6 +637,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048953F3223A80B000A7ED87 /* GPUImage.framework in Frameworks */,
+				04895362223A76D400A7ED87 /* MobileCoreServices.framework in Frameworks */,
+				0489535F223A76C600A7ED87 /* QuartzCore.framework in Frameworks */,
+				0489535D223A76BC00A7ED87 /* AVFoundation.framework in Frameworks */,
+				0489535B223A76B400A7ED87 /* OpenGLES.framework in Frameworks */,
+				04895359223A76AA00A7ED87 /* CoreVideo.framework in Frameworks */,
+				04895357223A76A400A7ED87 /* CoreMedia.framework in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
@@ -557,6 +658,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D80C04DEE6D94F6084BC3C9E /* libRNCamera.a in Frameworks */,
+				047E2B6B223996F500CF5271 /* Lottie.framework in Frameworks */,
 				E9946DA7849F49A38CF805D7 /* libRNGestureHandler.a in Frameworks */,
 				EF9126B414C4420FB485CDC5 /* libBVLinearGradient.a in Frameworks */,
 				71C009B2DABD48FB97B5DA04 /* libAirMaps.a in Frameworks */,
@@ -660,6 +762,71 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		048953BF223A7E3C00A7ED87 /* RNVideoProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				048953C0223A7E3C00A7ED87 /* RNVideoProcessingManager.swift */,
+				048953C1223A7E3C00A7ED87 /* RNTrimmerView */,
+				048953CF223A7E3C00A7ED87 /* RNVideoProcessingBridge.m */,
+				048953D0223A7E3C00A7ED87 /* RNVideoTrimmer */,
+				048953D7223A7E3C00A7ED87 /* RNVideoProcessing.h */,
+				048953D8223A7E3C00A7ED87 /* RNVideoPlayer.swift */,
+				048953D9223A7E3C00A7ED87 /* RNVideoProcessing-Bridging-Header.h */,
+				048953DA223A7E3C00A7ED87 /* VideoProcessingGPUFilters.swift */,
+			);
+			name = RNVideoProcessing;
+			path = "../node_modules/react-native-video-processing/ios/RNVideoProcessing";
+			sourceTree = "<group>";
+		};
+		048953C1223A7E3C00A7ED87 /* RNTrimmerView */ = {
+			isa = PBXGroup;
+			children = (
+				048953C2223A7E3C00A7ED87 /* RNTrimmerView.swift */,
+				048953C3223A7E3C00A7ED87 /* RNTrimmerViewManager.swift */,
+				048953C4223A7E3C00A7ED87 /* RNTrimmerViewBridge.m */,
+				048953C5223A7E3C00A7ED87 /* RNTrimmerView-Bridging-Header.h */,
+				048953C6223A7E3C00A7ED87 /* RNTrimmerView.h */,
+				048953C7223A7E3C00A7ED87 /* ICGVideoTrimmer */,
+			);
+			path = RNTrimmerView;
+			sourceTree = "<group>";
+		};
+		048953C7223A7E3C00A7ED87 /* ICGVideoTrimmer */ = {
+			isa = PBXGroup;
+			children = (
+				048953C8223A7E3C00A7ED87 /* ICGThumbView.h */,
+				048953C9223A7E3C00A7ED87 /* ICGRulerView.m */,
+				048953CA223A7E3C00A7ED87 /* ICGVideoTrimmerView.m */,
+				048953CB223A7E3C00A7ED87 /* ICGVideoTrimmer.h */,
+				048953CC223A7E3C00A7ED87 /* ICGThumbView.m */,
+				048953CD223A7E3C00A7ED87 /* ICGRulerView.h */,
+				048953CE223A7E3C00A7ED87 /* ICGVideoTrimmerView.h */,
+			);
+			path = ICGVideoTrimmer;
+			sourceTree = "<group>";
+		};
+		048953D0223A7E3C00A7ED87 /* RNVideoTrimmer */ = {
+			isa = PBXGroup;
+			children = (
+				048953D1223A7E3C00A7ED87 /* RNVideoTrimmer-Bridging-Header.h */,
+				048953D2223A7E3C00A7ED87 /* SDAVAssetExportSession.m */,
+				048953D3223A7E3C00A7ED87 /* RNVideoTrimmerBridge.m */,
+				048953D4223A7E3C00A7ED87 /* AVUtilities.swift */,
+				048953D5223A7E3C00A7ED87 /* RNVideoTrimmer.swift */,
+				048953D6223A7E3C00A7ED87 /* SDAVAssetExportSession.h */,
+			);
+			path = RNVideoTrimmer;
+			sourceTree = "<group>";
+		};
+		048953EA223A7E6000A7ED87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				048953F0223A7E6000A7ED87 /* libGPUImage.a */,
+				048953F2223A7E6000A7ED87 /* GPUImage.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		04BCE63F22359E21001BBA7E /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +842,7 @@
 				9D0A78A59AE34D00B60635C7 /* Lottie.framework */,
 				EE04E6766C774ACF885455EC /* libLottie.a */,
 				6009FA8471624326B31CA7C0 /* libLottieReactNative.a */,
+				EC5120317C9C48A0BAA84F21 /* libRNVideoProcessing.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -781,6 +949,8 @@
 		13B07FAE1A68108700A75B9A /* Proxily */ = {
 			isa = PBXGroup;
 			children = (
+				048953BA223A7ACE00A7ED87 /* Proxily-Bridging-Header.h */,
+				048953B7223A798800A7ED87 /* test.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -788,6 +958,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				048953BB223A7ACF00A7ED87 /* File.swift */,
 			);
 			name = Proxily;
 			sourceTree = "<group>";
@@ -818,6 +989,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04895361223A76D400A7ED87 /* MobileCoreServices.framework */,
+				0489535E223A76C600A7ED87 /* QuartzCore.framework */,
+				0489535C223A76BC00A7ED87 /* AVFoundation.framework */,
+				0489535A223A76B400A7ED87 /* OpenGLES.framework */,
+				04895358223A76AA00A7ED87 /* CoreVideo.framework */,
+				04895356223A76A400A7ED87 /* CoreMedia.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -908,6 +1085,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */,
+				048953BF223A7E3C00A7ED87 /* RNVideoProcessing */,
 				13B07FAE1A68108700A75B9A /* Proxily */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ProxilyTests */,
@@ -970,10 +1149,12 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				047E2BA0223996F600CF5271 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				047E2B6E223996F500CF5271 /* PBXTargetDependency */,
 			);
 			name = Proxily;
 			productName = "Hello World";
@@ -1029,6 +1210,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1010;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -1059,6 +1243,10 @@
 				{
 					ProductGroup = 04BCE69422359E23001BBA7E /* Products */;
 					ProjectRef = B85155AFF8E947A6919C82A4 /* BVLinearGradient.xcodeproj */;
+				},
+				{
+					ProductGroup = 048953EA223A7E6000A7ED87 /* Products */;
+					ProjectRef = 048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */;
 				},
 				{
 					ProductGroup = 04BCE6B62235A532001BBA7E /* Products */;
@@ -1181,6 +1369,20 @@
 			fileType = archive.ar;
 			path = libRCTVibration.a;
 			remoteRef = 00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		048953F0223A7E6000A7ED87 /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 048953EF223A7E6000A7ED87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		048953F2223A7E6000A7ED87 /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = 048953F1223A7E6000A7ED87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		04BCE66622359E23001BBA7E /* libjsi.a */ = {
@@ -1614,8 +1816,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048953DE223A7E3D00A7ED87 /* RNTrimmerViewBridge.m in Sources */,
+				048953E8223A7E3D00A7ED87 /* VideoProcessingGPUFilters.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				048953DD223A7E3D00A7ED87 /* RNTrimmerViewManager.swift in Sources */,
+				048953E3223A7E3D00A7ED87 /* SDAVAssetExportSession.m in Sources */,
+				048953E5223A7E3D00A7ED87 /* AVUtilities.swift in Sources */,
+				048953E0223A7E3D00A7ED87 /* ICGVideoTrimmerView.m in Sources */,
+				048953E6223A7E3D00A7ED87 /* RNVideoTrimmer.swift in Sources */,
+				048953DC223A7E3D00A7ED87 /* RNTrimmerView.swift in Sources */,
+				048953E1223A7E3D00A7ED87 /* ICGThumbView.m in Sources */,
+				048953BC223A7ACF00A7ED87 /* File.swift in Sources */,
+				048953DF223A7E3D00A7ED87 /* ICGRulerView.m in Sources */,
+				048953E7223A7E3D00A7ED87 /* RNVideoPlayer.swift in Sources */,
+				048953DB223A7E3D00A7ED87 /* RNVideoProcessingManager.swift in Sources */,
+				048953E2223A7E3D00A7ED87 /* RNVideoProcessingBridge.m in Sources */,
+				048953E4223A7E3D00A7ED87 /* RNVideoTrimmerBridge.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				048953B8223A798800A7ED87 /* test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1625,6 +1843,7 @@
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
+				048953B9223A798C00A7ED87 /* test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1643,6 +1862,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Proxily */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		047E2B6E223996F500CF5271 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Lottie_iOS;
+			targetProxy = 047E2B6D223996F500CF5271 /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1667,6 +1891,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
@@ -1685,6 +1910,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = ProxilyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1692,8 +1918,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1708,6 +1932,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
@@ -1723,6 +1948,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = ProxilyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1730,8 +1956,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1747,6 +1971,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
@@ -1762,6 +1987,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = Proxily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1772,6 +1998,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Proxily;
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxily-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1780,6 +2009,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
@@ -1794,6 +2024,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = Proxily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1804,6 +2035,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Proxily;
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxily-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1832,14 +2065,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = "Proxily-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1877,14 +2109,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = "Proxily-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1921,14 +2152,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = "Proxily-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1965,14 +2195,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/lottie-ios/lottie-ios/Classes/**",
 					"$(SRCROOT)/../node_modules/lottie-react-native/src/ios/LottieReactNative",
+					"$(SRCROOT)/../node_modules/react-native-video-processing/ios/RNVideoProcessing/**",
 				);
 				INFOPLIST_FILE = "Proxily-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

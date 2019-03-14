@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'black', 
     height: 1,
-    width: Dimensions.get('window').width*0.7,
+    width: Dimensions.get('window').width*0.67,
   }
 })
 

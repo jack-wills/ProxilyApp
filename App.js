@@ -33,6 +33,8 @@ import SubmitTextScreen from './screens/SubmitTextScreen'
 import CameraVideoScreen from './screens/CameraVideoScreen'
 import CameraPictureScreen from './screens/CameraPictureScreen'
 import MainReducer from './reducers/MainReducer'
+import PictureReviewScreen from './screens/PictureReviewScreen';
+import VideoReviewScreen from './screens/VideoReviewScreen';
 
 const store = createStore(MainReducer, applyMiddleware(thunk, logger));
 
@@ -160,7 +162,8 @@ class SavedLocationsFeedScreen extends React.Component {
                     shadowOpacity: 0.3,
                     justifyContent: 'center',
                     flexDirection: 'row',
-                    zIndex: 1, height: 42}}>
+                    zIndex: 1, height: 42,
+                    width: Dimensions.get('window').width}}>
         <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
           <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
             <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-arrow-back' color='white' size={32}/>
@@ -264,17 +267,73 @@ const AuthStackNavigator = createStackNavigator({
   }
 );
 
+const SubmitImageStackNavigator = createStackNavigator({
+  CameraPicture: {
+    screen: CameraPictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  },
+  PictureReview: {
+    screen: PictureReviewScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  }},
+  {
+    initialRouteName: 'CameraPicture',
+    swipeEnabled: false,
+    animationEnabled: false,
+  }
+);
+
+const SubmitVideoStackNavigator = createStackNavigator({
+  CameraVideo: {
+    screen: CameraVideoScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  },
+  VideoReview: {
+    screen: VideoReviewScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { 
+        marginTop: -40,
+        backgroundColor: 'white',
+      },
+      header: null,
+    })
+  }},
+  {
+    initialRouteName: 'CameraVideo',
+    swipeEnabled: false,
+    animationEnabled: false,
+  }
+);
+
 const AppTabNavigator = createMaterialTopTabNavigator({
   Home: FeedScreen,
   SavedLocations:  SavedLocationsStackNavigator,
   CameraPicture:  {
-    screen: CameraPictureScreen,
+    screen: SubmitImageStackNavigator,
     navigationOptions: ({ navigation }) => ({
       tabBarVisible: false,
     })
   },
   CameraVideo:  {
-    screen: CameraVideoScreen,
+    screen: SubmitVideoStackNavigator,
     navigationOptions: ({ navigation }) => ({
       tabBarVisible: false,
     })
