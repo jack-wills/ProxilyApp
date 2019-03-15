@@ -73,8 +73,11 @@ export default class CustomFooter extends React.Component {
                 style={{
                     height: 200,
                     width: 200,
-                justifyContent: 'flex-end',
-                alignItems: 'center'}}pointerEvents='box-none'>
+                    justifyContent: 'flex-end',
+                    alignItems: 'center'
+                }}
+                pointerEvents='box-none'
+            >
                 <Animated.View style={{
                     position: 'absolute',
                     zIndex: 10,
@@ -208,19 +211,20 @@ export default class CustomFooter extends React.Component {
             jumpTo
         } = this.props;
         return (
+            <View>
             <View
             style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    justifyContent: 'flex-end',
-                    minHeight: 160,
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                justifyContent: 'flex-end',
+                minHeight: 160,
             }}
             pointerEvents="box-none"
             forceInset={{
                 top: 'never',
                 bottom: 'always',
-            }}>
+            }}/>
             
             <View style={styles.mediaButton} pointerEvents="box-none">
                 {this.renderButton()}

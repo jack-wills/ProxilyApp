@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 import Video from 'react-native-video'
 import {connect} from 'react-redux';

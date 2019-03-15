@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import FeedMediaItem from './FeedMediaItem';
 
 import {FRONT_SERVICE_URL} from '../Constants';
+import CommentFeedItem from './CommentFeedItem';
 
 class FeedItem extends React.Component {
     state = {
@@ -147,6 +148,13 @@ class FeedItem extends React.Component {
       this.setState({refreshing: false});
     }
 
+    _renderComment = ({item}) => {
+      return (
+        <CommentFeedItem
+          item={item}
+        />
+    )};
+
     renderComments() {
       if (this.props.commentsLoading) {
         return (
@@ -161,54 +169,7 @@ class FeedItem extends React.Component {
       return (
         <FlatList
               data={this.props.comments}
-              renderItem={({item}) => (
-                <View style={styles.comment}>
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                    <Image
-                      style={styles.profileImage}
-                      source={require('../assets/mountains.jpg')} 
-                    />
-                    <View style={{
-                      backgroundColor: 'lightgrey', 
-                      marginLeft: 7, 
-                      borderRadius: 10, 
-                      padding: 10,
-                      width: Dimensions.get('window').width*0.9-136, //50 profile, 40 comment padding, 46, upvotes
-                    }}>
-                      <Text style={{fontWeight: 'bold'}}>{item.submitter}</Text>
-                      <Text>{item.comment}</Text>
-                    </View>
-
-                    <View style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                      marginLeft: 10,
-                      marginRight: 10,
-                    }}>
-                        <TouchableOpacity onPress={this._onPressUpvote}>
-                        <Image 
-                            style={{flex:0, height: 26, width: 26, marginLeft: 10}}
-                            source={item.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
-                        />
-                        </TouchableOpacity>
-                        <Text style={{flex:0, width: 26, marginLeft: 10, fontFamily: 'Avenir', textAlign: 'center', marginTop: 5, marginBottom: 5}}>
-                          {item.totalVotes+item.userVote}
-                        </Text>
-                        <TouchableOpacity onPress={this._onPressDownvote}>
-                        <Image 
-                            style={{flex:0, height: 26, width: 26, marginLeft: 10}}
-                            source={item.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
-                        />
-                        </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              )}
+              renderItem={this._renderComment}
               refreshControl={
                   <RefreshControl
                       colors={["#9Bd35A", "#689F38"]}
@@ -226,7 +187,7 @@ class FeedItem extends React.Component {
         <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-          <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3,}]}>
+          <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3, marginBottom: 25}]}>
             <FeedMediaItem 
               styles={{width: Dimensions.get('window').width*0.96, }} 
               itemInfo={this.props.item.media}
@@ -247,13 +208,13 @@ class FeedItem extends React.Component {
                 flexDirection: 'row',
               }}>
                 <Text style={styles.voteText}>{this.props.item.totalVotes+this.state.userVote}</Text>
-                <TouchableOpacity onPress={this._onPressUpvote}>
+                <TouchableOpacity onPress={this._onPressUpvoteComment}>
                 <Image 
                     style={{flex:0, height: 26, width: 26, marginLeft: 10}}
                     source={this.state.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
                 />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this._onPressDownvote}>
+                <TouchableOpacity onPress={this._onPressDownvoteComment}>
                 <Image 
                     style={{flex:0, height: 26, width: 26, marginLeft: 8, marginTop: 2}}
                     source={this.state.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
@@ -327,13 +288,6 @@ class FeedItem extends React.Component {
       color: 'grey',
       fontFamily: 'Avenir',
       fontSize: 13,
-    },
-    comment: {
-      flex: 1,
-      borderTopWidth: 1,
-      borderTopColor: 'lightgrey',
-      padding: 10,
-      width: Dimensions.get('window').width*0.9,
     },
     profileImage: {
       height: 50,
