@@ -157,10 +157,50 @@ class FeedItem extends React.Component {
               data={this.props.comments}
               renderItem={({item}) => (
                 <View style={styles.comment}>
-                  <Text>{item.submitter}</Text>
-                  <Text>{item.comment}</Text>
-                  <Text>{item.totalVotes}</Text>
-                  <Text>{item.userVote}</Text>
+                  <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                    <Image
+                      style={styles.commentsProfileImage}
+                      source={require('../assets/mountains.jpg')} 
+                    />
+                    <View style={{
+                      backgroundColor: 'lightgrey', 
+                      marginLeft: 7, 
+                      borderRadius: 10, 
+                      padding: 10,
+                      width: Dimensions.get('window').width*0.9-136, //50 profile, 40 comment padding, 46, upvotes
+                    }}>
+                      <Text style={{fontWeight: 'bold'}}>{item.submitter}</Text>
+                      <Text>{item.comment}</Text>
+                    </View>
+
+                    <View style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      marginLeft: 10,
+                      marginRight: 10,
+                    }}>
+                        <TouchableOpacity onPress={this._onPressUpvote}>
+                        <Image 
+                            style={{flex:0, height: 26, width: 26, marginLeft: 10}}
+                            source={item.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
+                        />
+                        </TouchableOpacity>
+                        <Text style={{flex:0, width: 26, marginLeft: 10, fontFamily: 'Avenir', textAlign: 'center', marginTop: 5, marginBottom: 5}}>
+                          {item.totalVotes+item.userVote}
+                        </Text>
+                        <TouchableOpacity onPress={this._onPressDownvote}>
+                        <Image 
+                            style={{flex:0, height: 26, width: 26, marginLeft: 10}}
+                            source={item.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
+                        />
+                        </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               )}
               refreshControl={
@@ -275,6 +315,11 @@ class FeedItem extends React.Component {
       padding: 10,
       width: Dimensions.get('window').width*0.9,
     },
+    commentsProfileImage: {
+      height: 50,
+      width: 50,
+      borderRadius: 25,
+    },
     voteText: {
       marginTop: 5,
       fontFamily: 'Avenir',
@@ -289,6 +334,7 @@ class FeedItem extends React.Component {
       borderWidth: 1, 
       borderColor: 'lightgrey',
       padding: 10,
+      marginBottom: 5,
       alignItems: 'center',
       width: Dimensions.get('window').width*0.9-20,
       minHeight: Dimensions.get('window').height*0.1,
