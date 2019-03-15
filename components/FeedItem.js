@@ -23,13 +23,6 @@ class FeedItem extends React.Component {
       userVote: this.props.item.userVote,
       newComment: "",
     }
-    _onPressVideo = () => {
-      if (this.props.videoPlaying) {
-        this.props.changeVideoPlaying(-1)
-      } else {
-        this.props.changeVideoPlaying(this.props.id)
-      }
-    };
 
     _onPressComments = () => {
       this.props.openItemComments(this.props.item);
@@ -114,14 +107,9 @@ class FeedItem extends React.Component {
     };
     
     renderNormal() {
-      var mediaItem = this.props.item.media;
-      if (mediaItem.hasOwnProperty('video')){
-          mediaItem.video.videoPlaying = this.props.videoPlaying;
-          mediaItem.video.onPressVideo = this._onPressVideo;
-      }
       return (
           <View style={styles.container}>
-            <FeedMediaItem itemInfo={mediaItem}/>
+            <FeedMediaItem itemInfo={this.props.item.media} navigation={this.props.navigation}/>
             <View style={styles.info}>
                 <View style={styles.left}>
                     <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
@@ -188,17 +176,16 @@ class FeedItem extends React.Component {
     }
 
     renderExtended() {
-      var mediaItem = this.props.item.media;
-      if (mediaItem.hasOwnProperty('video')){
-          mediaItem.video.videoPlaying = this.props.videoPlaying;
-          mediaItem.video.onPressVideo = this._onPressVideo;
-      }
       return (
         <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3,}]}>
-        <FeedMediaItem styles={{width: Dimensions.get('window').width*0.96, }}itemInfo={mediaItem}/>
+        <FeedMediaItem 
+          styles={{width: Dimensions.get('window').width*0.96, }} 
+          itemInfo={this.props.item.media}
+          navigation={this.props.navigation}
+        />
         <View style={styles.comments}>
             <View style={styles.left}>
             <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>

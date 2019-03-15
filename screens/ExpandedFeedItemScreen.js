@@ -69,6 +69,7 @@ class ExpandedFeedItemScreen extends React.Component {
             commentsLoading={this.state.commentsLoading}
             reloadComments={this._getComments}
             changeVideoPlaying={this._changeVideoPlaying}
+            navigation={this.props.navigation}
           />
         </View>
     );

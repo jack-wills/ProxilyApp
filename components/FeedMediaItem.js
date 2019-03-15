@@ -9,41 +9,53 @@ import {
   Text,
   View,
 } from 'react-native';
-import VideoCompenent from './VideoComponent';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateVideoPlaying} from '../actions/UpdateVideo';
 
-export default class FeedMediaItem extends React.Component {
+import VideoComponent from './VideoComponent';
 
-    render(){
-        if (this.props.itemInfo.hasOwnProperty('video')) {
-            return(
-              <View style={[styles.video, {overflow: 'hidden'}]}>
-                <TouchableOpacity style={styles.video} onPress={this.props.itemInfo.video.onPressVideo}>
-                    <VideoCompenent 
-                        style={[styles.video, {overflow: 'hidden'}]} 
-                        playing={!this.props.itemInfo.video.videoPlaying} 
-                        url={this.props.itemInfo.video.url}
-                    />
-                </TouchableOpacity>
-              </View>
-            )
-        }
-        if (this.props.itemInfo.hasOwnProperty('image')) {
-            return(
-                <Image 
-                    style={styles.image}
-                    source={{uri: this.props.itemInfo.image.url}}
-                />
-            )
-        }
-        if (this.props.itemInfo.hasOwnProperty('text')) {
-            return(
-                <View style={styles.textBox}>
-                    <Text style={styles.text}>{this.props.itemInfo.text.content}</Text>
-                </View>
-            )
-        }
-        return(<View/>);
+class FeedMediaItem extends React.Component {
+
+  _onPressVideo = () => {
+    if (this.props.playing) {
+      this.props.updateVideoPlaying("")
+    } else {
+      this.props.updateVideoPlaying(this.props.itemInfo.video.url)
     }
+  };
+
+  render(){
+      if (this.props.itemInfo.hasOwnProperty('video')) {
+          return(
+            <View style={[styles.video, {overflow: 'hidden'}]}>
+              <TouchableOpacity style={styles.video} onPress={this._onPressVideo}>
+                  <VideoComponent 
+                      style={[styles.video, {overflow: 'hidden'}]} 
+                      url={this.props.itemInfo.video.url}
+                      navigation={this.props.navigation}
+                  />
+              </TouchableOpacity>
+            </View>
+          )
+      }
+      if (this.props.itemInfo.hasOwnProperty('image')) {
+          return(
+              <Image 
+                  style={styles.image}
+                  source={{uri: this.props.itemInfo.image.url}}
+              />
+          )
+      }
+      if (this.props.itemInfo.hasOwnProperty('text')) {
+          return(
+              <View style={styles.textBox}>
+                  <Text style={styles.text}>{this.props.itemInfo.text.content}</Text>
+              </View>
+          )
+      }
+      return(<View/>);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -86,3 +98,21 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   }
 });
+
+const mapDispatchToProps = (dispatch) => ({
+	updateVideoPlaying: bindActionCreators(updateVideoPlaying, dispatch)
+})
+
+const mapStateToProps = (state, ownProps) => {
+  const {video} = state.main;
+  if(ownProps.itemInfo.hasOwnProperty('video')) {
+    if (video.hasOwnProperty(ownProps.itemInfo.video.url)) {
+      return {
+        playing: state.main.currentVideoPlaying == ownProps.itemInfo.video.url
+      }
+    }
+  }
+  return {playing: false}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(FeedMediaItem);

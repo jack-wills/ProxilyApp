@@ -1,5 +1,7 @@
 export const FETCH_USER_TOKEN = 'FETCH_USER_TOKEN';
 export const UPDATE_USER_TOKEN = 'UPDATE_USER_TOKEN';
+export const UPDATE_VIDEO_TIME = 'UPDATE_VIDEO_TIME';
+export const UPDATE_VIDEO_PLAYING = 'UPDATE_VIDEO_PLAYING';
 
 
 export const FRONT_SERVICE_URL = 'http://localhost:8080'

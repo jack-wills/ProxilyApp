@@ -16,7 +16,6 @@ export default class VideoFeed extends React.Component {
   state = {
     commentsOpen: null,
     selected: (new Map(): Map<string, boolean>),
-    videoPlaying: -1,
     refreshing: false,
     showEndSpinner: true,
     hasScrolled: false,
@@ -40,21 +39,17 @@ export default class VideoFeed extends React.Component {
       });
   };
 
-  _changeVideoPlaying = (itemId) => {
-    this.setState({videoPlaying: itemId});
-  }
-
-  _renderItem = ({item}) => (
+  _renderItem = ({item}) => {
+    return (
       <FeedItem
         id={item.id}
         onPressItem={this._onPressItem}
         openItemComments={this._openItemComments}
         selected={!this.state.selected.get(item.id)}
-        videoPlaying={this.state.videoPlaying == item.id}
-        changeVideoPlaying={this._changeVideoPlaying}
         item={item}
+        navigation={this.props.navigation}
       />
-  );
+  )};
 
   _renderFooter = () => {
     if (!this.state.showEndSpinner) {
