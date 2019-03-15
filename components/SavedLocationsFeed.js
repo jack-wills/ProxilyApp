@@ -11,60 +11,60 @@ import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 class MyListItem extends React.PureComponent {
-    _onPress = () => {
-      this.props.navigateToFeed(this.props.lat, this.props.long, this.props.name);
-    };
+  _onPress = () => {
+    this.props.navigateToFeed(this.props.lat, this.props.long, this.props.name);
+  };
 
-    _deleteItem = () => {
-      this.props.deleteItem(this.props.id);
-    };
-  
-    render() {
-        let circleSize = (150*0.0724)/0.15;
-      return (
-        <TouchableOpacity onPress={this._onPress}>
-            <View style={styles.container}>
-                <View style={{width: (Dimensions.get('window').width*0.48)-15, height: 180, justifyContent: 'center'}}>
-                    <TouchableOpacity style={{position: 'absolute', top: 0, left: 4}} onPress={this._deleteItem}>
-                        <Icon name="ios-close" color={'grey'} size={34} />
-                    </TouchableOpacity>
-                    <Text style={{textAlign: 'center', fontSize: 20, fontFamily: 'Avenir'}}>{this.props.name}</Text>
-                </View>
-                <View style={{width: (Dimensions.get('window').width*0.48)-15}}>
-                <View pointerEvents="none" style={styles.map}>
-                    <MapView
-                        style={styles.map}
-                        scrollEnabled={false}
-                        zoomEnabled={false}
-                        pitchEnabled={false}
-                        rotateEnabled={false}
-                        initialRegion={{
-                            latitude: this.props.lat,
-                            longitude: this.props.long,
-                            latitudeDelta: 0.15,
-                            longitudeDelta: 0.15,
-                        }}
-                    />
-                    <View pointerEvents="none" style={{
-                        left: '50%',
-                        marginLeft: -0.5 * circleSize,
-                        marginTop: -0.5 * circleSize,
-                        position: 'absolute',
-                        top: '50%', 
-                        height: circleSize, 
-                        width: circleSize,
-                        backgroundColor: '#62f8d13f',
-                        borderRadius: 0.5 * circleSize,
-                        borderColor: '#2faa71',
-                        borderWidth: 1,
-                    }} />
-                </View>
-                </View>
-            </View>
-        </TouchableOpacity>
-      );
-    }
+  _deleteItem = () => {
+    this.props.deleteItem(this.props.id);
+  };
+
+  render() {
+    let circleSize = (150*0.0724)/0.15;
+    return (
+      <TouchableOpacity onPress={this._onPress}>
+          <View style={styles.container}>
+              <View style={{width: (Dimensions.get('window').width*0.48)-15, height: 180, justifyContent: 'center'}}>
+                  <TouchableOpacity style={{position: 'absolute', top: 0, left: 4}} onPress={this._deleteItem}>
+                      <Icon name="ios-close" color={'grey'} size={34} />
+                  </TouchableOpacity>
+                  <Text style={{textAlign: 'center', fontSize: 20, fontFamily: 'Avenir'}}>{this.props.name}</Text>
+              </View>
+              <View style={{width: (Dimensions.get('window').width*0.48)-15}}>
+              <View pointerEvents="none" style={styles.map}>
+                  <MapView
+                      style={styles.map}
+                      scrollEnabled={false}
+                      zoomEnabled={false}
+                      pitchEnabled={false}
+                      rotateEnabled={false}
+                      initialRegion={{
+                          latitude: this.props.lat,
+                          longitude: this.props.long,
+                          latitudeDelta: 0.15,
+                          longitudeDelta: 0.15,
+                      }}
+                  />
+                  <View pointerEvents="none" style={{
+                      left: '50%',
+                      marginLeft: -0.5 * circleSize,
+                      marginTop: -0.5 * circleSize,
+                      position: 'absolute',
+                      top: '50%', 
+                      height: circleSize, 
+                      width: circleSize,
+                      backgroundColor: '#62f8d13f',
+                      borderRadius: 0.5 * circleSize,
+                      borderColor: '#2faa71',
+                      borderWidth: 1,
+                  }} />
+              </View>
+              </View>
+          </View>
+      </TouchableOpacity>
+    );
   }
+}
   
 export default class SavedLocationsFeed extends React.Component {
 
@@ -94,7 +94,6 @@ export default class SavedLocationsFeed extends React.Component {
       );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -9,9 +9,10 @@ class VideoComponent extends React.Component {
 
   componentDidMount() {
     this.props.navigation.addListener('willFocus', () => {
-      this.player.seek(this.props.currentVideoTime);
-    }
-    );
+      if (this.player) {
+        this.player.seek(this.props.currentVideoTime);
+      }
+    });
   }
 
   renderVideo () {
@@ -38,7 +39,9 @@ class VideoComponent extends React.Component {
             this.props.updateVideoTime(this.props.url, currentTime);
           }}
           onLoadStart={() => {
-            this.player.seek(this.props.currentVideoTime);
+            if (this.player) {
+              this.player.seek(this.props.currentVideoTime);
+            }
           }}
 
         />

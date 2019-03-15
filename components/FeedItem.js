@@ -112,8 +112,14 @@ class FeedItem extends React.Component {
             <FeedMediaItem itemInfo={this.props.item.media} navigation={this.props.navigation}/>
             <View style={styles.info}>
                 <View style={styles.left}>
+                  <Image
+                    style={[styles.profileImage, {marginLeft: -10}]}
+                    source={require('../assets/mountains.jpg')} 
+                  />
+                  <View style={{marginLeft: 10, justifyContent: 'center'}}>
                     <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
                     <Text style={styles.commentsText} onPress={this._onPressComments}>Comments...</Text>
+                  </View>
                 </View>
                 <View style={styles.right}>
                     <Text style={styles.voteText}>{this.props.item.totalVotes+this.state.userVote}</Text>
@@ -163,7 +169,7 @@ class FeedItem extends React.Component {
                     alignItems: 'center',
                   }}>
                     <Image
-                      style={styles.commentsProfileImage}
+                      style={styles.profileImage}
                       source={require('../assets/mountains.jpg')} 
                     />
                     <View style={{
@@ -220,28 +226,50 @@ class FeedItem extends React.Component {
         <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3,}]}>
-        <FeedMediaItem 
-          styles={{width: Dimensions.get('window').width*0.96, }} 
-          itemInfo={this.props.item.media}
-          navigation={this.props.navigation}
-        />
-        <View style={styles.comments}>
-            <View style={styles.left}>
-            <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
-            </View>
-            <View style={styles.right}>
-            </View>
-            </View>
-              <View style={styles.commentInputBox}>
-                <TextInput ref={input => { this.commentTextInput = input }} style={styles.commentInput} multiline={true} placeholder="Enter Comment..." onChangeText={(text) => this.setState({newComment: text})}/>
-                <TouchableOpacity style={styles.submitButton} onPress={this._submitComment}>
-                  <Text style={styles.submitButtonText}>Submit Comment</Text>
+          <View style={[styles.container, {width: Dimensions.get('window').width*0.96-3,}]}>
+            <FeedMediaItem 
+              styles={{width: Dimensions.get('window').width*0.96, }} 
+              itemInfo={this.props.item.media}
+              navigation={this.props.navigation}
+            />
+            <View style={styles.info}>
+              <View style={styles.left}>
+                <Image
+                  style={[styles.profileImage, {marginLeft: -10}]}
+                  source={require('../assets/mountains.jpg')} 
+                />
+                <View style={{marginLeft: 10, justifyContent: 'center'}}>
+                  <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
+                </View>
+              </View>
+              <View style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}>
+                <Text style={styles.voteText}>{this.props.item.totalVotes+this.state.userVote}</Text>
+                <TouchableOpacity onPress={this._onPressUpvote}>
+                <Image 
+                    style={{flex:0, height: 26, width: 26, marginLeft: 10}}
+                    source={this.state.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
+                />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this._onPressDownvote}>
+                <Image 
+                    style={{flex:0, height: 26, width: 26, marginLeft: 8, marginTop: 2}}
+                    source={this.state.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
+                />
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={styles.commentInputBox}>
+              <TextInput ref={input => { this.commentTextInput = input }} style={styles.commentInput} multiline={true} placeholder="Enter Comment..." onChangeText={(text) => this.setState({newComment: text})}/>
+              <TouchableOpacity style={styles.submitButton} onPress={this._submitComment}>
+                <Text style={styles.submitButtonText}>Submit Comment</Text>
+              </TouchableOpacity>
+            </View>
             {this.renderComments()}
           </View>
-          </ScrollView>
+        </ScrollView>
       );
     }
 
@@ -275,21 +303,20 @@ class FeedItem extends React.Component {
     },
     info: {
       flex: 1,
-      height: 70,
       width: Dimensions.get('window').width*0.83,
-      paddingTop: 10,
-      paddingBottom: 5,
+      paddingTop: 15,
+      paddingBottom: 15,
       flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: 'space-between'
     },
     left: {
-      width: Dimensions.get('window').width*0.565,
-    },
-    right: {
-      width: Dimensions.get('window').width*0.265,
       justifyContent: 'center',
       flexDirection: 'row',
-      marginTop: 10,
-      marginLeft: 20,
+    },
+    right: {
+      justifyContent: 'center',
+      flexDirection: 'row',
     },
     subByText: {
       fontFamily: 'Avenir',
@@ -301,13 +328,6 @@ class FeedItem extends React.Component {
       fontFamily: 'Avenir',
       fontSize: 13,
     },
-    comments: {
-      flex: 1,
-      width: Dimensions.get('window').width*0.83,
-      paddingTop: 10,
-      paddingBottom: 5,
-      flexDirection: "row",
-    },
     comment: {
       flex: 1,
       borderTopWidth: 1,
@@ -315,7 +335,7 @@ class FeedItem extends React.Component {
       padding: 10,
       width: Dimensions.get('window').width*0.9,
     },
-    commentsProfileImage: {
+    profileImage: {
       height: 50,
       width: 50,
       borderRadius: 25,
