@@ -76,22 +76,24 @@ class PictureReviewScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-50, left: 20}]}>
+            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
+            <Icon name="close" size={40} color="white"/>
+            </TouchableOpacity>
+        </View>
         <Video
           source={{uri: this.props.navigation.state.params.videoUri}}
           style={{ 
-            marginTop: 150,
+            marginTop: 100,
               width: Dimensions.get('window').width, 
               height: Dimensions.get('window').width,
-              transform: [{
-                rotate: '270deg'
-              }]
             }}
           muted={false}
           paused={false}
           repeat={true}
           resizeMode={"contain"}
           volume={1.0}
-          rate={1.0}
+          rate={1.0} 
           ignoreSilentSwitch={"obey"}
 
         />
@@ -102,11 +104,6 @@ class PictureReviewScreen extends React.Component {
         <View style={[styles.submitButton, {bottom: 130}]}>
             <TouchableOpacity style={styles.submitButton} onPress={this.submitImage}>
                 <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-        </View>
-        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-50, left: 20}]}>
-            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
-            <Icon name="close" size={40} color="white"/>
             </TouchableOpacity>
         </View>
         </SafeAreaView>

@@ -77,8 +77,13 @@ class PictureReviewScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-80, left: 20}]}>
+            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
+            <Icon name="close" size={40} color="white"/>
+            </TouchableOpacity>
+        </View>
         <Image source={{uri: this.props.navigation.state.params.imageUri}} style={{
-            marginTop: 150,
+            marginTop: 125,
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').width,}} 
             resizeMode="contain"/>
@@ -90,11 +95,6 @@ class PictureReviewScreen extends React.Component {
         <View style={[styles.submitButton, {bottom: 130}]}>
             <TouchableOpacity style={styles.submitButton} onPress={this.submitImage}>
                 <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-        </View>
-        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-80, left: 20}]}>
-            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
-            <Icon name="close" size={40} color="white"/>
             </TouchableOpacity>
         </View>
         </SafeAreaView>

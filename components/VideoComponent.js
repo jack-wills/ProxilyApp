@@ -27,9 +27,13 @@ class VideoComponent extends React.Component {
 
   checkVisible(isVisible) {
     if (isVisible) {
-      this.setState({focused: true});
+      if (!this.state.focused) {
+        this.setState({focused: true});
+      }
     } else {
-      this.setState({focused: false});
+      if (this.state.focused) {
+        this.setState({focused: false});
+      }
     }
   }
 

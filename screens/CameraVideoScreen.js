@@ -99,16 +99,29 @@ class CameraVideoScreen extends React.Component {
     try {
       this.setState({ recording: true });
       console.log('recording');
-      const options = { quality: RNCamera.Constants.VideoQuality["480p"], orientation: "landscapeRight"};
+      const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
       const data = await this.camera.recordAsync(options);
       console.log('not recording');
       this.setState({ recording: false, processing: true });
+      const height = 720;
+      const width = 1280;
+      console.log(height + " " + width)
+      const actualImageWidth = width*Dimensions.get('window').width/Dimensions.get('window').height;
+      console.log(100*actualImageWidth/Dimensions.get('window').height)
+      console.log(100*actualImageWidth/Dimensions.get('window').width)
       const cropOptions = {
-        cropOffsetX: 100, 
-        cropOffsetY: 0,
-        cropWidth: 480, 
-        cropHeight: 480,
+        cropOffsetX: (width-actualImageWidth)/2, 
+        cropOffsetY: 100*actualImageWidth/Dimensions.get('window').width,
+        cropWidth: actualImageWidth, 
+        cropHeight: actualImageWidth,
       }
+    /*const cropOptions = {
+
+        cropOffsetX: 0, 
+        cropOffsetY: 0,
+        cropWidth: width, 
+        cropHeight: height,
+      }*/
       console.log('Path to video: ' + data.uri);
       ProcessingManager.crop(data.uri, cropOptions).then((data) => {
         console.log('Path to video: ' + data);
@@ -173,16 +186,16 @@ const styles = StyleSheet.create({
   blackoutTop: {
     position: 'absolute',
     top: 0,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: 150
+    height: 100
   },
   blackoutBottom: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height-150-(Dimensions.get('window').width)
+    height: Dimensions.get('window').height-100-(Dimensions.get('window').width)
   }
 });
 
