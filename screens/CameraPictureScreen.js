@@ -81,13 +81,15 @@ class CameraPictureScreen extends React.Component {
     const options = {
       quality: 0.8,
       forceUpOrientation: true,
-      fixOrientation: true
+      fixOrientation: true,
+      width: 1920,
     };
     try {
       const data = await this.camera.takePictureAsync(options);
+      console.log(data.width + '' + data.height)
       const cropData = {
-        offset: {x: 0, y: 150},
-        size: {width: Dimensions.get('window').width, height: Dimensions.get('window').width},
+        offset: {x: 0, y: 150*data.width/Dimensions.get('window').width},
+        size: {width: data.width, height: data.width},
       };
       ImageEditor.cropImage(data.uri, 
         cropData, (croppedUri) => {
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
+    width: Dimensions.get('window').width,
     alignItems: 'center'
   },
   icon: {
@@ -137,14 +140,14 @@ const styles = StyleSheet.create({
   blackoutTop: {
     position: 'absolute',
     top: 0,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     width: Dimensions.get('window').width,
     height: 150
   },
   blackoutBottom: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height-150-(Dimensions.get('window').width)
   }

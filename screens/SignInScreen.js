@@ -15,10 +15,11 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
 
 import { LoginManager } from 'react-native-fbsdk'
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
@@ -28,19 +29,83 @@ class SignInScreen extends React.Component {
         password: '',
     }
 
-    handleFacebookLogin () {
-      LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
-        function (result) {
-          if (result.isCancelled) {
-            console.log('Login cancelled')
-          } else {
-            console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+    facebookLoginAPI(callback) {
+        LoginManager.logInWithReadPermissions(['public_profile', 'user_friends', 'email'])
+        .then((FBloginResult) => {
+          if (FBloginResult.isCancelled) {
+            throw new Error('Login cancelled');
           }
-        },
-        function (error) {
-          console.log('Login fail with error: ' + error)
+    
+          if (FBloginResult.deniedPermissions) {
+            throw new Error('We need the requested permissions');
+          }
+    
+          AccessToken.getCurrentAccessToken()
+          .then((data) => {
+            callback(data.accessToken);
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    async registerFacebookAccount(userToken) {
+    this.props.dispatch( async (dispatch) => {
+      try {
+        let response = await fetch(FRONT_SERVICE_URL + '/registerFacebookAccount', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: userToken,
+          }),
+        })
+        let responseJson = await response.json();
+        if (responseJson.hasOwnProperty('error')) {
+          console.error(responseJson.error);
         }
-      )
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  }
+
+    handleFacebookLogin = async () => {
+      this.props.dispatch( async (dispatch) => {
+      this.facebookLoginAPI(async (accessToken) => {
+        this.registerFacebookAccount(accessToken);
+        const request = new GraphRequest(
+          '/me',
+          {
+            parameters: {
+              fields: {
+                string: 'id,name,email,picture.width(100).height(100)',
+              },
+            },
+          },
+          async (error, result) => {
+            if (result) {
+              const profile = result
+              console.log(profile);
+              await AsyncStorage.setItem('userToken', accessToken);
+              await AsyncStorage.setItem('tokenProvider', "facebook");
+              dispatch(fetchUserToken(accessToken, profile.name, profile.email, profile.picture.data.url, true));
+              this.props.navigation.navigate('App');
+            } else {
+              console.log(error);
+            }
+          }
+        )
+  
+        new GraphRequestManager().addRequest(request).start();
+      });
+    });
     }
   
     render() {
@@ -53,10 +118,10 @@ class SignInScreen extends React.Component {
             <Text style={styles.formText}>Password</Text>
             <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
             <TouchableOpacity style={styles.submitButton} onPress={this._signInAsync}>
-                <Text style={styles.buttonText}>Sign In</Text>
+                <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.submitButton} onPress={this.handleFacebookLogin}>
-                <Text style={styles.buttonText}>Facebook</Text>
+            <TouchableOpacity onPress={this.handleFacebookLogin} style={[styles.submitButton, {backgroundColor: '#4267b2', fontFamily: 'Helvetica Neue'}]}>
+                <Text style={styles.buttonText}>Sign in with Facebook</Text>
             </TouchableOpacity>
             <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={[styles.signUpText, {color: 'black'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Don't have an account? </Text>
@@ -86,7 +151,8 @@ class SignInScreen extends React.Component {
           
         } else {
           await AsyncStorage.setItem('userToken', responseJson.jwt);
-          dispatch(fetchUserToken(responseJson.jwt, responseJson.firstName, responseJson.lastName, responseJson.email));
+          await AsyncStorage.setItem('tokenProvider', "proxily");
+          dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
           this.props.navigation.navigate('App');
         }
       } catch (error) {
@@ -145,7 +211,6 @@ const styles = StyleSheet.create({
     const {userToken} = state.main;
     return {userToken};
   }
-
   
   export default connect(mapStateToProps)(SignInScreen);
   

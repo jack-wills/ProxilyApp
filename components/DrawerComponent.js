@@ -10,12 +10,41 @@ import {
   Image 
 } from 'react-native'
 import {connect} from 'react-redux';
+import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 class DrawerComponent extends React.Component {
-
+  async facebookLogout() {
+    var current_access_token = '';
+    await AccessToken.getCurrentAccessToken().then(async (data) => {
+      current_access_token = data.accessToken.toString();
+    }).then(async () => {
+      let logout =
+      await new GraphRequest(
+        "me/permissions/",
+        {
+            accessToken: current_access_token,
+            httpMethod: 'DELETE'
+        },
+        async (error, result) => {
+            if (error) {
+                console.log('Error fetching data: ' + error.toString());
+            } else {
+                await LoginManager.logOut();
+            }
+        });
+      await new GraphRequestManager().addRequest(logout).start();
+    })
+    .catch(error => {
+      console.log(error)
+    });      
+  }
     async signOut(navigation) {
         try {
-            await AsyncStorage.removeItem('userToken');
+          if (this.props.isFacebook) {
+            await this.facebookLogout();
+          }
+          await AsyncStorage.removeItem('userToken');
+          await AsyncStorage.removeItem('tokenProvider');
         } catch(error) {
             console.log('error: ', error);
         }
@@ -28,8 +57,8 @@ class DrawerComponent extends React.Component {
       <View style={styles.drawerHeader}>
           <Image
             style={styles.drawerImage}
-            source={require('../assets/mountains.jpg')} />
-          <Text style={styles.drawerHeaderText}>{this.props.firstName} {this.props.lastName}</Text>
+            source={{uri: this.props.profilePicture}} />
+          <Text style={styles.drawerHeaderText}>{this.props.name}</Text>
       </View>
       <View style={styles.container}>
         <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Feed')}>
@@ -46,8 +75,8 @@ class DrawerComponent extends React.Component {
           </Text>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
-        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => {this.signOut();
-                                                                        navigation.navigate('AuthLoading');}}>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={async () => {await this.signOut();
+                                                                              navigation.navigate('AuthLoading');}}>
           <Text
             style={styles.drawerItem}>
             Sign Out
@@ -105,8 +134,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-  const {userToken, firstName, lastName} = state.main;
-  return {userToken, firstName, lastName};
+  const {userToken, name, profilePicture, isFacebook} = state.main;
+  return {userToken, name, profilePicture, isFacebook};
 }
 
 export default connect(mapStateToProps)(DrawerComponent);

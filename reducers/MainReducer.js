@@ -16,9 +16,10 @@ const mainReducer = (state = INITAL_STATE, action) => {
             return {
                 ...state,
                 userToken: action.payload.userToken,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
+                name: action.payload.name,
                 email: action.payload.email,
+                profilePicture: action.payload.picture,
+                isFacebook: action.payload.isFacebook,
             };
         case UPDATE_VIDEO_TIME:
             state.video
