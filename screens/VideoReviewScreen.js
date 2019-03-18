@@ -9,14 +9,29 @@ import {
   View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {connect} from 'react-redux';
+import { StackActions, NavigationActions } from 'react-navigation';
+import LottieView from 'lottie-react-native';
 import Video from 'react-native-video'
 
-class PictureReviewScreen extends React.Component {
-  state = {
-    
-  }
+import {FRONT_SERVICE_URL} from '../Constants';
 
-  submitImage = async () => {
+class VideoReviewScreen extends React.Component {
+  state = {
+    processing: false,
+    success: false,
+    animationFinished: false,
+  }
+  submitButtonWidth = new Animated.Value(1);
+
+  toggleSubmitButton = () => {
+    Animated.timing(this.submitButtonWidth, {
+        toValue: this.submitButtonWidth._value === 1 ? 0 : 1,
+        duration: 400
+    }).start();
+  };
+  submitVideo = async () => {
+    this.toggleSubmitButton();
+    this.setState({processing: true})
     let uploadUri = ""
     await fetch(FRONT_SERVICE_URL + '/uploadItem', {
         method: 'POST',
@@ -28,7 +43,7 @@ class PictureReviewScreen extends React.Component {
           latitude: "51.923147",
           longitude: "-0.226299",
           jwt: this.props.userToken,
-          mediaType: "image",
+          mediaType: "video",
         }),
       })
       .then((response) => response.json())
@@ -36,14 +51,13 @@ class PictureReviewScreen extends React.Component {
         if (responseJson.hasOwnProperty('error')) {
           console.error(responseJson.error);
         } else {
-          uploadUri = responseJson;
-          this.setState({comments: responseJson})
+          uploadUri = responseJson.uploadUrl;
         }
       })
       .catch((error) => {
         console.error(error);
       });
-      file = {uri: this.props.navigation.state.params.imageUri, type: "string", name: "string"};
+      file = {uri: this.props.navigation.state.params.videoUri, type: "video/mp4", name: "string"};
       const xhr = new XMLHttpRequest();
       xhr.upload.addEventListener('progress', (e) => {
         // handle notifications about upload progress: e.loaded / e.total
@@ -51,12 +65,13 @@ class PictureReviewScreen extends React.Component {
         console.log(e);
         
       }, false);
-      xhr.onreadystatechange = function () {
+      xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             // Successfully uploaded the file.
             console.log('successfully uploaded presignedurl');
             console.log(xhr);
+            this.setState({processing: false, success: true})
             
           } else {
             // The file could not be uploaded.
@@ -67,13 +82,66 @@ class PictureReviewScreen extends React.Component {
         }
       };
       xhr.open('PUT', uploadUri);
-      xhr.setRequestHeader('X-Amz-ACL', 'public-read');
       // for text file: text/plain, for binary file: application/octet-stream
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.send(file);
   }
   
   render() {
+    if (this.state.animationFinished) {
+      let resetAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'CameraVideo' })
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      this.props.navigation.navigate('Feed');
+    }
+    let button = (
+      <View style={styles.submitButton} >
+          <TouchableOpacity onPress={this.submitVideo}>
+              <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+      </View>
+    );
+    if (this.state.processing) {
+      button = (
+        <View style={styles.submitButton}>
+          <LottieView
+            ref={animation => {
+              if (animation) {
+                animation.play(0, 44);
+              }
+            }}
+            source={require('../assets/loading.json')}
+          />
+        </View>
+      );
+    }
+    if (this.state.success) {
+      button = (
+        <View style={styles.submitButton}>
+          <LottieView
+            ref={animation => {
+              if (animation) {
+                this.animation = animation;
+                animation.play(44, 95);
+              }
+            }}
+            onAnimationFinish={() => {
+              this.setState({animationFinished: true})
+            }}
+            loop={false}
+            source={require('../assets/loading.json')}
+          />
+        </View>
+      );
+    }
+    const buttonWidth = this.submitButtonWidth.interpolate({
+        inputRange: [0, 1],
+        outputRange: [60, Dimensions.get('window').width*0.7]
+    });
     return (
       <View style={styles.container}>
         <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-50, left: 20}]}>
@@ -97,16 +165,11 @@ class PictureReviewScreen extends React.Component {
           ignoreSilentSwitch={"obey"}
 
         />
-        <SafeAreaView style={{flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#F5FCFF',}}>
-        <View style={[styles.submitButton, {bottom: 130}]}>
-            <TouchableOpacity style={styles.submitButton} onPress={this.submitImage}>
-                <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Animated.View style={[styles.submitButton,{width: buttonWidth}]} >
+            {button}
+          </Animated.View>
         </View>
-        </SafeAreaView>
       </View>
     );
   }
@@ -116,17 +179,19 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    overflow: 'hidden',
-    backgroundColor: '#D7E7ED'
+    backgroundColor: '#D7E7ED',
+    alignItems: 'center',
   },
   iconContainer: {
     position: 'absolute'
   },
   submitButton: {
-      backgroundColor: '#e74c3c',
-      borderRadius: 35,
-      width: Dimensions.get('window').width*0.7,
-      position: 'absolute'
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e74c3c',
+    borderRadius: 35,
+    borderRadius: 30,
+    height: 60,
   },
   buttonText: {
       fontFamily: 'Avenir',
@@ -142,4 +207,4 @@ const mapStateToProps = (state) => {
   return {userToken};
 }
 
-export default connect(mapStateToProps)(PictureReviewScreen);
+export default connect(mapStateToProps)(VideoReviewScreen);

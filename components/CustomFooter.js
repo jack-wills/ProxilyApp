@@ -190,8 +190,6 @@ export default class CustomFooter extends React.Component {
                     shadowColor: 'grey',
                     shadowOffset: {height: -2, width: 0},
                     shadowOpacity: 0.5,
-                    overflow: 'hidden'
-                    
                 }}>
                         <IonIcon name="md-add" size={35} color="#F8F8F8"/>
                     </Animated.View>

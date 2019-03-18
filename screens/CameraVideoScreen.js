@@ -77,7 +77,7 @@ class CameraVideoScreen extends React.Component {
           <View style={styles.blackoutBottom}/>
           {button}
           <View style={[styles.iconContainer, {top: 30, left: 30}]}>
-            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
+            <TouchableOpacity style={styles.icon} onPress={() => { this.stopRecording(); this.props.navigation.navigate('Feed') }}>
               <Icon name="arrow-left" size={40} color="white"/>
             </TouchableOpacity>
           </View>
