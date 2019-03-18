@@ -9,6 +9,7 @@ import {
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+  import LottieView from 'lottie-react-native';
   import {connect} from 'react-redux';
 
 class CameraPictureScreen extends React.Component {
@@ -53,9 +54,17 @@ class CameraPictureScreen extends React.Component {
               <Icon name="arrow-left" size={40} color="white"/>
             </TouchableOpacity>
           </View>
+          <LottieView
+            style={{top: 80-Dimensions.get('window').height/2, left: 75, marginBottom: 7}}
+            ref={animation => {
+              this.animation = animation;
+            }}
+            loop={false}
+            source={require('../assets/switchCamera.json')}
+          />
           <View style={[styles.iconContainer, {top: 40, right: 90}]}>
             <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
-              <Icon name="sync" size={40} color="white"/>
+              <View style={{width:40, height:40}}/>
             </TouchableOpacity>
           </View>
           <View style={[styles.iconContainer, {top: 40, right: 30}]}>
@@ -103,6 +112,11 @@ class CameraPictureScreen extends React.Component {
     }
   };
   switchCamera = async () => {
+    if (this.state.frontCamera) {
+      this.animation.play(130, 145);
+    } else {
+      this.animation.play(60, 70);
+    }
     this.setState({frontCamera: !this.state.frontCamera})
   };
   switchFlash = async () => {

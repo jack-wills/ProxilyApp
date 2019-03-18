@@ -10,6 +10,7 @@ import {
   import { RNCamera } from 'react-native-camera';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
   import {connect} from 'react-redux';
+  import LottieView from 'lottie-react-native';
   import { ProcessingManager } from 'react-native-video-processing';
 
 class CameraVideoScreen extends React.Component {
@@ -81,9 +82,17 @@ class CameraVideoScreen extends React.Component {
               <Icon name="arrow-left" size={40} color="white"/>
             </TouchableOpacity>
           </View>
-          <View style={[styles.iconContainer, {top: 30, right: 70}]}>
+          <LottieView
+            style={{top: 80-Dimensions.get('window').height/2, left: 75, marginBottom: 15}}
+            ref={animation => {
+              this.animation = animation;
+            }}
+            loop={false}
+            source={require('../assets/switchCamera.json')}
+          />
+          <View style={[styles.iconContainer, {top: 40, right: 90}]}>
             <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
-              <Icon name="sync" size={40} color="white"/>
+              <View style={{width:40, height:40}}/>
             </TouchableOpacity>
           </View>
           <View style={[styles.iconContainer, {top: 30, right: 30}]}>
@@ -115,14 +124,6 @@ class CameraVideoScreen extends React.Component {
         cropWidth: actualImageWidth, 
         cropHeight: actualImageWidth,
       }
-    /*const cropOptions = {
-
-        cropOffsetX: 0, 
-        cropOffsetY: 0,
-        cropWidth: width, 
-        cropHeight: height,
-      }*/
-      console.log('Path to video: ' + data.uri);
       ProcessingManager.crop(data.uri, cropOptions).then((data) => {
         console.log('Path to video: ' + data);
         this.setState({ processing: false });
@@ -151,6 +152,11 @@ class CameraVideoScreen extends React.Component {
       }
   }
   switchCamera = async () => {
+    if (this.state.frontCamera) {
+      this.animation.play(130, 145);
+    } else {
+      this.animation.play(60, 70);
+    }
     this.setState({frontCamera: !this.state.frontCamera})
   };
   switchFlash = async () => {
