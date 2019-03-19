@@ -3,7 +3,7 @@ import React from "react";
 import { Animated, Dimensions, View, SafeAreaView, StyleSheet, TouchableOpacity, TouchableHighlight } from "react-native";
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import IonIcon from 'react-native-vector-icons/Ionicons'
-const SIZE = 70;
+const SIZE = 65;
 
 export default class CustomFooter extends React.Component {
     mode = new Animated.Value(0);
@@ -91,7 +91,6 @@ export default class CustomFooter extends React.Component {
                             this.toggleView();
                         }}
                         style={{
-                            //position: 'absolute',
                             alignItems: 'center',
                             justifyContent: 'center',
                             width: SIZE / 2,
@@ -117,7 +116,6 @@ export default class CustomFooter extends React.Component {
                             this.toggleView();
                         }}
                         style={{
-                            //position: 'absolute',
                             alignItems: 'center',
                             justifyContent: 'center',
                             width: SIZE / 2,
@@ -143,7 +141,6 @@ export default class CustomFooter extends React.Component {
                             this.toggleView();
                         }}
                         style={{
-                            //position: 'absolute',
                             alignItems: 'center',
                             justifyContent: 'center',
                             width: SIZE / 2,
@@ -229,24 +226,23 @@ export default class CustomFooter extends React.Component {
             </View>
             <SafeAreaView
             style={{
-                height: 60,
+                height: Dimensions.get('window').height*0.08,
                 backgroundColor: '#E3e3e3',
                 flexDirection: 'row',
+                justifyContent: 'space-around',
                 shadowRadius: 4,
                 shadowColor: 'grey',
                 shadowOffset: {height: -2, width: 0},
                 shadowOpacity: 0.5
 
-            }}
-            >
-            <View
-            style={{
-                height: 60,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
             }}>
             <TouchableHighlight
-                onPress={() => jumpTo(routes[0].key)}
+                onPress={() => {
+                    if (this.mode._value === 2) {
+                        this.toggleView();
+                    }
+                    jumpTo(routes[0].key);
+                }}
                 underlayColor={'#00b489'}
                 style={[styles.tabButton, {
                     paddingRight: 20, 
@@ -255,7 +251,12 @@ export default class CustomFooter extends React.Component {
             <Icon name="home" color={index === 0 ? '#e74c3c' : '#555'} size={30} />
             </TouchableHighlight>
             <TouchableHighlight
-                onPress={() => jumpTo(routes[1].key)}
+                onPress={() => {
+                    if (this.mode._value === 2) {
+                        this.toggleView();
+                    }
+                    jumpTo(routes[1].key);
+                }}
                 underlayColor={'#00b489'}
                 style={[styles.tabButton, {
                     paddingLeft: 20, 
@@ -265,7 +266,6 @@ export default class CustomFooter extends React.Component {
             >
             <Icon name="directions" color={index === 1 ? '#e74c3c' : '#555'} size={30} />
             </TouchableHighlight>
-            </View>
             
             </SafeAreaView>
             </View>

@@ -55,7 +55,6 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
       inactiveTintColor: 'black',
       style: {
         backgroundColor: '#A4D7CE',
-        //height: Dimensions.get('window').height*0.06,
         shadowRadius: 4,
         shadowColor: 'grey',
         shadowOffset: {height: 2, width: 0},
@@ -66,6 +65,7 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
       },
       tabStyle: {
         fontFamily: 'Avenir',
+        height: Dimensions.get('window').height*0.07,
       },
       indicatorStyle: {
         backgroundColor: '#FF1654',

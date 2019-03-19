@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {
+  Animated,
+  TouchableWithoutFeedback,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
@@ -15,7 +17,43 @@ import {
 class CameraPictureScreen extends React.Component {
   state = {
     frontCamera: false,
-    flash: RNCamera.Constants.FlashMode.off
+    flash: RNCamera.Constants.FlashMode.off,
+    autoFocusPoint: {
+      normalized: { x: 0.5, y: 0.5 }, // normalized values required for autoFocusPointOfInterest
+      drawRectPosition: {
+        x: Dimensions.get('window').width * 0.5 - 32,
+        y: Dimensions.get('window').height * 0.5 - 32,
+      },
+    },
+  }
+  focusPointOpacity = new Animated.Value(0);
+
+  toggleFocusPoint = () => {
+    Animated.timing(this.focusPointOpacity, {
+      toValue: this.focusPointOpacity._value === 1 ? 0 : 1,
+      duration: 750
+    }).start();
+};
+  touchToFocus(event) {
+    const { pageX, pageY } = event.nativeEvent;
+    const screenWidth = Dimensions.get('window').width;
+    const screenHeight = Dimensions.get('window').height;
+    const isPortrait = screenHeight > screenWidth;
+
+    let x = pageX / screenWidth;
+    let y = pageY / screenHeight;
+    // Coordinate transform for portrait. See autoFocusPointOfInterest in docs for more info
+    if (isPortrait) {
+      x = pageY / screenHeight;
+      y = -(pageX / screenWidth) + 1;
+    }
+    this.toggleFocusPoint();
+    this.setState({
+      autoFocusPoint: {
+        normalized: { x, y },
+        drawRectPosition: { x: pageX, y: pageY },
+      },
+    });
   }
 
   componentDidMount() {
@@ -30,6 +68,15 @@ class CameraPictureScreen extends React.Component {
 
   render() {
     if (!this.state.focusedScreen) return null;
+
+    const drawFocusRingPosition = {
+      top: this.state.autoFocusPoint.drawRectPosition.y - 32,
+      left: this.state.autoFocusPoint.drawRectPosition.x - 32,
+    };
+    const focusPointOpacity = this.focusPointOpacity.interpolate({
+        inputRange: [0, 0.35, 0.65, 1],
+        outputRange: [0, 0.7, 0.7, 0]
+    });
     return (
       <View style={styles.container}>
         <RNCamera
@@ -41,6 +88,7 @@ class CameraPictureScreen extends React.Component {
           flashMode={this.state.flash}
           permissionDialogTitle={'Permission to use camera'}
           permissionDialogMessage={'We need your permission to use your camera.'}
+          autoFocusPointOfInterest={this.state.autoFocusPoint.normalized}
         >
           <View style={styles.blackoutTop}/>
           <View style={styles.blackoutBottom}/>
@@ -49,27 +97,33 @@ class CameraPictureScreen extends React.Component {
               <Icon name="camera" size={40} color="white"/>
             </TouchableOpacity>
           </View>
-          <View style={[styles.iconContainer, {top: 40, left: 20}]}>
+          <View style={[styles.iconContainer, {top: 30, left: 20}]}>
             <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
               <Icon name="arrow-left" size={40} color="white"/>
             </TouchableOpacity>
           </View>
+          <View style={[styles.iconContainer, {top: 30, right: 30}]}>
+            <TouchableOpacity style={styles.icon} onPress={this.switchFlash}>
+              <Icon name={this.getFlashIcon()} size={40} color="white"/>
+            </TouchableOpacity>
+          </View>
           <LottieView
-            style={{top: 80-Dimensions.get('window').height/2, left: 75, marginBottom: 7}}
+          style={{position: 'absolute',top: (80-Dimensions.get('window').height/2), left: 75, marginBottom: 15}}
             ref={animation => {
               this.animation = animation;
             }}
             loop={false}
             source={require('../assets/switchCamera.json')}
           />
-          <View style={[styles.iconContainer, {top: 40, right: 90}]}>
+          <View style={{height: Dimensions.get('window').width, width: Dimensions.get('window').width, paddingTop: 100}}>
+            <Animated.View style={[styles.autoFocusBox, drawFocusRingPosition, {opacity: focusPointOpacity}]} />
+            <TouchableWithoutFeedback  onPress={this.touchToFocus.bind(this)}>
+              <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}} />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={[styles.iconContainer, {top: 30, right: 90}]}>
             <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
               <View style={{width:40, height:40}}/>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.iconContainer, {top: 40, right: 30}]}>
-            <TouchableOpacity style={styles.icon} onPress={this.switchFlash}>
-              <Icon name={this.getFlashIcon()} size={40} color="white"/>
             </TouchableOpacity>
           </View>
         </RNCamera>
@@ -139,7 +193,7 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     width: Dimensions.get('window').width,
     alignItems: 'center'
   },
@@ -156,6 +210,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
     height: 100
+  },
+  autoFocusBox: {
+    position: 'absolute',
+    height: 64,
+    width: 64,
+    borderRadius: 32,
+    borderWidth: 2,
+    borderColor: 'white',
+    shadowRadius: 32,
+    shadowColor: 'grey',
+    shadowOffset: {height: 0, width: 0},
+    shadowOpacity: 1,
   },
   blackoutBottom: {
     position: 'absolute',
