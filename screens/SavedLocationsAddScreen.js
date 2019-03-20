@@ -121,9 +121,9 @@ export default class SavedLocationsAddScreen extends React.Component {
           </View>
           <Text style={{position: 'absolute', bottom:135, zIndex: this.state.needEnterName ? 100 : -1, color: 'red', fontFamily: 'Avenir', fontSize: 16}}>Please enter a name for the location</Text>
           <TextInput style={[styles.bubble, styles.latlng, {bottom: 90, borderColor: 'red', borderWidth: this.state.needEnterName ? 1 : 0}]} placeholder={"Location Name"} maxLength={14} onChangeText={(text) => this.setState({name: text})}/>
-          <TouchableOpacity style={[styles.bubble, styles.latlng]} onPress={() => { 
+          <TouchableOpacity style={[styles.bubble, styles.latlng]} onPress={async () => { 
             if (this.state.name) {
-              this.props.navigation.state.params.addSavedLocation(this.state.region.latitude, this.state.region.longitude, this.state.name);
+              await this.props.navigation.state.params.addSavedLocation(this.state.region.latitude, this.state.region.longitude, this.state.name);
               this.setState({needEnterName: false});
               this.props.navigation.goBack();
             } else {

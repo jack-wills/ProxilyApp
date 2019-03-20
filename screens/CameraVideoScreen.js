@@ -101,7 +101,7 @@ class CameraVideoScreen extends React.Component {
           onPress={this.stopRecording.bind(this)}
           style={styles.icon}
         >
-          <Image source={require('../assets/camera.png')} style={{
+          <Image source={require('../assets/cameraRecording.png')} style={{
           width: 90,
           height: 90,}} 
           resizeMode="contain"/>

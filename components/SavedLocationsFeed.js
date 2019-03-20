@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 class MyListItem extends React.PureComponent {
   _onPress = () => {
-    this.props.navigateToFeed(this.props.lat, this.props.long, this.props.name);
+    this.props.navigateToFeed(this.props.latitude, this.props.longitude, this.props.name);
   };
 
   _deleteItem = () => {
@@ -38,9 +38,9 @@ class MyListItem extends React.PureComponent {
                       zoomEnabled={false}
                       pitchEnabled={false}
                       rotateEnabled={false}
-                      initialRegion={{
-                          latitude: this.props.lat,
-                          longitude: this.props.long,
+                      region={{
+                          latitude: this.props.latitude,
+                          longitude: this.props.longitude,
                           latitudeDelta: 0.15,
                           longitudeDelta: 0.15,
                       }}
@@ -73,8 +73,8 @@ export default class SavedLocationsFeed extends React.Component {
   _renderItem = ({item}) => (
       <MyListItem
       id={item.id}
-      lat={item.lat}
-      long={item.long}
+      latitude={item.latitude}
+      longitude={item.longitude}
       name={item.name}
       navigateToFeed={this.props.navigateToFeed}
       deleteItem={this.props.deleteItem}

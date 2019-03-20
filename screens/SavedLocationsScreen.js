@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Button,
   Image,
   SafeAreaView,
@@ -9,54 +10,128 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import {connect} from 'react-redux';
 
 import SavedLocationsFeed from '../components/SavedLocationsFeed'
+import {FRONT_SERVICE_URL} from '../Constants';
 
-export default class SavedLocationsScreen extends React.Component {
+class SavedLocationsScreen extends React.Component {
   state = {
-    data: [{
-      id: 1,
-      lat: 37.78825,
-      long: -122.4324,
-      name: 'London'
-    }, {
-      id: 2,
-      lat: 37.78825,
-      long: -122.4324,
-      name: 'Home'
-    },{
-      id: 3,
-      lat: 51.923187,
-      long: -0.226379,
-      name: 'Should Work'
-    }]
+    data: []
   }
-  _navigateToFeed = (lat, long, name) => {
+  _navigateToFeed = (latitude, longitude, name) => {
     this.props.navigation.navigate('SavedLocationsFeed',{
-        latitude: lat,
-        longitude: long,
+        latitude: latitude,
+        longitude: longitude,
         name: name,
     })
   }
 
-  _addSavedLocation = (latitude, longitude, name) => {
-    this.state.data.push({
-      id: this.state.data.length+1,
-      lat: latitude,
-      long: longitude,
-      name: name,
+  _getSavedLocations = () => {
+    fetch(FRONT_SERVICE_URL + '/getSavedLocations', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jwt: this.props.userToken,
+      }),
     })
-    //TODO Add call to endpoint
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        console.log(responseJson.error)
+      } else {
+        this.setState({data: responseJson});
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
-  _deleteSavedLocation = (index) => {
+  componentDidMount() {
+    this._getSavedLocations();
+  }
+
+  _addSavedLocation = async (latitude, longitude, name) => {
+    await fetch(FRONT_SERVICE_URL + '/putSavedLocation', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude: latitude,
+        longitude: longitude,
+        name: name,
+        jwt: this.props.userToken,
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        console.log(responseJson.error)
+      } else {
+        this.state.data.push({
+          id: responseJson.id,
+          latitude: latitude,
+          longitude: longitude,
+          name: name,
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  _deleteSavedLocation = async (id) => {
     var array = [...this.state.data];
-    array.splice(index-1, 1);
-    this.setState({data: array})
-    //TODO Add call to endpoint
+    let index;
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].id == id) {
+        index = i;
+        break;
+      }
+    }
+    await fetch(FRONT_SERVICE_URL + '/removeSavedLocation', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+        jwt: this.props.userToken,
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        console.log(responseJson.error)
+      } else {
+        array.splice(index, 1);
+        this.setState({data: array})
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   render() {
+    let feed;
+    if (!this.state.data.length) {
+      feed = (
+          <ActivityIndicator size="large" style={{marginTop: 20}}/>
+      );
+    } else {
+      feed = (
+        <SavedLocationsFeed data={this.state.data} navigateToFeed={this._navigateToFeed} deleteItem={this._deleteSavedLocation}/>
+      );
+    }
     return (
       <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
         <View style={{flexDirection:'row', 
@@ -81,7 +156,7 @@ export default class SavedLocationsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <SavedLocationsFeed data={this.state.data} navigateToFeed={this._navigateToFeed} deleteItem={this._deleteSavedLocation}/>
+        {feed}
         </View>
       </SafeAreaView>
     );
@@ -105,3 +180,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
 });
+
+const mapStateToProps = (state) => {
+  const {userToken} = state.main;
+  return {userToken};
+}
+
+export default connect(mapStateToProps)(SavedLocationsScreen);
