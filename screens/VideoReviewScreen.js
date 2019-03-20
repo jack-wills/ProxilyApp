@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Animated,
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
@@ -99,43 +100,37 @@ class VideoReviewScreen extends React.Component {
       this.props.navigation.navigate('Feed');
     }
     let button = (
-      <View style={styles.submitButton} >
-          <TouchableOpacity onPress={this.submitVideo}>
-              <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-      </View>
+        <TouchableOpacity onPress={this.submitVideo}>
+            <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
     );
     if (this.state.processing) {
       button = (
-        <View style={styles.submitButton}>
-          <LottieView
-            ref={animation => {
-              if (animation) {
-                animation.play(0, 44);
-              }
-            }}
-            source={require('../assets/loading.json')}
-          />
-        </View>
+        <LottieView
+          ref={animation => {
+            if (animation) {
+              animation.play(0, 44);
+            }
+          }}
+          source={require('../assets/loading.json')}
+        />
       );
     }
     if (this.state.success) {
       button = (
-        <View style={styles.submitButton}>
-          <LottieView
-            ref={animation => {
-              if (animation) {
-                this.animation = animation;
-                animation.play(44, 95);
-              }
-            }}
-            onAnimationFinish={() => {
-              this.setState({animationFinished: true})
-            }}
-            loop={false}
-            source={require('../assets/loading.json')}
-          />
-        </View>
+        <LottieView
+          ref={animation => {
+            if (animation) {
+              this.animation = animation;
+              animation.play(44, 95);
+            }
+          }}
+          onAnimationFinish={() => {
+            this.setState({animationFinished: true})
+          }}
+          loop={false}
+          source={require('../assets/loading.json')}
+        />
       );
     }
     const buttonWidth = this.submitButtonWidth.interpolate({
@@ -144,7 +139,7 @@ class VideoReviewScreen extends React.Component {
     });
     return (
       <View style={styles.container}>
-        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-50, left: 20}]}>
+        <View style={[styles.iconContainer, {top: 40, left: 20}]}>
             <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
             <Icon name="close" size={40} color="white"/>
             </TouchableOpacity>
@@ -153,9 +148,9 @@ class VideoReviewScreen extends React.Component {
           source={{uri: this.props.navigation.state.params.videoUri}}
           style={{ 
             marginTop: 100,
-              width: Dimensions.get('window').width, 
-              height: Dimensions.get('window').width,
-            }}
+            width: Dimensions.get('window').width, 
+            height: Dimensions.get('window').width*8/7,
+          }}
           muted={false}
           paused={false}
           repeat={true}
@@ -177,6 +172,8 @@ class VideoReviewScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    bottom: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     backgroundColor: '#D7E7ED',
@@ -189,7 +186,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e74c3c',
-    borderRadius: 35,
     borderRadius: 30,
     height: 60,
   },

@@ -38,6 +38,13 @@ import VideoReviewScreen from './screens/VideoReviewScreen';
 
 const store = createStore(MainReducer, applyMiddleware(thunk, logger));
 
+function getTabBarHeight () {
+  let height = Dimensions.get('window').height*0.07;
+  if (height > 50) {
+    return 50;
+  }
+  return height;
+}
 const FeedTabNavigator = createMaterialTopTabNavigator({
   Popular: {
     screen: PopularVideoFeedScreen,
@@ -61,11 +68,12 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
         shadowOpacity: 1.0,
       },
       labelStyle: {
-        fontSize: 10 + (Dimensions.get('window').height/150),
+        fontSize: 10 + getTabBarHeight()/10,
       },
       tabStyle: {
         fontFamily: 'Avenir',
-        height: Dimensions.get('window').height*0.07,
+        height: getTabBarHeight(),
+        //height: 40,
       },
       indicatorStyle: {
         backgroundColor: '#FF1654',

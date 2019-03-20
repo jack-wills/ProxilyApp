@@ -138,7 +138,7 @@ class PictureReviewScreen extends React.Component {
     });
     return (
       <View style={styles.container}>
-        <View style={[styles.iconContainer, {bottom: Dimensions.get('window').height-80, left: 20}]}>
+        <View style={[styles.iconContainer, {top: 40, left: 20}]}>
           <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
             <Icon name="close" size={40} color="white"/>
           </TouchableOpacity>
@@ -146,7 +146,7 @@ class PictureReviewScreen extends React.Component {
         <Image source={{uri: this.props.navigation.state.params.imageUri}} style={{
             marginTop: 100,
             width: Dimensions.get('window').width,
-            height: Dimensions.get('window').width,}} 
+            height: Dimensions.get('window').width*8/7,}} 
             resizeMode="contain"/>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Animated.View style={[styles.submitButton,{width: buttonWidth}]} >

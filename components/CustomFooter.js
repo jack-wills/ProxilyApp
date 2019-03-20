@@ -3,7 +3,7 @@ import React from "react";
 import { Animated, Dimensions, View, SafeAreaView, StyleSheet, TouchableOpacity, TouchableHighlight } from "react-native";
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import IonIcon from 'react-native-vector-icons/Ionicons'
-const SIZE = 65;
+const SIZE = 60 + Dimensions.get('window').height*0.015;
 
 export default class CustomFooter extends React.Component {
     mode = new Animated.Value(0);
@@ -205,6 +205,10 @@ export default class CustomFooter extends React.Component {
             renderIcon,
             jumpTo
         } = this.props;
+        let height = Dimensions.get('window').height*0.08;
+        if (height > 65) {
+            height = 65;
+        }
         return (
             <View>
             <View
@@ -226,7 +230,7 @@ export default class CustomFooter extends React.Component {
             </View>
             <SafeAreaView
             style={{
-                height: Dimensions.get('window').height*0.08,
+                height: height,
                 backgroundColor: '#E3e3e3',
                 flexDirection: 'row',
                 justifyContent: 'space-around',
@@ -236,6 +240,9 @@ export default class CustomFooter extends React.Component {
                 shadowOpacity: 0.5
 
             }}>
+            <View style={{
+                height: height,
+                flexDirection: 'row',}}>
             <TouchableHighlight
                 onPress={() => {
                     if (this.mode._value === 2) {
@@ -266,7 +273,7 @@ export default class CustomFooter extends React.Component {
             >
             <Icon name="directions" color={index === 1 ? '#e74c3c' : '#555'} size={30} />
             </TouchableHighlight>
-            
+            </View>
             </SafeAreaView>
             </View>
         );
@@ -285,6 +292,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 2,
         left: (Dimensions.get('window').width-200)*0.5,
-        bottom: 13,
+        bottom: Dimensions.get('window').height*0.025,
     }
 });

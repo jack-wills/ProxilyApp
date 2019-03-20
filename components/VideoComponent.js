@@ -47,7 +47,7 @@ class VideoComponent extends React.Component {
             source={{uri: this.props.url}}
             style={{ 
                 width: videoWidth, 
-                height: videoWidth,
+                height: videoWidth*8/7,
                 borderRadius: 30,
               }}
             muted={false}

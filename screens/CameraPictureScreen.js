@@ -8,6 +8,7 @@ import {
   StyleSheet, 
   Text, 
   ImageEditor,
+  Image,
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -92,10 +93,27 @@ class CameraPictureScreen extends React.Component {
         >
           <View style={styles.blackoutTop}/>
           <View style={styles.blackoutBottom}/>
-          <View style={[styles.iconContainer, {bottom: 40}]}>
+          <LottieView
+          style={{position: 'absolute',top: (80-Dimensions.get('window').height/2), left: 75, marginBottom: 15}}
+            ref={animation => {
+              this.animation = animation;
+            }}
+            loop={false}
+            source={require('../assets/switchCamera.json')}
+          />
+          <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-45}]}>
             <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
-              <Icon name="camera" size={40} color="white"/>
+              <Image source={require('../assets/camera.png')} style={{
+              width: 90,
+              height: 90,}} 
+              resizeMode="contain"/>
             </TouchableOpacity>
+          </View>
+          <View style={{height: Dimensions.get('window').width*8/7, width: Dimensions.get('window').width, paddingTop: 100}}>
+            <Animated.View style={[styles.autoFocusBox, drawFocusRingPosition, {opacity: focusPointOpacity}]} />
+            <TouchableWithoutFeedback onPress={this.touchToFocus.bind(this)}>
+              <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width*8/7}} />
+            </TouchableWithoutFeedback>
           </View>
           <View style={[styles.iconContainer, {top: 30, left: 20}]}>
             <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
@@ -106,20 +124,6 @@ class CameraPictureScreen extends React.Component {
             <TouchableOpacity style={styles.icon} onPress={this.switchFlash}>
               <Icon name={this.getFlashIcon()} size={40} color="white"/>
             </TouchableOpacity>
-          </View>
-          <LottieView
-          style={{position: 'absolute',top: (80-Dimensions.get('window').height/2), left: 75, marginBottom: 15}}
-            ref={animation => {
-              this.animation = animation;
-            }}
-            loop={false}
-            source={require('../assets/switchCamera.json')}
-          />
-          <View style={{height: Dimensions.get('window').width, width: Dimensions.get('window').width, paddingTop: 100}}>
-            <Animated.View style={[styles.autoFocusBox, drawFocusRingPosition, {opacity: focusPointOpacity}]} />
-            <TouchableWithoutFeedback  onPress={this.touchToFocus.bind(this)}>
-              <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}} />
-            </TouchableWithoutFeedback>
           </View>
           <View style={[styles.iconContainer, {top: 30, right: 90}]}>
             <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
@@ -151,7 +155,7 @@ class CameraPictureScreen extends React.Component {
       const actualImageWidth = data.height*Dimensions.get('window').width/Dimensions.get('window').height;
       const cropData = {
         offset: {x: (data.width-actualImageWidth)/2, y: 100*actualImageWidth/Dimensions.get('window').width},
-        size: {width: actualImageWidth, height: actualImageWidth},
+        size: {width: actualImageWidth, height: actualImageWidth*8/7},
       };
       ImageEditor.cropImage(data.uri, 
         cropData, (croppedUri) => {
@@ -228,7 +232,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height-100-(Dimensions.get('window').width)
+    height: Dimensions.get('window').height-100-(Dimensions.get('window').width)*8/7
   }
 });
 

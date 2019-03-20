@@ -31,7 +31,7 @@ class FeedMediaItem extends React.Component {
             <View style={[styles.video, {overflow: 'hidden'}]}>
               <TouchableOpacity style={styles.video} onPress={this._onPressVideo}>
                   <VideoComponent 
-                      style={[styles.video, {overflow: 'hidden'}]} 
+                      style={styles.video} 
                       url={this.props.itemInfo.video.url}
                       navigation={this.props.navigation}
                   />
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     marginRight: -3,
     borderWidth: 1,
     borderColor: 'rgb(220,220,220)',
-    //width: 350,
+    width: Dimensions.get('window').width*0.96-2, 
+    height: (Dimensions.get('window').width*0.96-2)*8/7,
   },
   image: {
     flex: 1,
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(220,220,220)',
     width: Dimensions.get('window').width*0.96-2, 
-    height: Dimensions.get('window').width*0.96-2,
+    height: (Dimensions.get('window').width*0.96-2)*8/7,
     overflow: 'hidden',
   },
   textBox: {
