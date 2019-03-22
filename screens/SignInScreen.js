@@ -152,7 +152,7 @@ class SignInScreen extends React.Component {
         } else {
           await AsyncStorage.setItem('userToken', responseJson.jwt);
           await AsyncStorage.setItem('tokenProvider', "proxily");
-          dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
+          dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, responseJson.profilePicture, false));
           this.props.navigation.navigate('App');
         }
       } catch (error) {

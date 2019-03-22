@@ -115,7 +115,7 @@ class FeedItem extends React.Component {
                 <View style={styles.left}>
                   <Image
                     style={[styles.profileImage, {marginLeft: -10}]}
-                    source={require('../assets/mountains.jpg')} 
+                    source={{uri: this.props.item.submitterProfilePicture}} 
                   />
                   <View style={{marginLeft: 10, justifyContent: 'center'}}>
                     <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>

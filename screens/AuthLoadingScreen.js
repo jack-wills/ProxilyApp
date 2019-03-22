@@ -32,7 +32,7 @@ class AuthLoadingScreen extends React.Component {
           }),
         })
         let responseJson = await response.json();
-        dispatch(fetchUserToken(userToken, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
+        dispatch(fetchUserToken(userToken, responseJson.name, responseJson.email, responseJson.profilePicture, false));
 
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
