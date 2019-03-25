@@ -90,44 +90,47 @@ class CameraPictureScreen extends React.Component {
           permissionDialogTitle={'Permission to use camera'}
           permissionDialogMessage={'We need your permission to use your camera.'}
           autoFocusPointOfInterest={this.state.autoFocusPoint.normalized}
-        >
-          <View style={styles.blackoutTop}/>
-          <View style={styles.blackoutBottom}/>
-          <LottieView
-          style={{position: 'absolute',top: (80-Dimensions.get('window').height/2), left: 75, marginBottom: 15}}
-            ref={animation => {
-              this.animation = animation;
-            }}
-            loop={false}
-            source={require('../assets/switchCamera.json')}
-          />
-          <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-45}]}>
-            <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
-              <Image source={require('../assets/camera.png')} style={{
-              width: 90,
-              height: 90,}} 
-              resizeMode="contain"/>
-            </TouchableOpacity>
-          </View>
+          >
           <View style={{height: Dimensions.get('window').width*8/7, width: Dimensions.get('window').width, paddingTop: 100}}>
             <Animated.View style={[styles.autoFocusBox, drawFocusRingPosition, {opacity: focusPointOpacity}]} />
             <TouchableWithoutFeedback onPress={this.touchToFocus.bind(this)}>
               <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width*8/7}} />
             </TouchableWithoutFeedback>
           </View>
-          <View style={[styles.iconContainer, {top: 30, left: 20}]}>
-            <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
-              <Icon name="arrow-left" size={40} color="white"/>
-            </TouchableOpacity>
+          <View style={styles.blackoutTop}>
+          <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+
+            <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: Dimensions.get('window').width/2, paddingLeft: 20}}>
+              <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
+                <Icon name="arrow-left" size={40} color="white"/>
+              </TouchableOpacity>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', width: Dimensions.get('window').width/2, paddingRight: 20}}>
+              <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
+                <View style={{width: 50, height: 50, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', marginBottom: 6, marginRight: 5}}>
+                  <LottieView
+                    style={{height: 200}}
+                    ref={animation => {
+                      this.animation = animation;
+                    }}
+                    loop={false}
+                    source={require('../assets/switchCamera.json')}
+                    resizeMode='cover'
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.icon} onPress={this.switchFlash}>
+                <Icon name={this.getFlashIcon()} size={40} color="white"/>
+              </TouchableOpacity>
+            </View>
+            </SafeAreaView>
           </View>
-          <View style={[styles.iconContainer, {top: 30, right: 30}]}>
-            <TouchableOpacity style={styles.icon} onPress={this.switchFlash}>
-              <Icon name={this.getFlashIcon()} size={40} color="white"/>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.iconContainer, {top: 30, right: 90}]}>
-            <TouchableOpacity style={styles.icon} onPress={this.switchCamera}>
-              <View style={{width:40, height:40}}/>
+          <View style={styles.blackoutBottom}>
+            <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
+              <Image source={require('../assets/camera.png')} style={{
+              width: 90,
+              height: 90,}} 
+              resizeMode="contain"/>
             </TouchableOpacity>
           </View>
         </RNCamera>
@@ -201,10 +204,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     alignItems: 'center'
   },
-  icon: {
-    flex: 0,
-    alignSelf: 'center',
-  },
   iconContainer: {
     position: 'absolute'
   },
@@ -213,7 +212,10 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: 100
+    height: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   autoFocusBox: {
     position: 'absolute',
@@ -232,7 +234,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height-100-(Dimensions.get('window').width)*8/7
+    height: Dimensions.get('window').height-100-(Dimensions.get('window').width)*8/7,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

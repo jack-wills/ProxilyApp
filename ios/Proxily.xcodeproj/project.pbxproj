@@ -13,6 +13,11 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* ProxilyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ProxilyTests.m */; };
+		04244CAD2247CABF009AB9D2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1792D5ABA5714D93AC33A293 /* FBSDKCoreKit.framework */; };
+		04244CAF2247CABF009AB9D2 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253903935DE94D2489FB5697 /* FBSDKShareKit.framework */; };
+		04244CB12247CABF009AB9D2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7430BB631B4279852E7F57 /* FBSDKLoginKit.framework */; };
+		04244CB52247CE0A009AB9D2 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048953F2223A7E6000A7ED87 /* GPUImage.framework */; };
+		04244CB62247CE0A009AB9D2 /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048953F2223A7E6000A7ED87 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		047E2B6B223996F500CF5271 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; };
 		047E2B6C223996F500CF5271 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04895357223A76A400A7ED87 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04895356223A76A400A7ED87 /* CoreMedia.framework */; };
@@ -53,7 +58,6 @@
 		1665F0F4C9B847F7B5C8B8B5 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4942A843FF174DA3800367F8 /* EvilIcons.ttf */; };
 		258B431E3F344F3DAB594E76 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7A9194BA77541679F2EA7F9 /* FontAwesome5_Solid.ttf */; };
 		26C4DC4A63024B428B693658 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEEFCF54F07A4D89B747806B /* Zocial.ttf */; };
-		2AD6513423214ABE9FF361A2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1792D5ABA5714D93AC33A293 /* FBSDKCoreKit.framework */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -70,8 +74,6 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2F2667D6508442569C9ACD52 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F337432D914759AB5460E0 /* libRCTFBSDK.a */; };
 		387AC856B76641629E0C9797 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F170A15D19C47F5A23F08EA /* Foundation.ttf */; };
-		447F4F6CC7304FCB9DBAC83E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253903935DE94D2489FB5697 /* FBSDKShareKit.framework */; };
-		4B7C9B63544C4DC7B884FAD2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7430BB631B4279852E7F57 /* FBSDKLoginKit.framework */; };
 		4DA30BBEAB9E450D86F91E08 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0467C769A44541885E7BD2 /* libRNVectorIcons-tvOS.a */; };
 		4F8A7B22B6EE4421966024FD /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58C726B5FD5A4B63A1046D55 /* Ionicons.ttf */; };
 		647C135D9A354977A54823A5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31A6A4A8193D48E7B3969B5C /* Feather.ttf */; };
@@ -154,6 +156,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 6456441F1EB8DA9100672408;
 			remoteInfo = "RNFS-tvOS";
+		};
+		04244CB72247CE0A009AB9D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCE209E41943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
 		};
 		047E2B6D223996F500CF5271 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -529,6 +538,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				047E2B6C223996F500CF5271 /* Lottie.framework in Embed Frameworks */,
+				04244CB62247CE0A009AB9D2 /* GPUImage.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,10 +667,12 @@
 			files = (
 				048953F3223A80B000A7ED87 /* GPUImage.framework in Frameworks */,
 				04895362223A76D400A7ED87 /* MobileCoreServices.framework in Frameworks */,
+				04244CB12247CABF009AB9D2 /* FBSDKLoginKit.framework in Frameworks */,
 				0489535F223A76C600A7ED87 /* QuartzCore.framework in Frameworks */,
 				0489535D223A76BC00A7ED87 /* AVFoundation.framework in Frameworks */,
 				0489535B223A76B400A7ED87 /* OpenGLES.framework in Frameworks */,
 				04895359223A76AA00A7ED87 /* CoreVideo.framework in Frameworks */,
+				04244CAD2247CABF009AB9D2 /* FBSDKCoreKit.framework in Frameworks */,
 				04895357223A76A400A7ED87 /* CoreMedia.framework in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -676,7 +688,9 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D80C04DEE6D94F6084BC3C9E /* libRNCamera.a in Frameworks */,
+				04244CAF2247CABF009AB9D2 /* FBSDKShareKit.framework in Frameworks */,
 				E9946DA7849F49A38CF805D7 /* libRNGestureHandler.a in Frameworks */,
+				04244CB52247CE0A009AB9D2 /* GPUImage.framework in Frameworks */,
 				EF9126B414C4420FB485CDC5 /* libBVLinearGradient.a in Frameworks */,
 				71C009B2DABD48FB97B5DA04 /* libAirMaps.a in Frameworks */,
 				A6FA5782B3644935B3C3DB71 /* libRCTVideo.a in Frameworks */,
@@ -685,9 +699,6 @@
 				897474FA0D744C89B1F4A668 /* libLottie.a in Frameworks */,
 				D49D785887E448809EA34DC1 /* libLottieReactNative.a in Frameworks */,
 				047E2B6B223996F500CF5271 /* Lottie.framework in Frameworks */,
-				2AD6513423214ABE9FF361A2 /* FBSDKCoreKit.framework in Frameworks */,
-				447F4F6CC7304FCB9DBAC83E /* FBSDKShareKit.framework in Frameworks */,
-				4B7C9B63544C4DC7B884FAD2 /* FBSDKLoginKit.framework in Frameworks */,
 				A814F1E5EC8F468586AFE302 /* libRNFS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1184,6 +1195,7 @@
 			);
 			dependencies = (
 				047E2B6E223996F500CF5271 /* PBXTargetDependency */,
+				04244CB82247CE0A009AB9D2 /* PBXTargetDependency */,
 			);
 			name = Proxily;
 			productName = "Hello World";
@@ -1839,7 +1851,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1916,6 +1928,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Proxily */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		04244CB82247CE0A009AB9D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImageFramework;
+			targetProxy = 04244CB72247CE0A009AB9D2 /* PBXContainerItemProxy */;
 		};
 		047E2B6E223996F500CF5271 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2033,7 +2050,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8DJHU2P769;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/",
+					"$(PROJECT_DIR)/./ios/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
@@ -2071,7 +2091,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8DJHU2P769;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/",
+					"$(PROJECT_DIR)/./ios/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
