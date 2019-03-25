@@ -2,8 +2,10 @@ import React from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
+  Dimensions,
   StatusBar,
   StyleSheet,
+  SafeAreaView,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -100,10 +102,15 @@ _checkFacebookToken = () => {
   // Render any loading content that you like here
   render() {
     return (
-      <View>
-        <ActivityIndicator />
+      <SafeAreaView style={{
+        backgroundColor: '#D7E7ED', 
+        width: Dimensions.get('window').width, 
+        height: Dimensions.get('window').height,
+        justifyContent: 'center'
+        }}>
+        <ActivityIndicator  size="large" color={"black"}/>
         <StatusBar barStyle="default" />
-      </View>
+      </SafeAreaView>
     );
   }
 }
