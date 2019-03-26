@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  Animated,
   Dimensions,
   FlatList,
   RefreshControl,
@@ -8,12 +9,14 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   Image,
   Text,
   TextInput,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import FeedMediaItem from './FeedMediaItem';
 
 import {FRONT_SERVICE_URL} from '../Constants';
@@ -106,8 +109,29 @@ class FeedItem extends React.Component {
           this.props.item.userVote = -1;
         }
     };
+
+    optionsHeight = new Animated.Value(0);
+
+    _toggleOptions = () => {
+      Animated.timing(this.optionsHeight, {
+        toValue: this.optionsHeight._value === 1 ? 0 : 1,
+        duration: 400
+      }).start();
+    };
     
     renderNormal() {
+      const optionsHeight = this.optionsHeight.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 80]
+      });
+      const overlayHeight = this.optionsHeight.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, Dimensions.get('window').height*10]
+      });
+      const optionsBorder = this.optionsHeight.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1]
+      });
       return (
           <View style={styles.container}>
             <FeedMediaItem itemInfo={this.props.item.media} navigation={this.props.navigation}/>
@@ -136,7 +160,26 @@ class FeedItem extends React.Component {
                         source={this.state.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
                     />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={this._toggleOptions}>
+                      <Icon style={{flex:0, marginRight: -14}} name="options-vertical" color={'#555'} size={25} />
+                    </TouchableOpacity>
                 </View>
+                <TouchableWithoutFeedback onPress={this._toggleOptions}>
+                <Animated.View style={{position: 'absolute', left: -100, height: overlayHeight, width: Dimensions.get('window').width*10}}/>
+                </TouchableWithoutFeedback>
+              <Animated.View style={[styles.optionsBox, {height: optionsHeight, borderWidth: optionsBorder}]}>
+                <TouchableOpacity onPress={() => {}}>
+                <View style={styles.optionsRow}>
+                  <Text>Share</Text>
+                </View>
+                </TouchableOpacity>
+                <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
+                <TouchableOpacity onPress={() => {}}>
+                <View style={styles.optionsRow}>
+                  <Text>Report</Text>
+                </View>
+                </TouchableOpacity>
+              </Animated.View>
             </View>
           </View>
       );
@@ -325,6 +368,28 @@ class FeedItem extends React.Component {
       fontSize: 15,
       padding: 5,
       textAlign: 'center',
+    },
+    optionsBox: {
+      height: 80,
+      width: 100,
+      position: 'absolute',
+      right: -5,
+      bottom: 50,
+      backgroundColor: '#f2f2f2',
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: 'lightgrey',
+      shadowRadius: 4,
+      shadowColor: 'grey',
+      shadowOffset: {height: 2, width: 0},
+      shadowOpacity: 0.25,
+      overflow: 'hidden'
+    },
+    optionsRow: {
+      height: 40,
+      width: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 

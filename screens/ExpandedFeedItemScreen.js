@@ -78,8 +78,9 @@ class ExpandedFeedItemScreen extends React.Component {
 
 const styles = StyleSheet.create({
     mainContainer: {
+      flex: 1,
       alignItems: 'center',
-      backgroundColor: '#F0F6F9',
+      backgroundColor: '#D7E7ED',
     }
   });
 

@@ -70,7 +70,7 @@ class PopularVideoFeedScreen extends React.Component {
     if (!this.state.feedData.length) {
       if (this.state.noData) {
         return (
-          <View style={[styles.container, {height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
+          <View style={[styles.container, {justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
               this.setState({noData: false});
               this._getFeedData(false, this.callback);
@@ -78,7 +78,7 @@ class PopularVideoFeedScreen extends React.Component {
               <Text style={{marginBottom: 10, fontFamily: 'Avenir', fontSize: 17}}>Tap to reload</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
-              this.setState({noData: false});
+              this._getFeedData(false, this.callback);
               this._getFeedData(false, this.callback);
             }}>
               <Icon name={"reload1"} size={40} color="grey"/>
@@ -87,7 +87,7 @@ class PopularVideoFeedScreen extends React.Component {
         );
       }
       return (
-          <View style={[styles.container, {height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
+          <View style={[styles.container, {justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
           <ActivityIndicator size="large" style={{marginTop: 20}}/>
           </View>
       );
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#D7E7ED',
-    justifyContent: 'center',
   },
 });
 

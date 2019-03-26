@@ -17,7 +17,7 @@ export default class VideoFeed extends React.Component {
     commentsOpen: null,
     selected: (new Map(): Map<string, boolean>),
     refreshing: false,
-    showEndSpinner: true,
+    showEndSpinner: false,
     hasScrolled: false,
     outOfData: false,
   };
@@ -53,7 +53,7 @@ export default class VideoFeed extends React.Component {
 
   _renderFooter = () => {
     if (!this.state.showEndSpinner) {
-      if (!this.state.outOfData) return <ActivityIndicator style={{marginBottom: 30}}/>
+      if (!this.state.outOfData) return <View/>
 
       return (
         <Text style={{marginBottom: 30, textAlign: "center", fontFamily: 'Avenir', fontSize: 15}}>Sorry, that's it for now!</Text>
@@ -129,6 +129,7 @@ export default class VideoFeed extends React.Component {
 
 const styles = StyleSheet.create({
   mainContent: {
+    flex: 1,
     width: Dimensions.get('window').width,
     alignItems: 'center',
   },
