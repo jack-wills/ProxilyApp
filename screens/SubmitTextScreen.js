@@ -61,7 +61,7 @@ class SubmitTextScreen extends React.Component {
                         justifyContent: 'center',
                         flexDirection: 'row',
                         zIndex: 1, height: 42}}>
-            <TouchableOpacity onPress={() => { this.props.navigation.openDrawer }}>
+            <TouchableOpacity onPress={() => { this.props.navigation.openDrawer() }}>
               <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginLeft: 15, width: 40, height: 40 }}>
                 <Icon style={{paddingTop: 2, paddingRight: 20}} name='ios-menu' color='white' size={32}/>
               </View>
@@ -69,14 +69,13 @@ class SubmitTextScreen extends React.Component {
             <Image resizeMode={'contain'} source={require('../assets/logo4.png')} style={{flex:1, height: 32, marginTop: 5}}/>
             <View style={{ justifyContent: 'center', headerLayoutPreset: 'center', marginRight: 15, width: 40, height: 40 }}>
             </View>
-              
           </View>
-        <KeyboardAvoidingView style={styles.container}>
-                <TextInput multiline={true} placeholder="Enter Text.." placeholderTextColor="grey" style={styles.formInput} onChangeText={(text) => this.setState({text: text})}/>
-                <TouchableOpacity style={styles.submitButton} onPress={this._submitText}>
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-        </KeyboardAvoidingView>
+          <KeyboardAvoidingView style={styles.container}>
+            <TextInput multiline={true} placeholder="Enter Text.." placeholderTextColor="grey" style={styles.formInput} onChangeText={(text) => this.setState({text: text})}/>
+            <TouchableOpacity style={styles.submitButton} onPress={this._submitText}>
+                <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
         </SafeAreaView>
         );
     }
@@ -86,9 +85,9 @@ class SubmitTextScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#D7E7ED',
   },
   topBar: {
     flex: 0,
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     margin: 15,
     padding: 10,
     paddingTop: 13,
-    backgroundColor: '#f3fAfC',
+    backgroundColor: '#DEEEF4',
     color: '#222'
   },
   submitButton: {

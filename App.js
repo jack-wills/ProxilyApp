@@ -73,7 +73,6 @@ const FeedTabNavigator = createMaterialTopTabNavigator({
       tabStyle: {
         fontFamily: 'Avenir',
         height: getTabBarHeight(),
-        //height: 40,
       },
       indicatorStyle: {
         backgroundColor: '#FF1654',

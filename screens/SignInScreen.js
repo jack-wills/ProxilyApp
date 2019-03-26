@@ -5,9 +5,11 @@ import {
   Button,
   Dimensions,
   KeyboardAvoidingView,
+  Image,
   UserInput,
   StatusBar,
   StyleSheet,
+  SafeAreaView,
   TextInput,
   TouchableOpacity,
   Text,
@@ -25,7 +27,7 @@ import {FRONT_SERVICE_URL} from '../Constants';
 
 class SignInScreen extends React.Component {
     state = {
-        username: '',
+        email: '',
         password: '',
     }
 
@@ -111,10 +113,13 @@ class SignInScreen extends React.Component {
     render() {
       return (
       <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
+        <SafeAreaView style={{flex:1}}>
+        <View style={{flex: 0.3, justifyContent: 'center', alignItems: 'center'}}>
+          <Image style={{height: Dimensions.get('window').height*0.1}} source={require('../assets/logo7.png')} resizeMode={'contain'}/>
+        </View>
         <KeyboardAvoidingView style={styles.container}>
-            <Text style={{fontSize: 50, position: 'absolute', top: 100}}>Proxily</Text>
-            <Text style={styles.formText}>Username/Email</Text>
-            <TextInput style={styles.formInput} onChangeText={(text) => this.setState({username: text})}/>
+            <Text style={styles.formText}>Email</Text>
+            <TextInput style={styles.formInput} onChangeText={(text) => this.setState({email: text})}/>
             <Text style={styles.formText}>Password</Text>
             <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
             <TouchableOpacity style={styles.submitButton} onPress={this._signInAsync}>
@@ -128,6 +133,7 @@ class SignInScreen extends React.Component {
             <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up.</Text>
             </View>
         </KeyboardAvoidingView>
+        </SafeAreaView>
       </LinearGradient>
       );
     }
@@ -170,10 +176,10 @@ const styles = StyleSheet.create({
     },
     container: {
       backgroundColor: 'transparent',
-      flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      flex: 0.5,
     },
     formText: {
         fontSize: 25,

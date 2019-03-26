@@ -5,6 +5,7 @@ import {
     Button,
     Dimensions,
     KeyboardAvoidingView,
+    Image,
     UserInput,
     StatusBar,
     SafeAreaView,
@@ -23,30 +24,45 @@ import {FRONT_SERVICE_URL} from '../Constants';
 class SignUpScreen extends React.Component {
   state = {
     email: '',
-    username: '',
     password: '',
     passwordAgain: '',
     firstName: '',
     lastName: '',
+    wrongPass: false
 }
 
 render() {
+  let passAgain = (
+    <View style={{justifyContent: 'center',alignItems: 'center',}}>
+      <Text style={styles.formText}>Password Again</Text>
+      <TextInput style={styles.formInput} onChangeText={(text) => this.setState({passwordAgain: text})}/>
+    </View>
+  );
+
+  if (this.state.wrongPass) {
+    passAgain = (
+      <View style={{justifyContent: 'center',alignItems: 'center',}}>
+        <Text style={styles.formText}>Password Again</Text>
+        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({passwordAgain: text})}/>
+      </View>
+    );
+  }
   return (
   <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
+    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:0.3, justifyContent: 'center', alignItems: 'center'}}>
+      <Image style={{height: Dimensions.get('window').height*0.1}} source={require('../assets/logo7.png')} resizeMode={'contain'}/>
+    </View>
     <KeyboardAvoidingView style={styles.container}>
-        <Text style={{fontSize: 50, position: 'absolute', top: 50}}>Proxily</Text>
         <Text style={styles.formText}>First Name</Text>
         <TextInput style={styles.formInput} onChangeText={(text) => this.setState({firstName: text})}/>
         <Text style={styles.formText}>Last Name</Text>
         <TextInput style={styles.formInput} onChangeText={(text) => this.setState({lastName: text})}/>
         <Text style={styles.formText}>Email</Text>
         <TextInput style={styles.formInput} onChangeText={(text) => this.setState({email: text})}/>
-        <Text style={styles.formText}>Username</Text>
-        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({username: text})}/>
         <Text style={styles.formText}>Password</Text>
         <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
-        <Text style={styles.formText}>Password Again</Text>
-        <TextInput style={styles.formInput} onChangeText={(text) => this.setState({passwordAgain: text})}/>
+        {passAgain}
         <TouchableOpacity style={styles.submitButton} onPress={this._signUpAsync}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
@@ -55,12 +71,14 @@ render() {
             <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignIn')}>Sign In.</Text>
         </View>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   </LinearGradient>
   );
 }
 
 _signUpAsync = () => {
   if (this.state.passwordAgain != this.state.password) {
+    this.setState({wrongPass: true})
     return;
   }
   this.props.dispatch( async (dispatch) => {
@@ -72,8 +90,10 @@ _signUpAsync = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: "jackw53519@gmail.co.uk",
-        password: "test123",
+        email: this.state.email,
+        password: this.state.password,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
       }),
     })
     let responseJson = await response.json();
@@ -100,11 +120,10 @@ linearGradient: {
 },
 container: {
   backgroundColor: 'transparent',
-  flex: 1,
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: 50,
+  flex: 0.6,
 },
 formText: {
     fontSize: 20,
