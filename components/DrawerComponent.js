@@ -10,6 +10,7 @@ import {
   Image 
 } from 'react-native'
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 class DrawerComponent extends React.Component {
@@ -61,26 +62,68 @@ class DrawerComponent extends React.Component {
           <Text style={styles.drawerHeaderText}>{this.props.name}</Text>
       </View>
       <View style={styles.container}>
-        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Feed')}>
-          <Text
-            style={styles.drawerItem}>
-            Local Feed
-          </Text>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Account')}>
+          <View style={styles.drawerItem}>
+            <Icon name="user" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              Account
+            </Text>
+          </View>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
-        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Settings')}>
-          <Text
-            style={styles.drawerItem}>
-            Settings
-          </Text>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('MyPosts')}>
+          <View style={styles.drawerItem}>
+            <Icon name="speech" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              My Posts
+            </Text>
+          </View>
+        </TouchableHighlight>
+        <View style={styles.lineBreak}/>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Notifications')}>
+          <View style={styles.drawerItem}>
+            <Icon name="bulb" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              Notifications
+            </Text>
+          </View>
+        </TouchableHighlight>
+        <View style={styles.lineBreak}/>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Privacy')}>
+          <View style={styles.drawerItem}>
+            <Icon name="lock" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              Privacy
+            </Text>
+          </View>
+        </TouchableHighlight>
+        <View style={styles.lineBreak}/>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('Help')}>
+          <View style={styles.drawerItem}>
+            <Icon name="question" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              Help/Support
+            </Text>
+          </View>
+        </TouchableHighlight>
+        <View style={styles.lineBreak}/>
+        <TouchableHighlight underlayColor={'lightgrey'} onPress={() => navigation.navigate('About')}>
+          <View style={styles.drawerItem}>
+            <Icon name="info" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              About
+            </Text>
+          </View>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
         <TouchableHighlight underlayColor={'lightgrey'} onPress={async () => {await this.signOut();
                                                                               navigation.navigate('AuthLoading');}}>
-          <Text
-            style={styles.drawerItem}>
-            Sign Out
-          </Text>
+          <View style={styles.drawerItem}>
+            <Icon name="logout" color={'#555'} size={25} />
+            <Text style={styles.drawerText}>
+              Sign Out
+            </Text>
+          </View>
         </TouchableHighlight>
         <View style={styles.lineBreak}/>
       </View>
@@ -96,12 +139,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerItem: {
-    fontSize: 18,
-    fontFamily: 'Avenir',
+    flexDirection: 'row',
+    alignItems: 'center',
     color: 'black',
     height: 50,
     paddingLeft: 10,
-    paddingTop: 13,
+  },
+  drawerText: {
+    fontSize: 18,
+    fontFamily: 'Avenir',
+    paddingLeft: 10,
   },
   drawerHeader: {
     height: Dimensions.get('window').height*0.1,

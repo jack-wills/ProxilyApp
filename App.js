@@ -13,14 +13,18 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
   
 import SavedLocationsScreen from './screens/SavedLocationsScreen';
 import SavedLocationsAddScreen from './screens/SavedLocationsAddScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import AboutScreen from './screens/AboutScreen';
+import AccountScreen from './screens/AccountScreen';
+import MyPostsScreen from './screens/MyPostsScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
+import PrivacyScreen from './screens/PrivacyScreen';
+import HelpScreen from './screens/HelpScreen';
 import PopularVideoFeedScreen from './screens/PopularVideoFeedScreen';
 import NewVideoFeedScreen from './screens/NewVideoFeedScreen';
 import ExpandedFeedItemScreen from './screens/ExpandedFeedItemScreen';
@@ -346,7 +350,12 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     })
   },
   SubmitText:  SubmitTextScreen,
-  Settings: SettingsScreen,
+  Account: AccountScreen,
+  MyPosts: MyPostsScreen,
+  Notifications: NotificationsScreen,
+  Privacy: PrivacyScreen,
+  Help: HelpScreen,
+  About: AboutScreen,
 }, {
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
@@ -364,7 +373,12 @@ const AppTabNavigator = createMaterialTopTabNavigator({
 
   const SettingsDrawerNavigator = createDrawerNavigator({
     Feed: AppTabNavigator,
-    Settings: SettingsScreen,
+    Account: AccountScreen,
+    MyPosts: MyPostsScreen,
+    Notifications: NotificationsScreen,
+    Privacy: PrivacyScreen,
+    Help: HelpScreen,
+    About: AboutScreen,
   }, {
     initialRouteName: 'Feed',
     drawerPosition: 'left',
