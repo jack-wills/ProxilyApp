@@ -7,6 +7,7 @@ import {
   RefreshControl,
   StyleSheet,
   ScrollView,
+  Share,
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -17,8 +18,9 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
-import FeedMediaItem from './FeedMediaItem';
+import Modal from "react-native-modal";
 
+import FeedMediaItem from './FeedMediaItem';
 import {FRONT_SERVICE_URL} from '../Constants';
 import CommentFeedItem from './CommentFeedItem';
 
@@ -110,28 +112,93 @@ class FeedItem extends React.Component {
         }
     };
 
-    optionsHeight = new Animated.Value(0);
-
     _toggleOptions = () => {
-      Animated.timing(this.optionsHeight, {
-        toValue: this.optionsHeight._value === 1 ? 0 : 1,
-        duration: 400
-      }).start();
+      this.setState({ optionsVisible: true })
+    };
+
+    _shareItem = async () => {
+      let item = this.props.item;
+      let media = this.props.item.media;
+      let shareOptions = {
+        title: 'Proxily',
+        subject: 'Proxily'
+      };
+      if (media.hasOwnProperty('video')) {
+        shareOptions.url = media.video.url;
+      } else if (media.hasOwnProperty('image')) {
+        shareOptions.url = media.image.url;
+      } else if (media.hasOwnProperty('text')) {
+        shareOptions.message = media.text.content;
+      }
+      try {
+        const result = Share.share(shareOptions);
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    _reportItem = async () => {
+      this.setState({reporting: true})
+      await fetch(FRONT_SERVICE_URL + '/reportPost', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jwt: this.props.userToken,
+          postID: this.props.item.postId
+        }),
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({reporting: false})
+        if (responseJson.hasOwnProperty('error')) {
+          console.log(responseJson.error);
+          this.setState({reportStatus: "Sorry an error has occured"})
+        } else {
+          this.setState({reportStatus: "Post Reported"})
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      this.props.removeItem(this.props.item)
     };
     
     renderNormal() {
-      const optionsHeight = this.optionsHeight.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 80]
-      });
-      const overlayHeight = this.optionsHeight.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, Dimensions.get('window').height*10]
-      });
-      const optionsBorder = this.optionsHeight.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 1]
-      });
+      let report = (
+        <TouchableOpacity onPress={this._reportItem}>
+          <View style={styles.optionsRow}>
+            <Icon style={{marginLeft: 10, marginRight: 13}} name="flag" color={'#555'} size={17} />
+            <Text>Report</Text>
+          </View>
+        </TouchableOpacity>
+      );
+      if (this.state.reportStatus) {
+        report = (
+          <View style={[styles.optionsRow, {justifyContent: 'flex-start'}]}>
+            <Icon style={{marginLeft: 10, marginRight: 13}} name={this.state.reportStatus === "Post Reported" ? "check" : "close"} color={'#555'} size={17} />
+            <Text>{this.state.reportStatus}</Text>
+          </View>
+        )
+      }
+      if (this.state.reporting) {
+        report = (
+          <View style={[styles.optionsRow, {justifyContent: 'center'}]}>
+            <ActivityIndicator size="large"/>
+          </View>
+        )
+      }
       return (
           <View style={styles.container}>
             <FeedMediaItem itemInfo={this.props.item.media} navigation={this.props.navigation}/>
@@ -161,25 +228,23 @@ class FeedItem extends React.Component {
                     />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this._toggleOptions}>
-                      <Icon style={{flex:0, marginRight: -14}} name="options-vertical" color={'#555'} size={25} />
+                      <Icon style={{flex:0, marginRight: -14, marginLeft: 3}} name="options-vertical" color={'#999'} size={25} />
                     </TouchableOpacity>
                 </View>
-                <TouchableWithoutFeedback onPress={this._toggleOptions}>
-                <Animated.View style={{position: 'absolute', left: -100, height: overlayHeight, width: Dimensions.get('window').width*10}}/>
-                </TouchableWithoutFeedback>
-              <Animated.View style={[styles.optionsBox, {height: optionsHeight, borderWidth: optionsBorder}]}>
-                <TouchableOpacity onPress={() => {}}>
-                <View style={styles.optionsRow}>
-                  <Text>Share</Text>
-                </View>
-                </TouchableOpacity>
-                <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
-                <TouchableOpacity onPress={() => {}}>
-                <View style={styles.optionsRow}>
-                  <Text>Report</Text>
-                </View>
-                </TouchableOpacity>
-              </Animated.View>
+                <Modal
+                  isVisible={this.state.optionsVisible}
+                  onBackdropPress={() => this.setState({ optionsVisible: false })}>
+                  <View style={styles.optionsBox}>
+                    <TouchableOpacity onPress={this._shareItem}>
+                      <View style={styles.optionsRow}>
+                        <Icon style={{marginLeft: 10, marginRight: 13}} name="action-redo" color={'#555'} size={17} />
+                        <Text>Share</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
+                    {report}
+                  </View>
+                </Modal>
             </View>
           </View>
       );
@@ -240,7 +305,7 @@ class FeedItem extends React.Component {
               <View style={styles.left}>
                 <Image
                   style={[styles.profileImage, {marginLeft: -10}]}
-                  source={require('../assets/mountains.jpg')} 
+                  source={{uri: this.props.item.submitterProfilePicture}}
                 />
                 <View style={{marginLeft: 10, justifyContent: 'center'}}>
                   <Text style={styles.subByText}>Submitted by {this.props.item.submitter}</Text>
@@ -251,18 +316,40 @@ class FeedItem extends React.Component {
                 flexDirection: 'row',
               }}>
                 <Text style={styles.voteText}>{this.props.item.totalVotes+this.state.userVote}</Text>
-                <TouchableOpacity onPress={this._onPressUpvoteComment}>
+                <TouchableOpacity onPress={this._onPressUpvote}>
                 <Image 
                     style={{flex:0, height: 26, width: 26, marginLeft: 10}}
                     source={this.state.userVote == 1 ? require('../assets/upvotepressed.png'): require('../assets/upvote.png')}
                 />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this._onPressDownvoteComment}>
+                <TouchableOpacity onPress={this._onPressDownvote}>
                 <Image 
                     style={{flex:0, height: 26, width: 26, marginLeft: 8, marginTop: 2}}
                     source={this.state.userVote == -1 ? require('../assets/downvotepressed.png'): require('../assets/downvote.png')}
                 />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={this._toggleOptions}>
+                  <Icon style={{flex:0, marginRight: -14, marginLeft: 3}} name="options-vertical" color={'#999'} size={25} />
+                </TouchableOpacity>
+                <Modal
+                  isVisible={this.state.optionsVisible}
+                  onBackdropPress={() => this.setState({ optionsVisible: false })}>
+                  <View style={styles.optionsBox}>
+                    <TouchableOpacity onPress={this._shareItem}>
+                      <View style={styles.optionsRow}>
+                        <Icon style={{marginLeft: 10, marginRight: 13}} name="action-redo" color={'#555'} size={17} />
+                        <Text>Share</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
+                    <TouchableOpacity onPress={this._reportItem}>
+                      <View style={styles.optionsRow}>
+                        <Icon style={{marginLeft: 10, marginRight: 13}} name="flag" color={'#555'} size={17} />
+                        <Text>Report</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </Modal>
               </View>
             </View>
             <View style={styles.commentInputBox}>
@@ -370,13 +457,10 @@ class FeedItem extends React.Component {
       textAlign: 'center',
     },
     optionsBox: {
-      height: 80,
-      width: 100,
-      position: 'absolute',
-      right: -5,
-      bottom: 50,
+      alignSelf: 'center',
+      width: Dimensions.get('window').width*0.6,
       backgroundColor: '#f2f2f2',
-      borderRadius: 20,
+      borderRadius: 8,
       borderWidth: 1,
       borderColor: 'lightgrey',
       shadowRadius: 4,
@@ -386,10 +470,11 @@ class FeedItem extends React.Component {
       overflow: 'hidden'
     },
     optionsRow: {
-      height: 40,
-      width: 100,
-      justifyContent: 'center',
+      height: 50,
+      width: Dimensions.get('window').width*0.5,
+      justifyContent: 'flex-start',
       alignItems: 'center',
+      flexDirection: 'row',
     },
   });
 

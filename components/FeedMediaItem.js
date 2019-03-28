@@ -106,10 +106,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state, ownProps) => {
   const {video} = state.main;
-  if(ownProps.itemInfo.hasOwnProperty('video')) {
-    if (video.hasOwnProperty(ownProps.itemInfo.video.url)) {
-      return {
-        playing: state.main.currentVideoPlaying == ownProps.itemInfo.video.url
+  if(ownProps.hasOwnProperty('itemInfo')) {
+    if (ownProps.itemInfo.hasOwnProperty('video')) {
+      if (video.hasOwnProperty(ownProps.itemInfo.video.url)) {
+        return {
+          playing: state.main.currentVideoPlaying == ownProps.itemInfo.video.url
+        }
       }
     }
   }

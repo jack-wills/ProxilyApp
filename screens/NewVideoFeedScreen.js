@@ -38,10 +38,12 @@ class NewVideoFeedScreen extends React.Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (continuous) {
-        this.setState({feedData: this.state.feedData.concat(responseJson)});
-      } else {
-        this.setState({feedData: responseJson});
+      if (!responseJson.hasOwnProperty('error')) {
+        if (continuous) {
+          this.setState({feedData: this.state.feedData.concat(responseJson)});
+        } else {
+          this.setState({feedData: responseJson});
+        }
       }
       callback(responseJson);
     })

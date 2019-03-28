@@ -45,6 +45,7 @@ export default class VideoFeed extends React.Component {
         id={item.id}
         onPressItem={this._onPressItem}
         openItemComments={this._openItemComments}
+        removeItem={this._removeItem}
         selected={!this.state.selected.get(item.id)}
         item={item}
         navigation={this.props.navigation}
@@ -96,6 +97,14 @@ export default class VideoFeed extends React.Component {
       {item: item}
     );
   };
+
+  _removeItem = (item) => {
+    var index = this.props.data.findIndex((i) => {
+      return i.id == item.id;
+    });
+    this.props.data.splice(index, 1);
+    this.setState({update: true});
+  }
 
   render() {
     return (
