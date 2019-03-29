@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
-  Image, 
+  ImageBackground, 
   ImageStore, 
   Text, 
   Platform,
@@ -20,6 +20,7 @@ import FileSystem from 'react-native-fs';
 import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
+import MovableObject from '../components/MovableObject';
 
 class PictureReviewScreen extends React.Component {
   state = {
@@ -147,11 +148,13 @@ class PictureReviewScreen extends React.Component {
             <Icon name="close" size={40} color="white"/>
           </TouchableOpacity>
         </View>
-        <Image source={{uri: this.props.navigation.state.params.imageUri}} style={{
+        <ImageBackground source={{uri: this.props.navigation.state.params.imageUri}} style={{
             marginTop: 100,
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').width*8/7,}} 
-            resizeMode="contain"/>
+            resizeMode="contain">
+          <MovableObject />
+        </ImageBackground>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Animated.View style={[styles.submitButton,{width: buttonWidth}]} >
             {button}
