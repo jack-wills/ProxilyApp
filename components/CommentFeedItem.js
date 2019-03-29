@@ -8,12 +8,14 @@ import {
     TouchableOpacity 
 } from 'react-native'
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
 class CommentFeedItem extends React.Component {
   state = {
     userVote: this.props.item.userVote,
+    error: "",
   }
 
   _onPressUpvote = async () => {
@@ -56,10 +58,12 @@ _onPressDownvote = async () => {
     .then((responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
         console.log(responseJson.error);
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
       }
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
     });
   }
 
@@ -111,6 +115,26 @@ _onPressDownvote = async () => {
                 </TouchableOpacity>
             </View>
           </View>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
         </View>
     )
   }

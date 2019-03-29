@@ -3,10 +3,12 @@ import {
   ActivityIndicator,
   Dimensions,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
 import FeedItem from '../components/FeedItem.js';
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
@@ -16,6 +18,7 @@ class ExpandedFeedItemScreen extends React.Component {
     comments: [],
     item: this.props.navigation.state.params.item,
     commentsLoading: true,
+    error: "",
   };
 
   _changeVideoPlaying = (itemId) => {
@@ -39,13 +42,15 @@ class ExpandedFeedItemScreen extends React.Component {
     .then((responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
         console.error(responseJson.error);
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
       } else {
         this.props.navigation.state.params.item.comments = responseJson;
         this.setState({comments: responseJson})
       }
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
     });
     this.setState({commentsLoading: false});
   }
@@ -71,6 +76,26 @@ class ExpandedFeedItemScreen extends React.Component {
             changeVideoPlaying={this._changeVideoPlaying}
             navigation={this.props.navigation}
           />
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
         </View>
     );
   }

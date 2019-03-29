@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import { StackActions, NavigationActions } from 'react-navigation';
 import LottieView from 'lottie-react-native';
 import Video from 'react-native-video'
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
@@ -21,6 +22,7 @@ class VideoReviewScreen extends React.Component {
     processing: false,
     success: false,
     animationFinished: false,
+    error: "",
   }
   submitButtonWidth = new Animated.Value(1);
 
@@ -50,13 +52,15 @@ class VideoReviewScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.hasOwnProperty('error')) {
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
           console.error(responseJson.error);
         } else {
           uploadUri = responseJson.uploadUrl;
         }
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+        console.log(error);
       });
       file = {uri: this.props.navigation.state.params.videoUri, type: "video/mp4", name: "string"};
       const xhr = new XMLHttpRequest();
@@ -165,6 +169,26 @@ class VideoReviewScreen extends React.Component {
             {button}
           </Animated.View>
         </View>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
       </View>
     );
   }

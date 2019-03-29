@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  AsyncStorage,
   Button,
+  Dimensions,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -11,13 +13,16 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
 import SavedLocationsFeed from '../components/SavedLocationsFeed'
 import {FRONT_SERVICE_URL} from '../Constants';
 
 class SavedLocationsScreen extends React.Component {
   state = {
-    data: []
+    error: "",
+    data: [],
+    noData: false
   }
   _navigateToFeed = (latitude, longitude, name) => {
     this.props.navigation.navigate('SavedLocationsFeed',{
@@ -27,7 +32,7 @@ class SavedLocationsScreen extends React.Component {
     })
   }
 
-  _getSavedLocations = () => {
+  _getSavedLocations = async () => {
     fetch(FRONT_SERVICE_URL + '/getSavedLocations', {
       method: 'POST',
       headers: {
@@ -39,15 +44,33 @@ class SavedLocationsScreen extends React.Component {
       }),
     })
     .then((response) => response.json())
-    .then((responseJson) => {
+    .then(async (responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         console.log(responseJson.error)
+        data = await AsyncStorage.getItem('savedLocations');
+        this.setState({data: JSON.parse(data)});
       } else {
+        if (responseJson.length == 0) {
+          this.setState({noData: true});
+        } else {
+          this.setState({noData: false});
+        }
         this.setState({data: responseJson});
+        console.log(responseJson)
+        await AsyncStorage.setItem('savedLocations', JSON.stringify(this.state.data));
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(async (error) => {
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
+      data = JSON.parse(await AsyncStorage.getItem('savedLocations'));
+      if (data.length == 0) {
+        this.setState({noData: true});
+      } else {
+        this.setState({noData: false});
+      }
+      this.setState({data: data});
     });
   }
 
@@ -70,8 +93,9 @@ class SavedLocationsScreen extends React.Component {
       }),
     })
     .then((response) => response.json())
-    .then((responseJson) => {
+    .then(async (responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         console.log(responseJson.error)
       } else {
         this.state.data.push({
@@ -80,10 +104,12 @@ class SavedLocationsScreen extends React.Component {
           longitude: longitude,
           name: name,
         })
+        await AsyncStorage.setItem('savedLocations', JSON.stringify(this.state.data));
       }
     })
     .catch((error) => {
-      console.error(error);
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
     });
   }
 
@@ -108,25 +134,42 @@ class SavedLocationsScreen extends React.Component {
       }),
     })
     .then((response) => response.json())
-    .then((responseJson) => {
+    .then(async (responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         console.log(responseJson.error)
       } else {
         array.splice(index, 1);
         this.setState({data: array})
+        await AsyncStorage.setItem('savedLocations', JSON.stringify(this.state.data));
       }
     })
     .catch((error) => {
-      console.error(error);
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
     });
   }
 
   render() {
     let feed;
     if (!this.state.data.length) {
-      feed = (
-          <ActivityIndicator size="large" style={{marginTop: 20}}/>
-      );
+      if (this.state.noData) {
+        feed = (
+          <View style={[styles.container, {flex: 1, padding: 34}]}>
+            <View style={{flex:1, justifyContent: 'center'}}>
+            <Text style={{fontFamily: 'Avenir', fontSize: 30, textAlign: 'center', marginBottom: 30}}>Welcome to your saved locations screen.</Text>
+            </View>
+            <View style={{flex:1}}>
+            <Text style={{fontFamily: 'Avenir', fontSize: 18, textAlign: 'center', marginBottom: 20}}>Saved locations are a great way to keep up to date with areas when you're not around.</Text>
+            <Text style={{fontFamily: 'Avenir', textAlign: 'center'}}>Press the plus in the top right corner to get started.</Text>
+            </View>
+          </View>
+        );
+      } else {
+        feed = (
+            <ActivityIndicator size="large" style={{marginTop: 20}}/>
+        );
+      }
     } else {
       feed = (
         <SavedLocationsFeed data={this.state.data} navigateToFeed={this._navigateToFeed} deleteItem={this._deleteSavedLocation}/>
@@ -158,6 +201,26 @@ class SavedLocationsScreen extends React.Component {
         <View style={styles.container}>
         {feed}
         </View>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
       </SafeAreaView>
     );
   }

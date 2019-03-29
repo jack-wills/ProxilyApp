@@ -19,6 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
+import Modal from 'react-native-modal';
 
 import { LoginManager } from 'react-native-fbsdk'
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
@@ -29,6 +30,7 @@ class SignInScreen extends React.Component {
     state = {
         email: '',
         password: '',
+        error: "",
     }
 
     facebookLoginAPI(callback) {
@@ -70,10 +72,12 @@ class SignInScreen extends React.Component {
         })
         let responseJson = await response.json();
         if (responseJson.hasOwnProperty('error')) {
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
           console.error(responseJson.error);
         }
       } catch (error) {
-        console.error(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+        console.log(error);
       }
     });
   }
@@ -97,6 +101,9 @@ class SignInScreen extends React.Component {
               console.log(profile);
               await AsyncStorage.setItem('userToken', accessToken);
               await AsyncStorage.setItem('tokenProvider', "facebook");
+              await AsyncStorage.setItem('userName', profile.name);
+              await AsyncStorage.setItem('email', profile.email);
+              await AsyncStorage.setItem('profilePicture', profile.picture.data.url);
               dispatch(fetchUserToken(accessToken, profile.name, profile.email, profile.picture.data.url, true));
               this.props.navigation.navigate('App');
             } else {
@@ -133,6 +140,26 @@ class SignInScreen extends React.Component {
             <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up.</Text>
             </View>
         </KeyboardAvoidingView>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
         </SafeAreaView>
       </LinearGradient>
       );
@@ -153,16 +180,22 @@ class SignInScreen extends React.Component {
           }),
         })
         let responseJson = await response.json();
-        if (responseJson.jwt == "") {
-          
+        if (responseJson.hasOwnProperty('error')) {
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+        } else if (responseJson.jwt === "") {
+          this.setState({error: "User token is empty"});
         } else {
           await AsyncStorage.setItem('userToken', responseJson.jwt);
           await AsyncStorage.setItem('tokenProvider', "proxily");
+          await AsyncStorage.setItem('userName', responseJson.name);
+          await AsyncStorage.setItem('email', responseJson.email);
+          await AsyncStorage.setItem('profilePicture', responseJson.profilePicture);
           dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, responseJson.profilePicture, false));
           this.props.navigation.navigate('App');
         }
       } catch (error) {
-        console.error(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+        console.log(error);
       }
     })
   }

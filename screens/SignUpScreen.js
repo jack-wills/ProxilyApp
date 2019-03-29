@@ -102,11 +102,14 @@ _signUpAsync = () => {
     } else {
       await AsyncStorage.setItem('userToken', responseJson.jwt);
       await AsyncStorage.setItem('tokenProvider', "proxily");
+      await AsyncStorage.setItem('userName', responseJson.name);
+      await AsyncStorage.setItem('email', responseJson.email);
+      await AsyncStorage.setItem('profilePicture', "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg");
       dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
       this.props.navigation.navigate('App');
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 })
 }

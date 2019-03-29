@@ -6,15 +6,20 @@ import {
   StatusBar,
   StyleSheet,
   SafeAreaView,
+  Text,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {fetchUserToken} from '../actions/UpdateUserToken';
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
 class AuthLoadingScreen extends React.Component {
+  state = {
+    error: ""
+  }
   constructor(props) {
     super(props);
     this._bootstrapAsync();
@@ -34,13 +39,27 @@ class AuthLoadingScreen extends React.Component {
           }),
         })
         let responseJson = await response.json();
-        dispatch(fetchUserToken(userToken, responseJson.name, responseJson.email, responseJson.profilePicture, false));
+        if (responseJson.hasOwnProperty('error')) {
+          this.setState({error: "Oops, looks like something went wrong."});
+          this.setState({error: responseJson});
+          this.props.navigation.navigate('Auth');
+        } else {
+          await AsyncStorage.setItem('userName', responseJson.name);
+          await AsyncStorage.setItem('email', responseJson.email);
+          await AsyncStorage.setItem('profilePicture', responseJson.profilePicture);
+          dispatch(fetchUserToken(userToken, responseJson.name, responseJson.email, responseJson.profilePicture, false));
 
-        // This will switch to the App screen or Auth screen and this loading
-        // screen will be unmounted and thrown away.
-        this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+          // This will switch to the App screen or Auth screen and this loading
+          // screen will be unmounted and thrown away.
+          this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+        }
       } catch (error) {
-        console.error(error);
+        console.log(error);
+        name = await AsyncStorage.getItem('userName');
+        email = await AsyncStorage.getItem('email');
+        profilePicture = await AsyncStorage.getItem('profilePicture');
+        dispatch(fetchUserToken(userToken, name, email, profilePicture, false));
+        this.props.navigation.navigate('App');
       }
     });
   }
@@ -110,6 +129,26 @@ _checkFacebookToken = () => {
         }}>
         <ActivityIndicator  size="large" color={"black"}/>
         <StatusBar barStyle="default" />
+        <Modal
+            isVisible={this.state.error != ""}
+            onBackdropPress={() => this.setState({ error: "" })}>
+            <View style={{alignSelf: 'center',
+                justifySelf: 'center',
+                width: Dimensions.get('window').width*0.6,
+                backgroundColor: '#f2f2f2',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: 'lightgrey',
+                shadowRadius: 4,
+                shadowColor: 'grey',
+                shadowOffset: {height: 2, width: 0},
+                shadowOpacity: 0.25,
+                overflow: 'hidden',
+                padding: 15,
+            }}>
+            <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+            </View>
+        </Modal>
       </SafeAreaView>
     );
   }

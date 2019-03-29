@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
 class SubmitTextScreen extends React.Component {
     state = {
-        text: ''
+        text: '',
+        error: "",
     }
 
     _submitText = () => {
@@ -39,13 +41,15 @@ class SubmitTextScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.hasOwnProperty("error")) {
-          console.log("Couldn't get feed data because: " + responseJson.error)
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+          console.log(responseJson.error)
         } else if (responseJson.hasOwnProperty("success") && responseJson.success) {
           this.props.navigation.navigate('New');
         }
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+        console.log(error);
       });
     };
       
@@ -76,6 +80,26 @@ class SubmitTextScreen extends React.Component {
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
         </SafeAreaView>
         );
     }

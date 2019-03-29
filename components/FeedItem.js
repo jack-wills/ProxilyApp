@@ -28,6 +28,7 @@ class FeedItem extends React.Component {
     state = {
       userVote: this.props.item.userVote,
       newComment: "",
+      error: "",
     }
 
     _onPressComments = () => {
@@ -51,10 +52,12 @@ class FeedItem extends React.Component {
       .then((responseJson) => {
         if (responseJson.hasOwnProperty('error')) {
           console.log(responseJson.error);
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       });
     }
 
@@ -82,10 +85,12 @@ class FeedItem extends React.Component {
       .then((responseJson) => {
         if (responseJson.hasOwnProperty('error')) {
           console.log(responseJson.error);
+          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       });
     }
 
@@ -170,7 +175,8 @@ class FeedItem extends React.Component {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       });
       this.props.removeItem(this.props.item)
     };
@@ -194,7 +200,7 @@ class FeedItem extends React.Component {
       }
       if (this.state.reporting) {
         report = (
-          <View style={[styles.optionsRow, {justifyContent: 'center'}]}>
+          <View style={[styles.optionsRow, {justifyContent: 'center', marginLeft: 10}]}>
             <ActivityIndicator size="large"/>
           </View>
         )

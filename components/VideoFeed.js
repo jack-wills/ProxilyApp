@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AsyncStorage,
   Dimensions,
   FlatList,
   RefreshControl,
@@ -98,11 +99,12 @@ export default class VideoFeed extends React.Component {
     );
   };
 
-  _removeItem = (item) => {
+  _removeItem = async (item) => {
     var index = this.props.data.findIndex((i) => {
       return i.id == item.id;
     });
     this.props.data.splice(index, 1);
+    await AsyncStorage.setItem('feedData', JSON.stringify(this.props.data));
     this.setState({update: true});
   }
 

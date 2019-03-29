@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  AsyncStorage,
   Dimensions,
   SafeAreaView,
   StyleSheet,
@@ -11,12 +12,14 @@ import {
 import VideoFeed from '../components/VideoFeed';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Modal from 'react-native-modal';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
 class NewVideoFeedScreen extends React.Component {
   state = {
     feedData: [],
+    error: "",
     noData: false
   }
 
@@ -37,30 +40,41 @@ class NewVideoFeedScreen extends React.Component {
       }),
     })
     .then((response) => response.json())
-    .then((responseJson) => {
+    .then(async (responseJson) => {
       if (!responseJson.hasOwnProperty('error')) {
         if (continuous) {
           this.setState({feedData: this.state.feedData.concat(responseJson)});
         } else {
           this.setState({feedData: responseJson});
         }
+        await AsyncStorage.setItem('feedData', JSON.stringify(this.state.feedData));
+      } else {
+        if (!continuous) {
+          this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+        }
+        this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
       }
       callback(responseJson);
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(async (error) => {
+      if (!continuous) {
+        this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+      }
+      this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
     });
   }
 
   callback = (responseJson) => {
     if (responseJson.hasOwnProperty('error')) {
       this.setState({noData: true});
-      if (responseJson.error === "OBJECT_NOT_FOUND") {
-      } else {
-        console.log("Couldn't get feed data because: " + responseJson.error);
-      }
+      console.log("Couldn't get feed data because: " + responseJson.error);
     } else {
-      this.setState({noData: false});
+      if (responseJson.length == 0) {
+        this.setState({noData: true});
+      } else {
+        this.setState({noData: false});
+      }
     }
   }
 
@@ -91,6 +105,26 @@ class NewVideoFeedScreen extends React.Component {
       return (
           <View style={[styles.container, {height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
           <ActivityIndicator size="large" style={{marginTop: 20}}/>
+          <Modal
+              isVisible={this.state.error != ""}
+              onBackdropPress={() => this.setState({ error: "" })}>
+              <View style={{alignSelf: 'center',
+                  justifySelf: 'center',
+                  width: Dimensions.get('window').width*0.6,
+                  backgroundColor: '#f2f2f2',
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: 'lightgrey',
+                  shadowRadius: 4,
+                  shadowColor: 'grey',
+                  shadowOffset: {height: 2, width: 0},
+                  shadowOpacity: 0.25,
+                  overflow: 'hidden',
+                  padding: 15,
+              }}>
+              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+              </View>
+          </Modal>
           </View>
       );
     } else {
