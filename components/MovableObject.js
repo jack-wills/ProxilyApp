@@ -105,9 +105,8 @@ export default class MovableObject extends React.Component {
     };
     _onMoveGestureStateChange = event => {
       if (event.nativeEvent.oldState === State.ACTIVE) {
-          console.log(this._rotate._offset)
-        this._lastOffset.x += (event.nativeEvent.translationX*Math.cos(this._rotate._offset))-(event.nativeEvent.translationY*Math.sin(this._rotate._offset));
-        this._lastOffset.y += (event.nativeEvent.translationY*Math.cos(this._rotate._offset))+(event.nativeEvent.translationX*Math.sin(this._rotate._offset));
+        this._lastOffset.x += event.nativeEvent.translationX;
+        this._lastOffset.y += event.nativeEvent.translationY;
         this._translateX.setOffset(this._lastOffset.x);
         this._translateX.setValue(0);
         this._translateY.setOffset(this._lastOffset.y);
@@ -123,7 +122,6 @@ export default class MovableObject extends React.Component {
         const translateY = Animated.add(Animated.multiply(this._translateY, this._rotateCos), Animated.multiply(this._translateX, this._rotateSin));
         const scale = this._scale;
         const rotate = this._rotateStr;
-        console.log(this._rotateCos)
         const panStyle = {
           transform: [{ translateX }, { translateY }, { scale }, { rotate }],
         };

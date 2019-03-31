@@ -47,7 +47,7 @@ class PictureReviewScreen extends React.Component {
       "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
       "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
     ],
-    filters: [{name: "Sepia", ffmpeg: ".393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"}, {name: "Greyscale", ffmpeg: ".3:.4:.3:0:.3:.4:.3:0:.3:.4:.3"}],
+    filters: [{name: "No filter"}, {name: "Sepia", ffmpeg: ".393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"}, {name: "Greyscale", ffmpeg: ".3:.4:.3:0:.3:.4:.3:0:.3:.4:.3"}],
     stickerOpen: false,
     filtersOpen: false,
     textOpen: false
@@ -69,16 +69,14 @@ class PictureReviewScreen extends React.Component {
     const file_path = '/Users/Jack/Desktop/videoApp/assets/mountains.jpg'
     this.setState({currentImage: file_path})
     let filters = [...this.state.filters]
-    console.log(filters)
-    for (var i = 0; i < filters.length; i++) {
+    filters[0].file_path = file_path;
+    for (var i = 1; i < filters.length; i++) {
       let filter = filters[i]
-      console.log(filter)
       filter.file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/filter_" + filter.name + "_" + timestamp + ".png";
       await RNFFmpeg.executeWithArguments(["-i", file_path, "-filter_complex", "colorchannelmixer=" + filter.ffmpeg + "", filter.file_path])
       .then((result) => {
         this.setState({ filters })
         console.log(result)
-        console.log("FFmpeg process exited with rc " + result.rc)
       });
     }
   }
