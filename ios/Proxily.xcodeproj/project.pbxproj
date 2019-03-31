@@ -44,6 +44,40 @@
 		048953E7223A7E3D00A7ED87 /* RNVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953D8223A7E3C00A7ED87 /* RNVideoPlayer.swift */; };
 		048953E8223A7E3D00A7ED87 /* VideoProcessingGPUFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048953DA223A7E3C00A7ED87 /* VideoProcessingGPUFilters.swift */; };
 		048953F3223A80B000A7ED87 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048953F2223A7E6000A7ED87 /* GPUImage.framework */; };
+		04EB4966225054080051BB16 /* expat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495D225053F20051BB16 /* expat.framework */; };
+		04EB4967225054080051BB16 /* fontconfig.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4945225053F20051BB16 /* fontconfig.framework */; };
+		04EB4968225054080051BB16 /* freetype.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494C225053F20051BB16 /* freetype.framework */; };
+		04EB4969225054080051BB16 /* fribidi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495A225053F20051BB16 /* fribidi.framework */; };
+		04EB496A225054080051BB16 /* giflib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4953225053F20051BB16 /* giflib.framework */; };
+		04EB496B225054080051BB16 /* jpeg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4951225053F20051BB16 /* jpeg.framework */; };
+		04EB496C225054080051BB16 /* kvazaar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495E225053F20051BB16 /* kvazaar.framework */; };
+		04EB496D225054080051BB16 /* libaom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4960225053F20051BB16 /* libaom.framework */; };
+		04EB496E225054080051BB16 /* libass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4958225053F20051BB16 /* libass.framework */; };
+		04EB496F225054080051BB16 /* libavcodec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4959225053F20051BB16 /* libavcodec.framework */; };
+		04EB4970225054080051BB16 /* libavdevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4955225053F20051BB16 /* libavdevice.framework */; };
+		04EB4971225054080051BB16 /* libavfilter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4946225053F20051BB16 /* libavfilter.framework */; };
+		04EB4972225054080051BB16 /* libavformat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494A225053F20051BB16 /* libavformat.framework */; };
+		04EB4973225054080051BB16 /* libavutil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494B225053F20051BB16 /* libavutil.framework */; };
+		04EB4974225054080051BB16 /* libcharset.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4962225053F30051BB16 /* libcharset.framework */; };
+		04EB4975225054080051BB16 /* libiconv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4950225053F20051BB16 /* libiconv.framework */; };
+		04EB4976225054080051BB16 /* libogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494F225053F20051BB16 /* libogg.framework */; };
+		04EB4977225054080051BB16 /* libpng.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4961225053F30051BB16 /* libpng.framework */; };
+		04EB4978225054080051BB16 /* libswresample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4944225053F20051BB16 /* libswresample.framework */; };
+		04EB4979225054080051BB16 /* libswscale.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4954225053F20051BB16 /* libswscale.framework */; };
+		04EB497A225054080051BB16 /* libtheora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4949225053F20051BB16 /* libtheora.framework */; };
+		04EB497B225054080051BB16 /* libtheoradec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4948225053F20051BB16 /* libtheoradec.framework */; };
+		04EB497C225054080051BB16 /* libtheoraenc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494D225053F20051BB16 /* libtheoraenc.framework */; };
+		04EB497D225054080051BB16 /* libuuid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495C225053F20051BB16 /* libuuid.framework */; };
+		04EB497E225054080051BB16 /* libvorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4947225053F20051BB16 /* libvorbis.framework */; };
+		04EB497F225054080051BB16 /* libvorbisenc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB494E225053F20051BB16 /* libvorbisenc.framework */; };
+		04EB4980225054080051BB16 /* libvorbisfile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4963225053F30051BB16 /* libvorbisfile.framework */; };
+		04EB4981225054080051BB16 /* libvpx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495F225053F20051BB16 /* libvpx.framework */; };
+		04EB4982225054080051BB16 /* libwebp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4965225053F30051BB16 /* libwebp.framework */; };
+		04EB4983225054080051BB16 /* libwebpdecoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4952225053F20051BB16 /* libwebpdecoder.framework */; };
+		04EB4984225054080051BB16 /* libwebpdemux.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4957225053F20051BB16 /* libwebpdemux.framework */; };
+		04EB4985225054080051BB16 /* mobileffmpeg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4964225053F30051BB16 /* mobileffmpeg.framework */; };
+		04EB4986225054080051BB16 /* snappy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4956225053F20051BB16 /* snappy.framework */; };
+		04EB4987225054080051BB16 /* tiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB495B225053F20051BB16 /* tiff.framework */; };
 		04FB24BE224CEAE100680207 /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF0FFE72056DD460020B375 /* libdouble-conversion.a */; };
 		04FBDDD0224C0F1200680207 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */; };
 		09412F73D76044C899F82488 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD14E807504E49DDAEA7CAAC /* MaterialIcons.ttf */; };
@@ -593,6 +627,48 @@
 		048953D9223A7E3C00A7ED87 /* RNVideoProcessing-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNVideoProcessing-Bridging-Header.h"; sourceTree = "<group>"; };
 		048953DA223A7E3C00A7ED87 /* VideoProcessingGPUFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessingGPUFilters.swift; sourceTree = "<group>"; };
 		048953E9223A7E6000A7ED87 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../node_modules/react-native-video-processing/ios/GPUImage/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
+		04EB48AC2250531E0051BB16 /* libavcodec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libavcodec.framework; path = "Pods/mobile-ffmpeg-min/libavcodec.framework"; sourceTree = "<group>"; };
+		04EB48E52250531F0051BB16 /* mobileffmpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mobileffmpeg.framework; path = "Pods/mobile-ffmpeg-min/mobileffmpeg.framework"; sourceTree = "<group>"; };
+		04EB48E6225053200051BB16 /* libavformat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libavformat.framework; path = "Pods/mobile-ffmpeg-min/libavformat.framework"; sourceTree = "<group>"; };
+		04EB48E7225053210051BB16 /* libswresample.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libswresample.framework; path = "Pods/mobile-ffmpeg-min/libswresample.framework"; sourceTree = "<group>"; };
+		04EB48E8225053220051BB16 /* libavdevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libavdevice.framework; path = "Pods/mobile-ffmpeg-min/libavdevice.framework"; sourceTree = "<group>"; };
+		04EB48E9225053230051BB16 /* libswscale.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libswscale.framework; path = "Pods/mobile-ffmpeg-min/libswscale.framework"; sourceTree = "<group>"; };
+		04EB48EA225053240051BB16 /* libavutil.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libavutil.framework; path = "Pods/mobile-ffmpeg-min/libavutil.framework"; sourceTree = "<group>"; };
+		04EB48EB225053250051BB16 /* libavfilter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libavfilter.framework; path = "Pods/mobile-ffmpeg-min/libavfilter.framework"; sourceTree = "<group>"; };
+		04EB4944225053F20051BB16 /* libswresample.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libswresample.framework; sourceTree = "<group>"; };
+		04EB4945225053F20051BB16 /* fontconfig.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = fontconfig.framework; sourceTree = "<group>"; };
+		04EB4946225053F20051BB16 /* libavfilter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libavfilter.framework; sourceTree = "<group>"; };
+		04EB4947225053F20051BB16 /* libvorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libvorbis.framework; sourceTree = "<group>"; };
+		04EB4948225053F20051BB16 /* libtheoradec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libtheoradec.framework; sourceTree = "<group>"; };
+		04EB4949225053F20051BB16 /* libtheora.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libtheora.framework; sourceTree = "<group>"; };
+		04EB494A225053F20051BB16 /* libavformat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libavformat.framework; sourceTree = "<group>"; };
+		04EB494B225053F20051BB16 /* libavutil.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libavutil.framework; sourceTree = "<group>"; };
+		04EB494C225053F20051BB16 /* freetype.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = freetype.framework; sourceTree = "<group>"; };
+		04EB494D225053F20051BB16 /* libtheoraenc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libtheoraenc.framework; sourceTree = "<group>"; };
+		04EB494E225053F20051BB16 /* libvorbisenc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libvorbisenc.framework; sourceTree = "<group>"; };
+		04EB494F225053F20051BB16 /* libogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libogg.framework; sourceTree = "<group>"; };
+		04EB4950225053F20051BB16 /* libiconv.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libiconv.framework; sourceTree = "<group>"; };
+		04EB4951225053F20051BB16 /* jpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = jpeg.framework; sourceTree = "<group>"; };
+		04EB4952225053F20051BB16 /* libwebpdecoder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libwebpdecoder.framework; sourceTree = "<group>"; };
+		04EB4953225053F20051BB16 /* giflib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = giflib.framework; sourceTree = "<group>"; };
+		04EB4954225053F20051BB16 /* libswscale.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libswscale.framework; sourceTree = "<group>"; };
+		04EB4955225053F20051BB16 /* libavdevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libavdevice.framework; sourceTree = "<group>"; };
+		04EB4956225053F20051BB16 /* snappy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = snappy.framework; sourceTree = "<group>"; };
+		04EB4957225053F20051BB16 /* libwebpdemux.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libwebpdemux.framework; sourceTree = "<group>"; };
+		04EB4958225053F20051BB16 /* libass.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libass.framework; sourceTree = "<group>"; };
+		04EB4959225053F20051BB16 /* libavcodec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libavcodec.framework; sourceTree = "<group>"; };
+		04EB495A225053F20051BB16 /* fribidi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = fribidi.framework; sourceTree = "<group>"; };
+		04EB495B225053F20051BB16 /* tiff.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = tiff.framework; sourceTree = "<group>"; };
+		04EB495C225053F20051BB16 /* libuuid.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libuuid.framework; sourceTree = "<group>"; };
+		04EB495D225053F20051BB16 /* expat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = expat.framework; sourceTree = "<group>"; };
+		04EB495E225053F20051BB16 /* kvazaar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = kvazaar.framework; sourceTree = "<group>"; };
+		04EB495F225053F20051BB16 /* libvpx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libvpx.framework; sourceTree = "<group>"; };
+		04EB4960225053F20051BB16 /* libaom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libaom.framework; sourceTree = "<group>"; };
+		04EB4961225053F30051BB16 /* libpng.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libpng.framework; sourceTree = "<group>"; };
+		04EB4962225053F30051BB16 /* libcharset.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libcharset.framework; sourceTree = "<group>"; };
+		04EB4963225053F30051BB16 /* libvorbisfile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libvorbisfile.framework; sourceTree = "<group>"; };
+		04EB4964225053F30051BB16 /* mobileffmpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = mobileffmpeg.framework; sourceTree = "<group>"; };
+		04EB4965225053F30051BB16 /* libwebp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libwebp.framework; sourceTree = "<group>"; };
 		04FB0000224C127300680207 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		04FB0001224C127300680207 /* mutable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mutable.js; sourceTree = "<group>"; };
 		04FB0002224C127300680207 /* LICENCE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
@@ -1331,7 +1407,7 @@
 		04FB0381224C128400680207 /* slnx.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = slnx.sqlite; sourceTree = "<group>"; };
 		04FB0383224C128400680207 /* applicationhost.config */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = applicationhost.config; sourceTree = "<group>"; };
 		04FB0384224C128400680207 /* ProjectSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProjectSettings.json; sourceTree = "<group>"; };
-		04FB0387224C128400680207 /* .suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = .suo; sourceTree = "<group>"; };
+		04FB0387224C128400680207 /* .suo */ = {isa = PBXFileReference; lastKnownFileType = text; path = .suo; sourceTree = "<group>"; };
 		04FB0388224C128400680207 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		04FB0389224C128400680207 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		04FB038B224C128400680207 /* dateformat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = dateformat.js; sourceTree = "<group>"; };
@@ -14785,21 +14861,21 @@
 		04FBF805224C125D00680207 /* es6.reflect.set-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.set-prototype-of.js"; sourceTree = "<group>"; };
 		04FBF806224C125D00680207 /* es6.reflect.prevent-extensions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.prevent-extensions.js"; sourceTree = "<group>"; };
 		04FBF807224C125D00680207 /* $.is-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-array.js"; sourceTree = "<group>"; };
-		04FBF808224C125D00680207 /* $.partial.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.partial.js"; sourceTree = "<group>"; };
+		04FBF808224C125D00680207 /* $.partial.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.partial.js; sourceTree = "<group>"; };
 		04FBF809224C125D00680207 /* es6.array.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.iterator.js; sourceTree = "<group>"; };
 		04FBF80A224C125D00680207 /* es6.math.fround.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.fround.js; sourceTree = "<group>"; };
-		04FBF80B224C125D00680207 /* $.microtask.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.microtask.js"; sourceTree = "<group>"; };
-		04FBF80C224C125D00680207 /* $.replacer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.replacer.js"; sourceTree = "<group>"; };
-		04FBF80D224C125D00680207 /* $.shared.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.shared.js"; sourceTree = "<group>"; };
+		04FBF80B224C125D00680207 /* $.microtask.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.microtask.js; sourceTree = "<group>"; };
+		04FBF80C224C125D00680207 /* $.replacer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.replacer.js; sourceTree = "<group>"; };
+		04FBF80D224C125D00680207 /* $.shared.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.shared.js; sourceTree = "<group>"; };
 		04FBF80E224C125D00680207 /* es6.object.get-own-property-names.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-own-property-names.js"; sourceTree = "<group>"; };
-		04FBF80F224C125D00680207 /* $.defined.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.defined.js"; sourceTree = "<group>"; };
+		04FBF80F224C125D00680207 /* $.defined.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.defined.js; sourceTree = "<group>"; };
 		04FBF810224C125D00680207 /* es6.function.name.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.function.name.js; sourceTree = "<group>"; };
 		04FBF811224C125D00680207 /* $.to-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-integer.js"; sourceTree = "<group>"; };
 		04FBF812224C125D00680207 /* es5.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es5.js; sourceTree = "<group>"; };
 		04FBF813224C125D00680207 /* core.object.make.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.object.make.js; sourceTree = "<group>"; };
 		04FBF814224C125D00680207 /* es6.regexp.replace.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.replace.js; sourceTree = "<group>"; };
 		04FBF815224C125D00680207 /* es6.object.freeze.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.freeze.js; sourceTree = "<group>"; };
-		04FBF816224C125D00680207 /* $.hide.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.hide.js"; sourceTree = "<group>"; };
+		04FBF816224C125D00680207 /* $.hide.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.hide.js; sourceTree = "<group>"; };
 		04FBF817224C125D00680207 /* js.array.statics.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = js.array.statics.js; sourceTree = "<group>"; };
 		04FBF818224C125D00680207 /* es6.string.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.iterator.js; sourceTree = "<group>"; };
 		04FBF819224C125D00680207 /* es6.array.species.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.species.js; sourceTree = "<group>"; };
@@ -14811,18 +14887,18 @@
 		04FBF81F224C125D00680207 /* es7.string.pad-left.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es7.string.pad-left.js"; sourceTree = "<group>"; };
 		04FBF820224C125D00680207 /* $.to-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-object.js"; sourceTree = "<group>"; };
 		04FBF821224C125D00680207 /* es6.math.tanh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.tanh.js; sourceTree = "<group>"; };
-		04FBF822224C125D00680207 /* $.buffer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.buffer.js"; sourceTree = "<group>"; };
+		04FBF822224C125D00680207 /* $.buffer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.buffer.js; sourceTree = "<group>"; };
 		04FBF823224C125D00680207 /* $.object-to-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.object-to-array.js"; sourceTree = "<group>"; };
 		04FBF824224C125D00680207 /* es6.string.from-code-point.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.from-code-point.js"; sourceTree = "<group>"; };
 		04FBF825224C125D00680207 /* es6.regexp.search.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.search.js; sourceTree = "<group>"; };
 		04FBF826224C125D00680207 /* core.function.part.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.function.part.js; sourceTree = "<group>"; };
 		04FBF827224C125D00680207 /* es6.weak-set.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.weak-set.js"; sourceTree = "<group>"; };
-		04FBF828224C125D00680207 /* $.fails.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fails.js"; sourceTree = "<group>"; };
+		04FBF828224C125D00680207 /* $.fails.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.fails.js; sourceTree = "<group>"; };
 		04FBF829224C125D00680207 /* es6.object.assign.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.assign.js; sourceTree = "<group>"; };
 		04FBF82A224C125D00680207 /* $.fix-re-wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fix-re-wks.js"; sourceTree = "<group>"; };
 		04FBF82B224C125D00680207 /* es6.object.to-string.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.to-string.js"; sourceTree = "<group>"; };
 		04FBF82C224C125D00680207 /* es6.array.fill.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.fill.js; sourceTree = "<group>"; };
-		04FBF82D224C125D00680207 /* $.wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.wks.js"; sourceTree = "<group>"; };
+		04FBF82D224C125D00680207 /* $.wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.wks.js; sourceTree = "<group>"; };
 		04FBF82E224C125D00680207 /* es6.object.is-frozen.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.is-frozen.js"; sourceTree = "<group>"; };
 		04FBF82F224C125D00680207 /* es6.string.raw.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.raw.js; sourceTree = "<group>"; };
 		04FBF830224C125D00680207 /* web.immediate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.immediate.js; sourceTree = "<group>"; };
@@ -14831,18 +14907,18 @@
 		04FBF833224C125D00680207 /* es6.reflect.get.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.get.js; sourceTree = "<group>"; };
 		04FBF834224C125D00680207 /* $.to-length.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-length.js"; sourceTree = "<group>"; };
 		04FBF835224C125D00680207 /* $.collection-to-json.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection-to-json.js"; sourceTree = "<group>"; };
-		04FBF836224C125D00680207 /* $.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.js"; sourceTree = "<group>"; };
+		04FBF836224C125D00680207 /* $.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.js; sourceTree = "<group>"; };
 		04FBF837224C125D00680207 /* es6.reflect.define-property.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.define-property.js"; sourceTree = "<group>"; };
 		04FBF838224C125D00680207 /* es6.number.min-safe-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.min-safe-integer.js"; sourceTree = "<group>"; };
 		04FBF839224C125D00680207 /* es6.object.get-own-property-descriptor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-own-property-descriptor.js"; sourceTree = "<group>"; };
-		04FBF83A224C125D00680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.redefine.js"; sourceTree = "<group>"; };
+		04FBF83A224C125D00680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.redefine.js; sourceTree = "<group>"; };
 		04FBF83B224C125D00680207 /* es6.regexp.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.constructor.js; sourceTree = "<group>"; };
 		04FBF83C224C125D00680207 /* es6.regexp.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.flags.js; sourceTree = "<group>"; };
 		04FBF83D224C125D00680207 /* es6.typed.uint16-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.uint16-array.js"; sourceTree = "<group>"; };
 		04FBF83E224C125D00680207 /* es6.object.set-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.set-prototype-of.js"; sourceTree = "<group>"; };
 		04FBF83F224C125D00680207 /* core.dict.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.dict.js; sourceTree = "<group>"; };
 		04FBF840224C125D00680207 /* es6.math.clz32.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.clz32.js; sourceTree = "<group>"; };
-		04FBF841224C125D00680207 /* $.invoke.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.invoke.js"; sourceTree = "<group>"; };
+		04FBF841224C125D00680207 /* $.invoke.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.invoke.js; sourceTree = "<group>"; };
 		04FBF842224C125D00680207 /* es6.reflect.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.has.js; sourceTree = "<group>"; };
 		04FBF843224C125D00680207 /* es6.math.trunc.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.trunc.js; sourceTree = "<group>"; };
 		04FBF844224C125D00680207 /* es6.math.acosh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.acosh.js; sourceTree = "<group>"; };
@@ -14850,7 +14926,7 @@
 		04FBF846224C125D00680207 /* $.iter-create.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-create.js"; sourceTree = "<group>"; };
 		04FBF847224C125E00680207 /* $.own-keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.own-keys.js"; sourceTree = "<group>"; };
 		04FBF848224C125E00680207 /* es6.weak-map.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.weak-map.js"; sourceTree = "<group>"; };
-		04FBF849224C125E00680207 /* $.descriptors.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.descriptors.js"; sourceTree = "<group>"; };
+		04FBF849224C125E00680207 /* $.descriptors.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.descriptors.js; sourceTree = "<group>"; };
 		04FBF84A224C125E00680207 /* $.array-species-create.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.array-species-create.js"; sourceTree = "<group>"; };
 		04FBF84B224C125E00680207 /* $.get-names.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.get-names.js"; sourceTree = "<group>"; };
 		04FBF84C224C125E00680207 /* $.is-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-object.js"; sourceTree = "<group>"; };
@@ -14868,11 +14944,11 @@
 		04FBF858224C125E00680207 /* es6.reflect.delete-property.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.delete-property.js"; sourceTree = "<group>"; };
 		04FBF859224C125E00680207 /* $.object-define.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.object-define.js"; sourceTree = "<group>"; };
 		04FBF85A224C125E00680207 /* $.collection-weak.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection-weak.js"; sourceTree = "<group>"; };
-		04FBF85B224C125E00680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.path.js"; sourceTree = "<group>"; };
+		04FBF85B224C125E00680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.path.js; sourceTree = "<group>"; };
 		04FBF85C224C125E00680207 /* $.same-value.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.same-value.js"; sourceTree = "<group>"; };
 		04FBF85D224C125E00680207 /* es7.string.trim-left.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es7.string.trim-left.js"; sourceTree = "<group>"; };
 		04FBF85E224C125E00680207 /* es6.reflect.set.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.set.js; sourceTree = "<group>"; };
-		04FBF85F224C125E00680207 /* $.classof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.classof.js"; sourceTree = "<group>"; };
+		04FBF85F224C125E00680207 /* $.classof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.classof.js; sourceTree = "<group>"; };
 		04FBF860224C125E00680207 /* es6.array.copy-within.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.array.copy-within.js"; sourceTree = "<group>"; };
 		04FBF861224C125E00680207 /* core.object.define.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.object.define.js; sourceTree = "<group>"; };
 		04FBF862224C125E00680207 /* core.log.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.log.js; sourceTree = "<group>"; };
@@ -14885,13 +14961,13 @@
 		04FBF869224C125E00680207 /* core.number.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.number.iterator.js; sourceTree = "<group>"; };
 		04FBF86A224C125E00680207 /* es6.symbol.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.symbol.js; sourceTree = "<group>"; };
 		04FBF86B224C125E00680207 /* es6.object.keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.keys.js; sourceTree = "<group>"; };
-		04FBF86C224C125E00680207 /* $.task.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.task.js"; sourceTree = "<group>"; };
+		04FBF86C224C125E00680207 /* $.task.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.task.js; sourceTree = "<group>"; };
 		04FBF86D224C125E00680207 /* $.to-index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-index.js"; sourceTree = "<group>"; };
 		04FBF86E224C125E00680207 /* es6.math.log1p.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log1p.js; sourceTree = "<group>"; };
 		04FBF86F224C125E00680207 /* es6.promise.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.promise.js; sourceTree = "<group>"; };
 		04FBF870224C125E00680207 /* es6.math.atanh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.atanh.js; sourceTree = "<group>"; };
 		04FBF871224C125E00680207 /* $.array-methods.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.array-methods.js"; sourceTree = "<group>"; };
-		04FBF872224C125E00680207 /* $.typed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.typed.js"; sourceTree = "<group>"; };
+		04FBF872224C125E00680207 /* $.typed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.typed.js; sourceTree = "<group>"; };
 		04FBF873224C125E00680207 /* core.get-iterator-method.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.get-iterator-method.js"; sourceTree = "<group>"; };
 		04FBF874224C125E00680207 /* es6.reflect.get-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.get-prototype-of.js"; sourceTree = "<group>"; };
 		04FBF875224C125E00680207 /* es6.typed.int16-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.int16-array.js"; sourceTree = "<group>"; };
@@ -14900,12 +14976,12 @@
 		04FBF878224C125E00680207 /* core.is-iterable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.is-iterable.js"; sourceTree = "<group>"; };
 		04FBF879224C125E00680207 /* es6.number.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.number.constructor.js; sourceTree = "<group>"; };
 		04FBF87A224C125E00680207 /* es6.number.is-finite.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.is-finite.js"; sourceTree = "<group>"; };
-		04FBF87B224C125E00680207 /* $.keyof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.keyof.js"; sourceTree = "<group>"; };
+		04FBF87B224C125E00680207 /* $.keyof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.keyof.js; sourceTree = "<group>"; };
 		04FBF87C224C125E00680207 /* $.strict-new.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.strict-new.js"; sourceTree = "<group>"; };
 		04FBF87D224C125E00680207 /* es6.string.ends-with.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.ends-with.js"; sourceTree = "<group>"; };
 		04FBF87E224C125E00680207 /* es6.array.find-index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.array.find-index.js"; sourceTree = "<group>"; };
 		04FBF87F224C125E00680207 /* $.iter-call.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-call.js"; sourceTree = "<group>"; };
-		04FBF880224C125E00680207 /* $.global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.global.js"; sourceTree = "<group>"; };
+		04FBF880224C125E00680207 /* $.global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.global.js; sourceTree = "<group>"; };
 		04FBF881224C125E00680207 /* es6.object.prevent-extensions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.prevent-extensions.js"; sourceTree = "<group>"; };
 		04FBF882224C125E00680207 /* web.dom.iterable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.dom.iterable.js; sourceTree = "<group>"; };
 		04FBF883224C125E00680207 /* $.is-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-integer.js"; sourceTree = "<group>"; };
@@ -14924,24 +15000,24 @@
 		04FBF890224C125E00680207 /* es6.string.code-point-at.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.code-point-at.js"; sourceTree = "<group>"; };
 		04FBF891224C125E00680207 /* es6.typed.uint8-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.uint8-array.js"; sourceTree = "<group>"; };
 		04FBF892224C125E00680207 /* es6.object.is-sealed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.is-sealed.js"; sourceTree = "<group>"; };
-		04FBF893224C125E00680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection.js"; sourceTree = "<group>"; };
+		04FBF893224C125E00680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.collection.js; sourceTree = "<group>"; };
 		04FBF894224C125E00680207 /* $.string-pad.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-pad.js"; sourceTree = "<group>"; };
 		04FBF895224C125E00680207 /* $.is-regexp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-regexp.js"; sourceTree = "<group>"; };
 		04FBF896224C125E00680207 /* es6.typed.int32-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.int32-array.js"; sourceTree = "<group>"; };
 		04FBF897224C125E00680207 /* es6.object.get-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-prototype-of.js"; sourceTree = "<group>"; };
-		04FBF898224C125E00680207 /* $.html.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.html.js"; sourceTree = "<group>"; };
+		04FBF898224C125E00680207 /* $.html.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.html.js; sourceTree = "<group>"; };
 		04FBF899224C125E00680207 /* es6.math.cosh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.cosh.js; sourceTree = "<group>"; };
-		04FBF89A224C125E00680207 /* $.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.flags.js"; sourceTree = "<group>"; };
+		04FBF89A224C125E00680207 /* $.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.flags.js; sourceTree = "<group>"; };
 		04FBF89B224C125E00680207 /* core.delay.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.delay.js; sourceTree = "<group>"; };
 		04FBF89C224C125E00680207 /* $.string-at.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-at.js"; sourceTree = "<group>"; };
 		04FBF89D224C125E00680207 /* es6.reflect.get-own-property-descriptor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.get-own-property-descriptor.js"; sourceTree = "<group>"; };
 		04FBF89E224C125E00680207 /* es6.array.find.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.find.js; sourceTree = "<group>"; };
 		04FBF89F224C125E00680207 /* es6.math.sign.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.sign.js; sourceTree = "<group>"; };
-		04FBF8A0224C125E00680207 /* $.iobject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iobject.js"; sourceTree = "<group>"; };
+		04FBF8A0224C125E00680207 /* $.iobject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.iobject.js; sourceTree = "<group>"; };
 		04FBF8A1224C125E00680207 /* es6.math.sinh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.sinh.js; sourceTree = "<group>"; };
 		04FBF8A2224C125E00680207 /* es6.number.epsilon.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.number.epsilon.js; sourceTree = "<group>"; };
 		04FBF8A3224C125E00680207 /* $.math-log1p.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.math-log1p.js"; sourceTree = "<group>"; };
-		04FBF8A4224C125E00680207 /* $.ctx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.ctx.js"; sourceTree = "<group>"; };
+		04FBF8A4224C125E00680207 /* $.ctx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.ctx.js; sourceTree = "<group>"; };
 		04FBF8A5224C125E00680207 /* es6.string.includes.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.includes.js; sourceTree = "<group>"; };
 		04FBF8A6224C125E00680207 /* $.string-trim.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-trim.js"; sourceTree = "<group>"; };
 		04FBF8A7224C125E00680207 /* es7.regexp.escape.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.regexp.escape.js; sourceTree = "<group>"; };
@@ -14952,7 +15028,7 @@
 		04FBF8AC224C125E00680207 /* es6.object.seal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.seal.js; sourceTree = "<group>"; };
 		04FBF8AD224C125E00680207 /* es7.array.includes.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.array.includes.js; sourceTree = "<group>"; };
 		04FBF8AE224C125E00680207 /* $.typed-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.typed-array.js"; sourceTree = "<group>"; };
-		04FBF8AF224C125E00680207 /* $.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.has.js"; sourceTree = "<group>"; };
+		04FBF8AF224C125E00680207 /* $.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.has.js; sourceTree = "<group>"; };
 		04FBF8B0224C125E00680207 /* es6.function.has-instance.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.function.has-instance.js"; sourceTree = "<group>"; };
 		04FBF8B1224C125F00680207 /* es6.math.log2.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log2.js; sourceTree = "<group>"; };
 		04FBF8B2224C125F00680207 /* es6.string.repeat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.repeat.js; sourceTree = "<group>"; };
@@ -14969,22 +15045,22 @@
 		04FBF8BD224C125F00680207 /* es6.reflect.apply.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.apply.js; sourceTree = "<group>"; };
 		04FBF8BE224C125F00680207 /* es6.reflect.is-extensible.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.is-extensible.js"; sourceTree = "<group>"; };
 		04FBF8BF224C125F00680207 /* core.get-iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.get-iterator.js"; sourceTree = "<group>"; };
-		04FBF8C0224C125F00680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.export.js"; sourceTree = "<group>"; };
+		04FBF8C0224C125F00680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.export.js; sourceTree = "<group>"; };
 		04FBF8C1224C125F00680207 /* es6.map.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.map.js; sourceTree = "<group>"; };
 		04FBF8C2224C125F00680207 /* es6.typed.float32-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.float32-array.js"; sourceTree = "<group>"; };
 		04FBF8C3224C125F00680207 /* $.set-to-string-tag.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.set-to-string-tag.js"; sourceTree = "<group>"; };
-		04FBF8C4224C125F00680207 /* $.cof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.cof.js"; sourceTree = "<group>"; };
+		04FBF8C4224C125F00680207 /* $.cof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.cof.js; sourceTree = "<group>"; };
 		04FBF8C5224C125F00680207 /* es6.math.log10.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log10.js; sourceTree = "<group>"; };
 		04FBF8C6224C125F00680207 /* es7.object.values.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.object.values.js; sourceTree = "<group>"; };
 		04FBF8C7224C125F00680207 /* es6.reflect.own-keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.own-keys.js"; sourceTree = "<group>"; };
-		04FBF8C8224C125F00680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.library.js"; sourceTree = "<group>"; };
-		04FBF8C9224C125F00680207 /* $.core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.core.js"; sourceTree = "<group>"; };
-		04FBF8CA224C125F00680207 /* $.iterators.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iterators.js"; sourceTree = "<group>"; };
+		04FBF8C8224C125F00680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.library.js; sourceTree = "<group>"; };
+		04FBF8C9224C125F00680207 /* $.core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.core.js; sourceTree = "<group>"; };
+		04FBF8CA224C125F00680207 /* $.iterators.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.iterators.js; sourceTree = "<group>"; };
 		04FBF8CB224C125F00680207 /* core.object.is-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.object.is-object.js"; sourceTree = "<group>"; };
 		04FBF8CC224C125F00680207 /* es6.number.is-nan.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.is-nan.js"; sourceTree = "<group>"; };
 		04FBF8CD224C125F00680207 /* $.iter-step.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-step.js"; sourceTree = "<group>"; };
 		04FBF8CE224C125F00680207 /* es6.math.cbrt.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.cbrt.js; sourceTree = "<group>"; };
-		04FBF8CF224C125F00680207 /* $.uid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.uid.js"; sourceTree = "<group>"; };
+		04FBF8CF224C125F00680207 /* $.uid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.uid.js; sourceTree = "<group>"; };
 		04FBF8D0224C125F00680207 /* $.fails-is-regexp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fails-is-regexp.js"; sourceTree = "<group>"; };
 		04FBF8D1224C125F00680207 /* $.species-constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.species-constructor.js"; sourceTree = "<group>"; };
 		04FBF8D2224C125F00680207 /* bower.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bower.json; sourceTree = "<group>"; };
@@ -15187,21 +15263,21 @@
 		04FBF9A8224C126000680207 /* es6.reflect.set-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.set-prototype-of.js"; sourceTree = "<group>"; };
 		04FBF9A9224C126000680207 /* es6.reflect.prevent-extensions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.prevent-extensions.js"; sourceTree = "<group>"; };
 		04FBF9AA224C126000680207 /* $.is-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-array.js"; sourceTree = "<group>"; };
-		04FBF9AB224C126000680207 /* $.partial.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.partial.js"; sourceTree = "<group>"; };
+		04FBF9AB224C126000680207 /* $.partial.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.partial.js; sourceTree = "<group>"; };
 		04FBF9AC224C126000680207 /* es6.array.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.iterator.js; sourceTree = "<group>"; };
 		04FBF9AD224C126000680207 /* es6.math.fround.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.fround.js; sourceTree = "<group>"; };
-		04FBF9AE224C126000680207 /* $.microtask.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.microtask.js"; sourceTree = "<group>"; };
-		04FBF9AF224C126000680207 /* $.replacer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.replacer.js"; sourceTree = "<group>"; };
-		04FBF9B0224C126000680207 /* $.shared.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.shared.js"; sourceTree = "<group>"; };
+		04FBF9AE224C126000680207 /* $.microtask.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.microtask.js; sourceTree = "<group>"; };
+		04FBF9AF224C126000680207 /* $.replacer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.replacer.js; sourceTree = "<group>"; };
+		04FBF9B0224C126000680207 /* $.shared.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.shared.js; sourceTree = "<group>"; };
 		04FBF9B1224C126000680207 /* es6.object.get-own-property-names.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-own-property-names.js"; sourceTree = "<group>"; };
-		04FBF9B2224C126000680207 /* $.defined.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.defined.js"; sourceTree = "<group>"; };
+		04FBF9B2224C126000680207 /* $.defined.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.defined.js; sourceTree = "<group>"; };
 		04FBF9B3224C126000680207 /* es6.function.name.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.function.name.js; sourceTree = "<group>"; };
 		04FBF9B4224C126000680207 /* $.to-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-integer.js"; sourceTree = "<group>"; };
 		04FBF9B5224C126000680207 /* es5.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es5.js; sourceTree = "<group>"; };
 		04FBF9B6224C126000680207 /* core.object.make.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.object.make.js; sourceTree = "<group>"; };
 		04FBF9B7224C126000680207 /* es6.regexp.replace.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.replace.js; sourceTree = "<group>"; };
 		04FBF9B8224C126000680207 /* es6.object.freeze.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.freeze.js; sourceTree = "<group>"; };
-		04FBF9B9224C126000680207 /* $.hide.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.hide.js"; sourceTree = "<group>"; };
+		04FBF9B9224C126000680207 /* $.hide.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.hide.js; sourceTree = "<group>"; };
 		04FBF9BA224C126000680207 /* js.array.statics.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = js.array.statics.js; sourceTree = "<group>"; };
 		04FBF9BB224C126000680207 /* es6.string.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.iterator.js; sourceTree = "<group>"; };
 		04FBF9BC224C126000680207 /* es6.array.species.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.species.js; sourceTree = "<group>"; };
@@ -15213,18 +15289,18 @@
 		04FBF9C2224C126000680207 /* es7.string.pad-left.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es7.string.pad-left.js"; sourceTree = "<group>"; };
 		04FBF9C3224C126000680207 /* $.to-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-object.js"; sourceTree = "<group>"; };
 		04FBF9C4224C126100680207 /* es6.math.tanh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.tanh.js; sourceTree = "<group>"; };
-		04FBF9C5224C126100680207 /* $.buffer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.buffer.js"; sourceTree = "<group>"; };
+		04FBF9C5224C126100680207 /* $.buffer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.buffer.js; sourceTree = "<group>"; };
 		04FBF9C6224C126100680207 /* $.object-to-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.object-to-array.js"; sourceTree = "<group>"; };
 		04FBF9C7224C126100680207 /* es6.string.from-code-point.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.from-code-point.js"; sourceTree = "<group>"; };
 		04FBF9C8224C126100680207 /* es6.regexp.search.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.search.js; sourceTree = "<group>"; };
 		04FBF9C9224C126100680207 /* core.function.part.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.function.part.js; sourceTree = "<group>"; };
 		04FBF9CA224C126100680207 /* es6.weak-set.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.weak-set.js"; sourceTree = "<group>"; };
-		04FBF9CB224C126100680207 /* $.fails.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fails.js"; sourceTree = "<group>"; };
+		04FBF9CB224C126100680207 /* $.fails.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.fails.js; sourceTree = "<group>"; };
 		04FBF9CC224C126100680207 /* es6.object.assign.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.assign.js; sourceTree = "<group>"; };
 		04FBF9CD224C126100680207 /* $.fix-re-wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fix-re-wks.js"; sourceTree = "<group>"; };
 		04FBF9CE224C126100680207 /* es6.object.to-string.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.to-string.js"; sourceTree = "<group>"; };
 		04FBF9CF224C126100680207 /* es6.array.fill.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.fill.js; sourceTree = "<group>"; };
-		04FBF9D0224C126100680207 /* $.wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.wks.js"; sourceTree = "<group>"; };
+		04FBF9D0224C126100680207 /* $.wks.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.wks.js; sourceTree = "<group>"; };
 		04FBF9D1224C126100680207 /* es6.object.is-frozen.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.is-frozen.js"; sourceTree = "<group>"; };
 		04FBF9D2224C126100680207 /* es6.string.raw.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.raw.js; sourceTree = "<group>"; };
 		04FBF9D3224C126100680207 /* web.immediate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.immediate.js; sourceTree = "<group>"; };
@@ -15233,18 +15309,18 @@
 		04FBF9D6224C126100680207 /* es6.reflect.get.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.get.js; sourceTree = "<group>"; };
 		04FBF9D7224C126100680207 /* $.to-length.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-length.js"; sourceTree = "<group>"; };
 		04FBF9D8224C126100680207 /* $.collection-to-json.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection-to-json.js"; sourceTree = "<group>"; };
-		04FBF9D9224C126100680207 /* $.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.js"; sourceTree = "<group>"; };
+		04FBF9D9224C126100680207 /* $.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.js; sourceTree = "<group>"; };
 		04FBF9DA224C126100680207 /* es6.reflect.define-property.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.define-property.js"; sourceTree = "<group>"; };
 		04FBF9DB224C126100680207 /* es6.number.min-safe-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.min-safe-integer.js"; sourceTree = "<group>"; };
 		04FBF9DC224C126100680207 /* es6.object.get-own-property-descriptor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-own-property-descriptor.js"; sourceTree = "<group>"; };
-		04FBF9DD224C126100680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.redefine.js"; sourceTree = "<group>"; };
+		04FBF9DD224C126100680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.redefine.js; sourceTree = "<group>"; };
 		04FBF9DE224C126100680207 /* es6.regexp.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.constructor.js; sourceTree = "<group>"; };
 		04FBF9DF224C126100680207 /* es6.regexp.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.flags.js; sourceTree = "<group>"; };
 		04FBF9E0224C126100680207 /* es6.typed.uint16-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.uint16-array.js"; sourceTree = "<group>"; };
 		04FBF9E1224C126100680207 /* es6.object.set-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.set-prototype-of.js"; sourceTree = "<group>"; };
 		04FBF9E2224C126100680207 /* core.dict.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.dict.js; sourceTree = "<group>"; };
 		04FBF9E3224C126100680207 /* es6.math.clz32.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.clz32.js; sourceTree = "<group>"; };
-		04FBF9E4224C126100680207 /* $.invoke.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.invoke.js"; sourceTree = "<group>"; };
+		04FBF9E4224C126100680207 /* $.invoke.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.invoke.js; sourceTree = "<group>"; };
 		04FBF9E5224C126100680207 /* es6.reflect.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.has.js; sourceTree = "<group>"; };
 		04FBF9E6224C126100680207 /* es6.math.trunc.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.trunc.js; sourceTree = "<group>"; };
 		04FBF9E7224C126100680207 /* es6.math.acosh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.acosh.js; sourceTree = "<group>"; };
@@ -15252,7 +15328,7 @@
 		04FBF9E9224C126100680207 /* $.iter-create.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-create.js"; sourceTree = "<group>"; };
 		04FBF9EA224C126100680207 /* $.own-keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.own-keys.js"; sourceTree = "<group>"; };
 		04FBF9EB224C126100680207 /* es6.weak-map.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.weak-map.js"; sourceTree = "<group>"; };
-		04FBF9EC224C126100680207 /* $.descriptors.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.descriptors.js"; sourceTree = "<group>"; };
+		04FBF9EC224C126100680207 /* $.descriptors.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.descriptors.js; sourceTree = "<group>"; };
 		04FBF9ED224C126100680207 /* $.array-species-create.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.array-species-create.js"; sourceTree = "<group>"; };
 		04FBF9EE224C126100680207 /* $.get-names.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.get-names.js"; sourceTree = "<group>"; };
 		04FBF9EF224C126100680207 /* $.is-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-object.js"; sourceTree = "<group>"; };
@@ -15264,19 +15340,19 @@
 		04FBF9F6224C126100680207 /* $.set-species.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.set-species.js"; sourceTree = "<group>"; };
 		04FBF9F7224C126100680207 /* es6.regexp.search.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.search.js; sourceTree = "<group>"; };
 		04FBF9F8224C126100680207 /* es6.object.to-string.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.to-string.js"; sourceTree = "<group>"; };
-		04FBF9F9224C126100680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.redefine.js"; sourceTree = "<group>"; };
+		04FBF9F9224C126100680207 /* $.redefine.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.redefine.js; sourceTree = "<group>"; };
 		04FBF9FA224C126100680207 /* es6.regexp.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.constructor.js; sourceTree = "<group>"; };
 		04FBF9FB224C126100680207 /* es6.regexp.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.flags.js; sourceTree = "<group>"; };
 		04FBF9FC224C126100680207 /* $.add-to-unscopables.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.add-to-unscopables.js"; sourceTree = "<group>"; };
 		04FBF9FD224C126100680207 /* es6.date.to-string.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.date.to-string.js"; sourceTree = "<group>"; };
-		04FBF9FE224C126100680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.path.js"; sourceTree = "<group>"; };
+		04FBF9FE224C126100680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.path.js; sourceTree = "<group>"; };
 		04FBF9FF224C126100680207 /* es6.regexp.split.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.split.js; sourceTree = "<group>"; };
 		04FBFA00224C126100680207 /* es6.number.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.number.constructor.js; sourceTree = "<group>"; };
 		04FBFA01224C126100680207 /* web.dom.iterable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.dom.iterable.js; sourceTree = "<group>"; };
-		04FBFA02224C126100680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection.js"; sourceTree = "<group>"; };
+		04FBFA02224C126100680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.collection.js; sourceTree = "<group>"; };
 		04FBFA03224C126100680207 /* es6.regexp.match.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.regexp.match.js; sourceTree = "<group>"; };
-		04FBFA04224C126100680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.export.js"; sourceTree = "<group>"; };
-		04FBFA05224C126100680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.library.js"; sourceTree = "<group>"; };
+		04FBFA04224C126100680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.export.js; sourceTree = "<group>"; };
+		04FBFA05224C126100680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.library.js; sourceTree = "<group>"; };
 		04FBFA06224C126100680207 /* $.set-proto.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.set-proto.js"; sourceTree = "<group>"; };
 		04FBFA07224C126100680207 /* web.timers.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.timers.js; sourceTree = "<group>"; };
 		04FBFA08224C126100680207 /* es6.object.is.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.is.js; sourceTree = "<group>"; };
@@ -15288,11 +15364,11 @@
 		04FBFA0E224C126100680207 /* es6.reflect.delete-property.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.delete-property.js"; sourceTree = "<group>"; };
 		04FBFA0F224C126100680207 /* $.object-define.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.object-define.js"; sourceTree = "<group>"; };
 		04FBFA10224C126100680207 /* $.collection-weak.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection-weak.js"; sourceTree = "<group>"; };
-		04FBFA11224C126100680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.path.js"; sourceTree = "<group>"; };
+		04FBFA11224C126100680207 /* $.path.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.path.js; sourceTree = "<group>"; };
 		04FBFA12224C126100680207 /* $.same-value.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.same-value.js"; sourceTree = "<group>"; };
 		04FBFA13224C126100680207 /* es7.string.trim-left.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es7.string.trim-left.js"; sourceTree = "<group>"; };
 		04FBFA14224C126100680207 /* es6.reflect.set.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.set.js; sourceTree = "<group>"; };
-		04FBFA15224C126100680207 /* $.classof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.classof.js"; sourceTree = "<group>"; };
+		04FBFA15224C126100680207 /* $.classof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.classof.js; sourceTree = "<group>"; };
 		04FBFA16224C126100680207 /* es6.array.copy-within.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.array.copy-within.js"; sourceTree = "<group>"; };
 		04FBFA17224C126100680207 /* core.object.define.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.object.define.js; sourceTree = "<group>"; };
 		04FBFA18224C126100680207 /* core.log.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.log.js; sourceTree = "<group>"; };
@@ -15305,13 +15381,13 @@
 		04FBFA1F224C126100680207 /* core.number.iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.number.iterator.js; sourceTree = "<group>"; };
 		04FBFA20224C126100680207 /* es6.symbol.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.symbol.js; sourceTree = "<group>"; };
 		04FBFA21224C126100680207 /* es6.object.keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.keys.js; sourceTree = "<group>"; };
-		04FBFA22224C126100680207 /* $.task.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.task.js"; sourceTree = "<group>"; };
+		04FBFA22224C126100680207 /* $.task.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.task.js; sourceTree = "<group>"; };
 		04FBFA23224C126100680207 /* $.to-index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.to-index.js"; sourceTree = "<group>"; };
 		04FBFA24224C126100680207 /* es6.math.log1p.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log1p.js; sourceTree = "<group>"; };
 		04FBFA25224C126100680207 /* es6.promise.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.promise.js; sourceTree = "<group>"; };
 		04FBFA26224C126100680207 /* es6.math.atanh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.atanh.js; sourceTree = "<group>"; };
 		04FBFA27224C126100680207 /* $.array-methods.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.array-methods.js"; sourceTree = "<group>"; };
-		04FBFA28224C126100680207 /* $.typed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.typed.js"; sourceTree = "<group>"; };
+		04FBFA28224C126100680207 /* $.typed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.typed.js; sourceTree = "<group>"; };
 		04FBFA29224C126100680207 /* core.get-iterator-method.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.get-iterator-method.js"; sourceTree = "<group>"; };
 		04FBFA2A224C126100680207 /* es6.reflect.get-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.get-prototype-of.js"; sourceTree = "<group>"; };
 		04FBFA2B224C126100680207 /* es6.typed.int16-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.int16-array.js"; sourceTree = "<group>"; };
@@ -15320,12 +15396,12 @@
 		04FBFA2E224C126100680207 /* core.is-iterable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.is-iterable.js"; sourceTree = "<group>"; };
 		04FBFA2F224C126100680207 /* es6.number.constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.number.constructor.js; sourceTree = "<group>"; };
 		04FBFA30224C126100680207 /* es6.number.is-finite.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.is-finite.js"; sourceTree = "<group>"; };
-		04FBFA31224C126100680207 /* $.keyof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.keyof.js"; sourceTree = "<group>"; };
+		04FBFA31224C126100680207 /* $.keyof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.keyof.js; sourceTree = "<group>"; };
 		04FBFA32224C126100680207 /* $.strict-new.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.strict-new.js"; sourceTree = "<group>"; };
 		04FBFA33224C126100680207 /* es6.string.ends-with.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.ends-with.js"; sourceTree = "<group>"; };
 		04FBFA34224C126100680207 /* es6.array.find-index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.array.find-index.js"; sourceTree = "<group>"; };
 		04FBFA35224C126100680207 /* $.iter-call.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-call.js"; sourceTree = "<group>"; };
-		04FBFA36224C126100680207 /* $.global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.global.js"; sourceTree = "<group>"; };
+		04FBFA36224C126100680207 /* $.global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.global.js; sourceTree = "<group>"; };
 		04FBFA37224C126100680207 /* es6.object.prevent-extensions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.prevent-extensions.js"; sourceTree = "<group>"; };
 		04FBFA38224C126100680207 /* web.dom.iterable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = web.dom.iterable.js; sourceTree = "<group>"; };
 		04FBFA39224C126100680207 /* $.is-integer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-integer.js"; sourceTree = "<group>"; };
@@ -15344,24 +15420,24 @@
 		04FBFA46224C126100680207 /* es6.string.code-point-at.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.string.code-point-at.js"; sourceTree = "<group>"; };
 		04FBFA47224C126100680207 /* es6.typed.uint8-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.uint8-array.js"; sourceTree = "<group>"; };
 		04FBFA48224C126100680207 /* es6.object.is-sealed.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.is-sealed.js"; sourceTree = "<group>"; };
-		04FBFA49224C126100680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.collection.js"; sourceTree = "<group>"; };
+		04FBFA49224C126100680207 /* $.collection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.collection.js; sourceTree = "<group>"; };
 		04FBFA4A224C126100680207 /* $.string-pad.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-pad.js"; sourceTree = "<group>"; };
 		04FBFA4B224C126100680207 /* $.is-regexp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.is-regexp.js"; sourceTree = "<group>"; };
 		04FBFA4C224C126100680207 /* es6.typed.int32-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.int32-array.js"; sourceTree = "<group>"; };
 		04FBFA4D224C126100680207 /* es6.object.get-prototype-of.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.object.get-prototype-of.js"; sourceTree = "<group>"; };
-		04FBFA4E224C126100680207 /* $.html.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.html.js"; sourceTree = "<group>"; };
+		04FBFA4E224C126100680207 /* $.html.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.html.js; sourceTree = "<group>"; };
 		04FBFA4F224C126100680207 /* es6.math.cosh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.cosh.js; sourceTree = "<group>"; };
-		04FBFA50224C126200680207 /* $.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.flags.js"; sourceTree = "<group>"; };
+		04FBFA50224C126200680207 /* $.flags.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.flags.js; sourceTree = "<group>"; };
 		04FBFA51224C126200680207 /* core.delay.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = core.delay.js; sourceTree = "<group>"; };
 		04FBFA52224C126200680207 /* $.string-at.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-at.js"; sourceTree = "<group>"; };
 		04FBFA53224C126200680207 /* es6.reflect.get-own-property-descriptor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.get-own-property-descriptor.js"; sourceTree = "<group>"; };
 		04FBFA54224C126200680207 /* es6.array.find.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.array.find.js; sourceTree = "<group>"; };
 		04FBFA55224C126200680207 /* es6.math.sign.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.sign.js; sourceTree = "<group>"; };
-		04FBFA56224C126200680207 /* $.iobject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iobject.js"; sourceTree = "<group>"; };
+		04FBFA56224C126200680207 /* $.iobject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.iobject.js; sourceTree = "<group>"; };
 		04FBFA57224C126200680207 /* es6.math.sinh.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.sinh.js; sourceTree = "<group>"; };
 		04FBFA58224C126200680207 /* es6.number.epsilon.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.number.epsilon.js; sourceTree = "<group>"; };
 		04FBFA59224C126200680207 /* $.math-log1p.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.math-log1p.js"; sourceTree = "<group>"; };
-		04FBFA5A224C126200680207 /* $.ctx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.ctx.js"; sourceTree = "<group>"; };
+		04FBFA5A224C126200680207 /* $.ctx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.ctx.js; sourceTree = "<group>"; };
 		04FBFA5B224C126200680207 /* es6.string.includes.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.includes.js; sourceTree = "<group>"; };
 		04FBFA5C224C126200680207 /* $.string-trim.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.string-trim.js"; sourceTree = "<group>"; };
 		04FBFA5D224C126200680207 /* es7.regexp.escape.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.regexp.escape.js; sourceTree = "<group>"; };
@@ -15372,7 +15448,7 @@
 		04FBFA62224C126200680207 /* es6.object.seal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.object.seal.js; sourceTree = "<group>"; };
 		04FBFA63224C126200680207 /* es7.array.includes.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.array.includes.js; sourceTree = "<group>"; };
 		04FBFA64224C126200680207 /* $.typed-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.typed-array.js"; sourceTree = "<group>"; };
-		04FBFA65224C126200680207 /* $.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.has.js"; sourceTree = "<group>"; };
+		04FBFA65224C126200680207 /* $.has.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.has.js; sourceTree = "<group>"; };
 		04FBFA66224C126200680207 /* es6.function.has-instance.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.function.has-instance.js"; sourceTree = "<group>"; };
 		04FBFA67224C126200680207 /* es6.math.log2.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log2.js; sourceTree = "<group>"; };
 		04FBFA68224C126200680207 /* es6.string.repeat.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.string.repeat.js; sourceTree = "<group>"; };
@@ -15389,22 +15465,22 @@
 		04FBFA73224C126200680207 /* es6.reflect.apply.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.reflect.apply.js; sourceTree = "<group>"; };
 		04FBFA74224C126200680207 /* es6.reflect.is-extensible.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.is-extensible.js"; sourceTree = "<group>"; };
 		04FBFA75224C126200680207 /* core.get-iterator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.get-iterator.js"; sourceTree = "<group>"; };
-		04FBFA76224C126200680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.export.js"; sourceTree = "<group>"; };
+		04FBFA76224C126200680207 /* $.export.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.export.js; sourceTree = "<group>"; };
 		04FBFA77224C126200680207 /* es6.map.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.map.js; sourceTree = "<group>"; };
 		04FBFA78224C126200680207 /* es6.typed.float32-array.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.typed.float32-array.js"; sourceTree = "<group>"; };
 		04FBFA79224C126200680207 /* $.set-to-string-tag.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.set-to-string-tag.js"; sourceTree = "<group>"; };
-		04FBFA7A224C126200680207 /* $.cof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.cof.js"; sourceTree = "<group>"; };
+		04FBFA7A224C126200680207 /* $.cof.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.cof.js; sourceTree = "<group>"; };
 		04FBFA7B224C126200680207 /* es6.math.log10.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.log10.js; sourceTree = "<group>"; };
 		04FBFA7C224C126200680207 /* es7.object.values.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es7.object.values.js; sourceTree = "<group>"; };
 		04FBFA7D224C126200680207 /* es6.reflect.own-keys.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.reflect.own-keys.js"; sourceTree = "<group>"; };
-		04FBFA7E224C126200680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.library.js"; sourceTree = "<group>"; };
-		04FBFA7F224C126200680207 /* $.core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.core.js"; sourceTree = "<group>"; };
-		04FBFA80224C126200680207 /* $.iterators.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iterators.js"; sourceTree = "<group>"; };
+		04FBFA7E224C126200680207 /* $.library.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.library.js; sourceTree = "<group>"; };
+		04FBFA7F224C126200680207 /* $.core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.core.js; sourceTree = "<group>"; };
+		04FBFA80224C126200680207 /* $.iterators.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.iterators.js; sourceTree = "<group>"; };
 		04FBFA81224C126200680207 /* core.object.is-object.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "core.object.is-object.js"; sourceTree = "<group>"; };
 		04FBFA82224C126200680207 /* es6.number.is-nan.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "es6.number.is-nan.js"; sourceTree = "<group>"; };
 		04FBFA83224C126200680207 /* $.iter-step.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.iter-step.js"; sourceTree = "<group>"; };
 		04FBFA84224C126200680207 /* es6.math.cbrt.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = es6.math.cbrt.js; sourceTree = "<group>"; };
-		04FBFA85224C126200680207 /* $.uid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.uid.js"; sourceTree = "<group>"; };
+		04FBFA85224C126200680207 /* $.uid.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = $.uid.js; sourceTree = "<group>"; };
 		04FBFA86224C126200680207 /* $.fails-is-regexp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.fails-is-regexp.js"; sourceTree = "<group>"; };
 		04FBFA87224C126200680207 /* $.species-constructor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "$.species-constructor.js"; sourceTree = "<group>"; };
 		04FBFA89224C126200680207 /* shim.min.js.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = shim.min.js.map; sourceTree = "<group>"; };
@@ -16539,6 +16615,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EB4966225054080051BB16 /* expat.framework in Frameworks */,
+				04EB4967225054080051BB16 /* fontconfig.framework in Frameworks */,
+				04EB4968225054080051BB16 /* freetype.framework in Frameworks */,
+				04EB4969225054080051BB16 /* fribidi.framework in Frameworks */,
+				04EB496A225054080051BB16 /* giflib.framework in Frameworks */,
+				04EB496B225054080051BB16 /* jpeg.framework in Frameworks */,
+				04EB496C225054080051BB16 /* kvazaar.framework in Frameworks */,
+				04EB496D225054080051BB16 /* libaom.framework in Frameworks */,
+				04EB496E225054080051BB16 /* libass.framework in Frameworks */,
+				04EB496F225054080051BB16 /* libavcodec.framework in Frameworks */,
+				04EB4970225054080051BB16 /* libavdevice.framework in Frameworks */,
+				04EB4971225054080051BB16 /* libavfilter.framework in Frameworks */,
+				04EB4972225054080051BB16 /* libavformat.framework in Frameworks */,
+				04EB4973225054080051BB16 /* libavutil.framework in Frameworks */,
+				04EB4974225054080051BB16 /* libcharset.framework in Frameworks */,
+				04EB4975225054080051BB16 /* libiconv.framework in Frameworks */,
+				04EB4976225054080051BB16 /* libogg.framework in Frameworks */,
+				04EB4977225054080051BB16 /* libpng.framework in Frameworks */,
+				04EB4978225054080051BB16 /* libswresample.framework in Frameworks */,
+				04EB4979225054080051BB16 /* libswscale.framework in Frameworks */,
+				04EB497A225054080051BB16 /* libtheora.framework in Frameworks */,
+				04EB497B225054080051BB16 /* libtheoradec.framework in Frameworks */,
+				04EB497C225054080051BB16 /* libtheoraenc.framework in Frameworks */,
+				04EB497D225054080051BB16 /* libuuid.framework in Frameworks */,
+				04EB497E225054080051BB16 /* libvorbis.framework in Frameworks */,
+				04EB497F225054080051BB16 /* libvorbisenc.framework in Frameworks */,
+				04EB4980225054080051BB16 /* libvorbisfile.framework in Frameworks */,
+				04EB4981225054080051BB16 /* libvpx.framework in Frameworks */,
+				04EB4982225054080051BB16 /* libwebp.framework in Frameworks */,
+				04EB4983225054080051BB16 /* libwebpdecoder.framework in Frameworks */,
+				04EB4984225054080051BB16 /* libwebpdemux.framework in Frameworks */,
+				04EB4985225054080051BB16 /* mobileffmpeg.framework in Frameworks */,
+				04EB4986225054080051BB16 /* snappy.framework in Frameworks */,
+				04EB4987225054080051BB16 /* tiff.framework in Frameworks */,
 				04FB24BE224CEAE100680207 /* libdouble-conversion.a in Frameworks */,
 				04FBDDD0224C0F1200680207 /* libcxxreact.a in Frameworks */,
 				048953F3223A80B000A7ED87 /* GPUImage.framework in Frameworks */,
@@ -16839,6 +16949,48 @@
 				04BCE6CB2235A54D001BBA7E /* libLottieReactNative.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		04EB4943225053F10051BB16 /* mobile-ffmpeg-video */ = {
+			isa = PBXGroup;
+			children = (
+				04EB4944225053F20051BB16 /* libswresample.framework */,
+				04EB4945225053F20051BB16 /* fontconfig.framework */,
+				04EB4946225053F20051BB16 /* libavfilter.framework */,
+				04EB4947225053F20051BB16 /* libvorbis.framework */,
+				04EB4948225053F20051BB16 /* libtheoradec.framework */,
+				04EB4949225053F20051BB16 /* libtheora.framework */,
+				04EB494A225053F20051BB16 /* libavformat.framework */,
+				04EB494B225053F20051BB16 /* libavutil.framework */,
+				04EB494C225053F20051BB16 /* freetype.framework */,
+				04EB494D225053F20051BB16 /* libtheoraenc.framework */,
+				04EB494E225053F20051BB16 /* libvorbisenc.framework */,
+				04EB494F225053F20051BB16 /* libogg.framework */,
+				04EB4950225053F20051BB16 /* libiconv.framework */,
+				04EB4951225053F20051BB16 /* jpeg.framework */,
+				04EB4952225053F20051BB16 /* libwebpdecoder.framework */,
+				04EB4953225053F20051BB16 /* giflib.framework */,
+				04EB4954225053F20051BB16 /* libswscale.framework */,
+				04EB4955225053F20051BB16 /* libavdevice.framework */,
+				04EB4956225053F20051BB16 /* snappy.framework */,
+				04EB4957225053F20051BB16 /* libwebpdemux.framework */,
+				04EB4958225053F20051BB16 /* libass.framework */,
+				04EB4959225053F20051BB16 /* libavcodec.framework */,
+				04EB495A225053F20051BB16 /* fribidi.framework */,
+				04EB495B225053F20051BB16 /* tiff.framework */,
+				04EB495C225053F20051BB16 /* libuuid.framework */,
+				04EB495D225053F20051BB16 /* expat.framework */,
+				04EB495E225053F20051BB16 /* kvazaar.framework */,
+				04EB495F225053F20051BB16 /* libvpx.framework */,
+				04EB4960225053F20051BB16 /* libaom.framework */,
+				04EB4961225053F30051BB16 /* libpng.framework */,
+				04EB4962225053F30051BB16 /* libcharset.framework */,
+				04EB4963225053F30051BB16 /* libvorbisfile.framework */,
+				04EB4964225053F30051BB16 /* mobileffmpeg.framework */,
+				04EB4965225053F30051BB16 /* libwebp.framework */,
+			);
+			name = "mobile-ffmpeg-video";
+			path = "Pods/mobile-ffmpeg-video";
 			sourceTree = "<group>";
 		};
 		04FB0003224C127400680207 /* isarray */ = {
@@ -50085,6 +50237,15 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04EB4943225053F10051BB16 /* mobile-ffmpeg-video */,
+				04EB48AC2250531E0051BB16 /* libavcodec.framework */,
+				04EB48E8225053220051BB16 /* libavdevice.framework */,
+				04EB48EB225053250051BB16 /* libavfilter.framework */,
+				04EB48E6225053200051BB16 /* libavformat.framework */,
+				04EB48EA225053240051BB16 /* libavutil.framework */,
+				04EB48E7225053210051BB16 /* libswresample.framework */,
+				04EB48E9225053230051BB16 /* libswscale.framework */,
+				04EB48E52250531F0051BB16 /* mobileffmpeg.framework */,
 				04FBDDF9224C123200680207 /* React */,
 				04895361223A76D400A7ED87 /* MobileCoreServices.framework */,
 				0489535E223A76C600A7ED87 /* QuartzCore.framework */,
@@ -50226,7 +50387,6 @@
 				1C78AFA81D784761A17B8B0A /* Pods-Proxily.debug.xcconfig */,
 				F310523F74F7208D131F9E2B /* Pods-Proxily.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -51144,7 +51304,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8DJHU2P769;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/",
+					"$(PROJECT_DIR)/Pods/mobile-ffmpeg-min",
+					"$(PROJECT_DIR)/Pods/mobile-ffmpeg-video",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
@@ -51183,7 +51347,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8DJHU2P769;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/",
+					"$(PROJECT_DIR)/Pods/mobile-ffmpeg-min",
+					"$(PROJECT_DIR)/Pods/mobile-ffmpeg-video",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",

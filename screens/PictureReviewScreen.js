@@ -5,9 +5,11 @@ import {
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
   StyleSheet,
   ImageBackground, 
   ImageStore, 
+  Image,
   Text, 
   Platform,
   View} from 'react-native';
@@ -18,6 +20,7 @@ import {Buffer} from 'buffer';
 import LottieView from 'lottie-react-native';
 import FileSystem from 'react-native-fs';
 import Modal from 'react-native-modal';
+import { RNFFmpeg } from 'react-native-ffmpeg';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 import MovableObject from '../components/MovableObject';
@@ -27,8 +30,59 @@ class PictureReviewScreen extends React.Component {
     processing: false,
     success: false,
     error: "",
+    currentImage: "",
     animationFinished: false,
+    heighestSticker: 1,
+    stickers: [],
+    stickersPreview: [
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+      "https://i.pinimg.com/736x/82/cf/b2/82cfb200c95adef00650e6450ef42925--pet-logo-cat-silhouette.jpg",
+    ],
+    filters: [{name: "Sepia", ffmpeg: ".393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"}, {name: "Greyscale", ffmpeg: ".3:.4:.3:0:.3:.4:.3:0:.3:.4:.3"}],
+    stickerOpen: false,
+    filtersOpen: false,
+    textOpen: false
   }
+  //
+
+  async componentDidMount() {
+    FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
+    const timestamp = new Date().getTime();
+    /*const uri = this.props.navigation.state.params.imageUri;
+    const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image" + "_" + timestamp + ".png";
+    ImageStore.getBase64ForTag(uri, (data) => {
+      FileSystem.writeFile(file_path, data, 'base64');
+      this.setState({currentImage: file_path})
+    }, (error) =>{
+      console.log('Get base64 from imagestore,',error);
+    })
+    ImageStore.removeImageForTag(uri)*/
+    const file_path = '/Users/Jack/Desktop/videoApp/assets/mountains.jpg'
+    this.setState({currentImage: file_path})
+    let filters = [...this.state.filters]
+    console.log(filters)
+    for (var i = 0; i < filters.length; i++) {
+      let filter = filters[i]
+      console.log(filter)
+      filter.file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/filter_" + filter.name + "_" + timestamp + ".png";
+      await RNFFmpeg.executeWithArguments(["-i", file_path, "-filter_complex", "colorchannelmixer=" + filter.ffmpeg + "", filter.file_path])
+      .then((result) => {
+        this.setState({ filters })
+        console.log(result)
+        console.log("FFmpeg process exited with rc " + result.rc)
+      });
+    }
+  }
+
   submitButtonWidth = new Animated.Value(1);
 
   toggleSubmitButton = () => {
@@ -91,6 +145,64 @@ class PictureReviewScreen extends React.Component {
       }, (error) => console.log(error));
     //Error on screen
   }
+  openStickers = () => {
+    this.setState({ stickerOpen: true })
+  }
+  openFilters = () => {
+    this.setState({ filtersOpen: true })
+  }
+  openText = () => {
+    this.setState({ textOpen: true })
+  }
+
+  stickerUpdate = (scale, rotate, x, y, id) => {
+    zIndex = this.state.heighestSticker+1
+    idName = "id" + id
+    this.setState({[idName]:{scale, rotate, x, y, zIndex}, heighestSticker: zIndex})
+  }
+
+  addSticker = (url) => {
+    this.setState({
+      stickers: [...this.state.stickers, url]
+    })
+    idName = "id" + this.state.stickers.length
+    zIndex = this.state.heighestSticker+1
+    this.setState({[idName]:{scale: 1, rotate: 0, x: 0, y:0, zIndex}, heighestSticker: zIndex})
+  }
+  renderStickers = () => {
+    if (this.state.stickers.length == 0) {
+      return null
+    }
+    return this.state.stickers.map((url, id)=> (
+      <MovableObject 
+        key={id}
+        id={id} 
+        zIndex={this.state['id' + id].zIndex}
+        passInfo={this.stickerUpdate}
+        source={url}
+      />)
+      )
+  }
+
+  renderStickersPreview = () => {
+    return this.state.stickersPreview.map((url, index)=> (
+      <TouchableOpacity onPress={() => {this.addSticker(url); this.setState({stickerOpen: false})}}>
+        <Image key={index} style={{height: Dimensions.get('window').width*0.3, width: Dimensions.get('window').width*0.3}} source={{uri: url}} resizeMode={'contain'}/>
+      </TouchableOpacity>
+      )
+    )
+  }
+
+  renderFiltersPreview = () => {
+    console.log(this.state.filters)
+    return this.state.filters.map((filter, index)=> (
+      <TouchableOpacity onPress={() => {this.setState({filtersOpen: false, currentImage: filter.file_path})}}>
+        <Image key={index} style={{height: Dimensions.get('window').width*0.3, width: Dimensions.get('window').width*0.3}} source={{uri: "file://" + filter.file_path}} resizeMode={'contain'}/>
+        <Text style={{textAlign: 'center', fontFamily: 'Avenir', fontSize: 18}}>{filter.name}</Text>
+      </TouchableOpacity>
+      )
+    )
+  }
   
   render() {
     if (this.state.animationFinished) {
@@ -148,13 +260,36 @@ class PictureReviewScreen extends React.Component {
             <Icon name="close" size={40} color="white"/>
           </TouchableOpacity>
         </View>
-        <ImageBackground source={{uri: this.props.navigation.state.params.imageUri}} style={{
+        <ImageBackground source={{ uri: "file://" + this.state.currentImage }}
+         style={{
             marginTop: 100,
             width: Dimensions.get('window').width,
-            height: Dimensions.get('window').width*8/7,}} 
-            resizeMode="contain">
-          <MovableObject />
+            height: Dimensions.get('window').width*8/7,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }} 
+            resizeMode="contain"
+            >
+            {this.renderStickers()}
         </ImageBackground>
+          <View style={styles.editBox} >
+            <TouchableOpacity onPress={this.openStickers}>
+              <View style={styles.editButton}>
+                <Text style={styles.editButtonText}>Stickers</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.openFilters}>
+              <View style={styles.editButton}>
+                <Text style={styles.editButtonText}>Filters</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.openText}>
+              <View style={styles.editButton}>
+                <Text style={styles.editButtonText}>Text</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Animated.View style={[styles.submitButton,{width: buttonWidth}]} >
             {button}
@@ -164,7 +299,6 @@ class PictureReviewScreen extends React.Component {
             isVisible={this.state.error != ""}
             onBackdropPress={() => this.setState({ error: "" })}>
             <View style={{alignSelf: 'center',
-                justifySelf: 'center',
                 width: Dimensions.get('window').width*0.6,
                 backgroundColor: '#f2f2f2',
                 borderRadius: 8,
@@ -180,6 +314,35 @@ class PictureReviewScreen extends React.Component {
             <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
             </View>
         </Modal>
+        <Modal
+            isVisible={this.state.stickerOpen}
+            onBackdropPress={() => this.setState({ stickerOpen: false })}>
+          <View style={styles.modal}>
+            <ScrollView style={{flex: 1}}>
+              <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                {this.renderStickersPreview()}
+              </View>
+            </ScrollView>
+          </View>
+        </Modal>
+        <Modal
+            isVisible={this.state.filtersOpen}
+            onBackdropPress={() => this.setState({ filtersOpen: false })}>
+          <View style={styles.modal}>
+            <ScrollView style={{flex: 1}}>
+              <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                {this.renderFiltersPreview()}
+              </View>
+            </ScrollView>
+          </View>
+        </Modal>
+        <Modal
+            isVisible={this.state.textOpen}
+            onBackdropPress={() => this.setState({ textOpen: false })}>
+          <View style={styles.modal}>
+            <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -191,7 +354,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    backgroundColor: '#D7E7ED',
+    backgroundColor: 'lightgrey',
     alignItems: 'center',
   },
   iconContainer: {
@@ -211,6 +374,38 @@ const styles = StyleSheet.create({
       padding: 13,
       textAlign: 'center',
   },
+  editBox: {
+    width: Dimensions.get('window').width,
+    height: 60,
+    flexDirection: 'row'
+  },
+  editButton: {
+    width: Dimensions.get('window').width/3,
+    backgroundColor: 'grey',
+    borderWidth: 1
+  },
+  editButtonText: {
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontSize: 20,
+    padding: 13,
+    textAlign: 'center',
+  },
+  modal: {
+    alignSelf: 'center',
+    width: Dimensions.get('window').width*0.9,
+    height: Dimensions.get('window').height*0.85,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 20,
+    //borderWidth: 1,
+    //borderColor: 'lightgrey',
+    shadowRadius: 4,
+    shadowColor: 'grey',
+    shadowOffset: {height: 2, width: 0},
+    shadowOpacity: 0.25,
+    overflow: 'hidden',
+    padding: 15,
+  }
 });
 
 const mapStateToProps = (state) => {

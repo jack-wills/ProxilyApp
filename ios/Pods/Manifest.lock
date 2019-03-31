@@ -6,6 +6,12 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - mobile-ffmpeg-video (4.2.LTS)
+  - React (0.58.6):
+    - React/Core (= 0.58.6)
+  - react-native-ffmpeg-video (0.3.1):
+    - mobile-ffmpeg-video (= 4.2.LTS)
+    - React
   - React/Core (0.58.6):
     - yoga (= 0.58.6.React)
   - React/CxxBridge (0.58.6):
@@ -59,6 +65,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - react-native-ffmpeg-video (from `../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-video.podspec`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -77,6 +84,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
+    - mobile-ffmpeg-video
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -87,6 +95,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
+  react-native-ffmpeg-video:
+    :podspec: "../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-video.podspec"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -95,9 +105,11 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
+  mobile-ffmpeg-video: f12c7272dc98d3cbcaf8d2dc5a0318630dd43098
   React: 130b87b2d5e2baac646954282cab87be986d98fc
+  react-native-ffmpeg-video: f9f7622fbbf417068a0e17e569dc89813c696082
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: 506e2acec76f89c5b1ac347bc0ed4747bf04ed6f
+PODFILE CHECKSUM: d774a289fa49a7e4192f4536b4b72556e36a44f5
 
 COCOAPODS: 1.6.1

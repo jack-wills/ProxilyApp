@@ -99,7 +99,6 @@ class CameraPictureScreen extends React.Component {
           </View>
           <View style={styles.blackoutTop}>
           <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-
             <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: Dimensions.get('window').width/2, paddingLeft: 20}}>
               <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.navigate('Feed') }}>
                 <Icon name="arrow-left" size={40} color="white"/>
@@ -129,7 +128,7 @@ class CameraPictureScreen extends React.Component {
             <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
               <Image source={require('../assets/camera.png')} style={{
               width: 90,
-              height: 90,}} 
+              height: 90}} 
               resizeMode="contain"/>
             </TouchableOpacity>
           </View>

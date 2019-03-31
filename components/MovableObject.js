@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Animated,
   StyleSheet, 
+  TouchableWithoutFeedback,
   Text, 
   View
 } from 'react-native';
@@ -11,9 +12,10 @@ import {
   PinchGestureHandler,
   RotationGestureHandler,
   State,
+  TapGestureHandler
 } from 'react-native-gesture-handler';
 
-const USE_NATIVE_DRIVER = true;
+const USE_NATIVE_DRIVER = false;
 
 export default class MovableObject extends React.Component {
     panRef = React.createRef();
@@ -39,6 +41,29 @@ export default class MovableObject extends React.Component {
         inputRange: [-100, 100],
         outputRange: ['-100rad', '100rad'],
       });
+      let inputRange = [], outputRange = [], steps = 500;
+      /// input range 0-1
+      for (let i=0; i<=steps; ++i) {
+          let key = ((i*2/steps)-1)*100;
+          inputRange.push(key);
+          outputRange.push(Math.cos(key));
+      }
+      this._rotateCos = this._rotate.interpolate({
+        inputRange: inputRange,
+        outputRange: outputRange,
+      });
+      inputRange = [];
+      outputRange = [];
+      /// input range 0-1
+      for (let i=0; i<=steps; ++i) {
+          let key = ((i*2/steps)-1)*100;
+          inputRange.push(key);
+          outputRange.push(Math.sin(key));
+      }
+      this._rotateSin = this._rotate.interpolate({
+        inputRange: inputRange,
+        outputRange: outputRange,
+      });
       this._lastRotate = 0;
       this._onRotateGestureEvent = Animated.event(
         [{ nativeEvent: { rotation: this._rotate } }],
@@ -49,7 +74,7 @@ export default class MovableObject extends React.Component {
       this._translateX = new Animated.Value(0);
       this._translateY = new Animated.Value(0);
       this._lastOffset = { x: 0, y: 0 };
-      this._onGestureEvent = Animated.event(
+      this._onPanGestureEvent = Animated.event(
       [
           {
           nativeEvent: {
@@ -68,6 +93,7 @@ export default class MovableObject extends React.Component {
         this._rotate.setOffset(this._lastRotate);
         this._rotate.setValue(0);
       }
+      this.props.passInfo(this._scale._value, this._rotate._value, this._translateX._value, this._translateY._value, this.props.id);
     };
     _onPinchHandlerStateChange = event => {
       if (event.nativeEvent.oldState === State.ACTIVE) {
@@ -75,80 +101,92 @@ export default class MovableObject extends React.Component {
         this._baseScale.setValue(this._lastScale);
         this._pinchScale.setValue(1);
       }
+      this.props.passInfo(this._scale._value, this._rotate._value, this._translateX._value, this._translateY._value, this.props.id);
     };
     _onMoveGestureStateChange = event => {
       if (event.nativeEvent.oldState === State.ACTIVE) {
-        this._lastOffset.x += event.nativeEvent.translationX;
-        this._lastOffset.y += event.nativeEvent.translationY;
+          console.log(this._rotate._offset)
+        this._lastOffset.x += (event.nativeEvent.translationX*Math.cos(this._rotate._offset))-(event.nativeEvent.translationY*Math.sin(this._rotate._offset));
+        this._lastOffset.y += (event.nativeEvent.translationY*Math.cos(this._rotate._offset))+(event.nativeEvent.translationX*Math.sin(this._rotate._offset));
         this._translateX.setOffset(this._lastOffset.x);
         this._translateX.setValue(0);
         this._translateY.setOffset(this._lastOffset.y);
         this._translateY.setValue(0);
       }
+      this.props.passInfo(this._scale._value, this._rotate._value, this._translateX._value, this._translateY._value, this.props.id);
     };
+    _onSingleTap = event => {
+        this.props.passInfo(this._scale._value, this._rotate._value, this._translateX._value, this._translateY._value, this.props.id);
+    }
     render() {
+        const translateX = Animated.subtract(Animated.multiply(this._translateX, this._rotateCos), Animated.multiply(this._translateY, this._rotateSin));
+        const translateY = Animated.add(Animated.multiply(this._translateY, this._rotateCos), Animated.multiply(this._translateX, this._rotateSin));
+        const scale = this._scale;
+        const rotate = this._rotateStr;
+        console.log(this._rotateCos)
+        const panStyle = {
+          transform: [{ translateX }, { translateY }, { scale }, { rotate }],
+        };
       return (
+        <TapGestureHandler
+          onHandlerStateChange={this._onSingleTap}>
         <PanGestureHandler
-        ref={this.panRef}
-        onGestureEvent={this._onGestureEvent}
-        onHandlerStateChange={this._onHandlerStateChange}
-        minDist={10}
-        maxPointers={2}
-        avgTouches>
-        <Animated.View style={styles.wrapper}>
-            <RotationGestureHandler
-            ref={this.rotationRef}
-            simultaneousHandlers={this.pinchRef}
+          {...this.props}
+          onGestureEvent={this._onPanGestureEvent}
+          onHandlerStateChange={this._onMoveGestureStateChange}
+          id={"image_drag" + this.props.id}
+          simultaneousHandlers={['image_pinch' + this.props.id, 'image_rotation' + this.props.id]}
+          shouldCancelWhenOutside={true}
+        >
+          <RotationGestureHandler
+            id={"image_rotation" + this.props.id}
+            simultaneousHandlers={['image_pinch' + this.props.id, 'image_drag' + this.props.id]}
             onGestureEvent={this._onRotateGestureEvent}
-            onHandlerStateChange={this._onRotateHandlerStateChange}>
-            <Animated.View style={styles.wrapper}>
-                <PinchGestureHandler
-                ref={this.pinchRef}
-                simultaneousHandlers={this.rotationRef}
-                onGestureEvent={this._onPinchGestureEvent}
-                onHandlerStateChange={this._onPinchHandlerStateChange}>
-                <Animated.View style={styles.container} collapsable={false}>
-                    <Animated.Image
-                    style={[
-                        styles.pinchableImage,
-                        {
-                        transform: [
-                            { perspective: 200 },
-                            { scale: this._scale },
-                            { rotate: this._rotateStr },
-                            { translateX: this._translateX },
-                            { translateY: this._translateY },
-                        ],
-                        },
-                    ]}
-                    source={{uri: "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg"}}
-                    />
-                </Animated.View>
-                </PinchGestureHandler>
-            </Animated.View>
-            </RotationGestureHandler>
-        </Animated.View>
+            onHandlerStateChange={this._onRotateHandlerStateChange}
+          >
+            <PinchGestureHandler
+              id={"image_pinch" + this.props.id}
+              simultaneousHandlers={['image_rotation' + this.props.id, 'image_drag' + this.props.id]}
+              onGestureEvent={this._onPinchGestureEvent}
+              onHandlerStateChange={this._onPinchHandlerStateChange}
+            >
+              <Animated.View
+                style={[panStyle, styles.stickerContainer, {zIndex: this.props.zIndex}]}
+                collapsable={false}
+              >
+                <Animated.Image
+                  style={[
+                    styles.pinchableImage,
+                    {
+                      transform: [
+                        { perspective: 200 },
+                      ],
+                    },
+                  ]}
+                  source={{
+                    uri: this.props.source,
+                  }}
+                />
+              </Animated.View>
+            </PinchGestureHandler>
+          </RotationGestureHandler>
         </PanGestureHandler>
+        </TapGestureHandler>
       );
     }
   }
-
-
+  
 const styles = StyleSheet.create({
-    container: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'black',
-      overflow: 'hidden',
+    stickerContainer: {
+      position: 'absolute',
+      width: 250,
+      height: 250,
       alignItems: 'center',
-      flex: 1,
       justifyContent: 'center',
     },
     pinchableImage: {
       width: 250,
       height: 250,
-    },
-    wrapper: {
-      flex: 1,
     },
   });
   
