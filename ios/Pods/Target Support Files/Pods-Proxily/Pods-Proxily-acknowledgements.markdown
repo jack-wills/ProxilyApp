@@ -333,7 +333,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-## mobile-ffmpeg-video
+## mobile-ffmpeg-full
 
                    GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -502,7 +502,7 @@ permanent authorization for you to choose that version for the
 Library.
 
 
-## react-native-ffmpeg-video
+## react-native-ffmpeg-full
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

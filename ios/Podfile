@@ -30,7 +30,7 @@ target 'Proxily' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'react-native-ffmpeg-video', :podspec => '../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-video.podspec'
+  pod 'react-native-ffmpeg-full', :podspec => '../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-full.podspec'
 
 end
 

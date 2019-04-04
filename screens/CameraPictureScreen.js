@@ -153,7 +153,8 @@ class CameraPictureScreen extends React.Component {
       fixOrientation: true,
     };
     try {
-      const data = await this.camera.takePictureAsync(options);
+      //const data = await this.camera.takePictureAsync(options);
+      const data = {uri:'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg', height: 2592, width: 4608}
       const actualImageWidth = data.height*Dimensions.get('window').width/Dimensions.get('window').height;
       const cropData = {
         offset: {x: (data.width-actualImageWidth)/2, y: 100*actualImageWidth/Dimensions.get('window').width},
@@ -162,7 +163,7 @@ class CameraPictureScreen extends React.Component {
       ImageEditor.cropImage(data.uri, 
         cropData, (croppedUri) => {
           console.log('Path to image: ' + croppedUri);
-          this.props.navigation.navigate("PictureReview", {imageUri: croppedUri})
+          this.props.navigation.navigate("PictureReview", {imageUri: croppedUri, imageWidth:actualImageWidth})
         }, (error) =>{
           console.log('cropImage,',error);
         });

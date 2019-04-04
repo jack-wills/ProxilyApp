@@ -1,0 +1,1 @@
+../../../react-native-ffmpeg-full/ios/RNFFmpegModule.h
