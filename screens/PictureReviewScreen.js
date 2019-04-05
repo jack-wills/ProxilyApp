@@ -2,18 +2,17 @@ import React, {Component} from 'react';
 import {
   ActivityIndicator,
   Animated,
-  SafeAreaView,
+  CameraRoll,
   Dimensions,
   Keyboard,
   TouchableOpacity,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   ImageBackground, 
   ImageStore, 
   Image,
   Text, 
-  TextInput,
-  Platform,
   View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from 'react-redux';
@@ -53,15 +52,46 @@ class PictureReviewScreen extends React.Component {
     ],
     filters: [{name: "No filter"}, {name: "Sepia", ffmpeg: ".393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"}, {name: "Greyscale", ffmpeg: ".3:.4:.3:0:.3:.4:.3:0:.3:.4:.3"}],
     stickerOpen: false,
+    filtersFinished: false,
     filtersOpen: false,
-    textOpen: false
+    textOpen: false,
+    savingImage: false,
+  }
+
+  getMoreStickers = () => {
+    fetch(FRONT_SERVICE_URL + '/getStickers', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude: "51.923147",
+        longitude: "-0.226299",
+        jwt: this.props.userToken,
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error') || !Array.isArray(responseJson)) {
+        console.log(responseJson.error);
+      } else {
+        let stickers = [...this.state.stickers];
+        stickers.push(...responseJson);
+        this.setState({stickers})
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   async componentDidMount() {
+    this.getMoreStickers()
     FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
     const timestamp = new Date().getTime();
     const uri = this.props.navigation.state.params.imageUri;
-    const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image" + "_" + timestamp + ".png";
+    const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image_" + timestamp + ".png";
     await ImageStore.getBase64ForTag(uri, async (data) => {
       await FileSystem.writeFile(file_path, data, 'base64').then(() => this.setState({currentImage: file_path}));
       ImageStore.removeImageForTag(uri)
@@ -75,6 +105,14 @@ class PictureReviewScreen extends React.Component {
         .then((result) => {
           this.setState({ filters })
           console.log(result)
+          if (i == filters.length-1) {
+            this.setState({filtersFinished: true})
+          }
+        }).catch((error) => {
+          console.log(error)
+          if (i == filters.length-1) {
+            this.setState({filtersFinished: true})
+          }
         });
       }
     }, (error) =>{
@@ -91,91 +129,106 @@ class PictureReviewScreen extends React.Component {
       }).start();
   };
 
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  processImage = async () => {
+    const timestamp = new Date().getTime();
+    let imageUri = FileSystem.DocumentDirectoryPath + "/proxily/tmp/output_" + timestamp + ".png";
+    let stickers = [...this.state.stickers];
+    if (stickers.length == 0) {
+      return this.state.currentImage;
+    }
+    let inputs = [];
+    let filter = [];
+    const fontFile = FileSystem.DocumentDirectoryPath + "/proxily/assets/Avenir-Medium.ttf";
+    let originalHeight = this.props.navigation.state.params.imageWidth*8/7;
+    let originalWidth = this.props.navigation.state.params.imageWidth;
+    let scaleToOriginal = originalWidth/Dimensions.get('window').width;
+    let state = this.state
+    var stickersInfo = Object.keys(state).filter(function(k) {
+        return k.indexOf('id') == 0;
+    }).reduce(function(newData, k) {
+        newData[k] = state[k];
+        return newData;
+    }, {});
+    let stickersInfoArray = Object.entries(stickersInfo).map(([key, value]) => ({key,value}));
+    stickersInfoArray.sort(function(a, b){
+      return a.value.zIndex - b.value.zIndex;
+    });
+    sortedStickers = [];
+    for (var i = 0; i < stickers.length; i++) {
+      let index = stickersInfoArray[i].key.replace("id", "")
+      sortedStickers[i] = stickers[index]
+    }
+    for (var i = 0; i < sortedStickers.length; i++) {
+      const {scale, rotate, x, y, zIndex, text, color} = stickersInfoArray[i].value;
+      if (sortedStickers[i].type === "sticker") {
+        let overlayHeight = 260*scaleToOriginal*scale; 
+        let overlayWidth = 325*scaleToOriginal*scale;
+        let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
+        let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
+        x *= scaleToOriginal;
+        y *= scaleToOriginal;
+        inputs.push("-i")
+        inputs.push(sortedStickers[i].url)
+        idName = "id" + i;
+        console.log(inputs)
+        filter.push("[" + (i+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
+        + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + ") ["+ idName +"];")
+        console.log(filter) 
+        if (i == sortedStickers.length-1) {
+          if (i == 0) {
+            filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
+          } else {
+            filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
+          }
+        } else if (i == 0) {
+          filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v0];")
+        } else {
+          filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v" + i +"];")
+        }
+      }
+      if (sortedStickers[i].type === "text") {
+        fontSize = 100*scaleToOriginal*scale;
+        let overlayHeight = fontSize; 
+        let overlayWidth = 1000;
+        let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
+        let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
+        x *= scaleToOriginal;
+        y *= scaleToOriginal;
+        idName = "id" + i;
+        filter.push("[1:v]scale=" + overlayWidth + ":" + overlayHeight + "[textBackground];[textBackground]drawtext=fontfile=" + fontFile + 
+        ":text='" + text + "':fontsize=" + fontSize + ":fontcolor=" + color + ":x=(" + overlayWidth + "-text_w)/2:y=(" + overlayHeight + "-text_h)/2[text" +
+        i + "];[text" + i + "]rotate=" + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + "):c=black@0["+ idName +"];")
+        if (i == sortedStickers.length-1) {
+          if (i == 0) {
+            filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
+          } else {
+            filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
+          }
+        } else if (i == 0) {
+          filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v0];")
+        } else {
+          filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v" + i +"];")
+        }
+      } 
+    }
+    let ffmpegCommand = ["-i", this.state.currentImage, "-i", "/Users/Jack/Desktop/blank_true.png", ...inputs, "-filter_complex", filter.join(""), imageUri]
+    console.log(ffmpegCommand.join(" "))
+    while(!this.state.filtersFinished) {
+      await this.sleep(100)
+    }
+    await RNFFmpeg.executeWithArguments(ffmpegCommand);
+    return imageUri
+  }
+
   submitImage = async () => {
     try {
       this.toggleSubmitButton();
       this.setState({processing: true})
-      const timestamp = new Date().getTime();
-      let imageUri = FileSystem.DocumentDirectoryPath + "/proxily/tmp/output_" + timestamp + ".png";
-      let stickers = [...this.state.stickers];
-      let inputs = [];
-      let filter = [];
-      const fontFile = FileSystem.DocumentDirectoryPath + "/proxily/assets/Avenir-Medium.ttf";
-      let originalHeight = this.props.navigation.state.params.imageWidth*8/7;
-      let originalWidth = this.props.navigation.state.params.imageWidth;
-      let scaleToOriginal = originalWidth/Dimensions.get('window').width;
-      let state = this.state
-      var stickersInfo = Object.keys(state).filter(function(k) {
-          return k.indexOf('id') == 0;
-      }).reduce(function(newData, k) {
-          newData[k] = state[k];
-          return newData;
-      }, {});
-      let stickersInfoArray = Object.entries(stickersInfo).map(([key, value]) => ({key,value}));
-      stickersInfoArray.sort(function(a, b){
-        return a.value.zIndex - b.value.zIndex;
-      });
-      sortedStickers = [];
-      for (var i = 0; i < stickers.length; i++) {
-        let index = stickersInfoArray[i].key.replace("id", "")
-        sortedStickers[i] = stickers[index]
-      }
-      for (var i = 0; i < sortedStickers.length; i++) {
-        const {scale, rotate, x, y, zIndex, text, color} = stickersInfoArray[i].value;
-        if (sortedStickers[i].type === "sticker") {
-          let overlayHeight = 260*scaleToOriginal*scale; 
-          let overlayWidth = 325*scaleToOriginal*scale;
-          let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
-          let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
-          x *= scaleToOriginal;
-          y *= scaleToOriginal;
-          inputs.push("-i")
-          inputs.push(sortedStickers[i].url)
-          idName = "id" + i;
-          console.log(inputs)
-          filter.push("[" + (i+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
-          + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + ") ["+ idName +"];")
-          console.log(filter) 
-          if (i == sortedStickers.length-1) {
-            if (i == 0) {
-              filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
-            } else {
-              filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
-            }
-          } else if (i == 0) {
-            filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v0];")
-          } else {
-            filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v" + i +"];")
-          }
-        }
-        if (sortedStickers[i].type === "text") {
-          fontSize = 100*scaleToOriginal*scale;
-          let overlayHeight = fontSize; 
-          let overlayWidth = 1000;
-          let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
-          let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
-          x *= scaleToOriginal;
-          y *= scaleToOriginal;
-          idName = "id" + i;
-          filter.push("[1:v]scale=" + overlayWidth + ":" + overlayHeight + "[textBackground];[textBackground]drawtext=fontfile=" + fontFile + 
-          ":text='" + text + "':fontsize=" + fontSize + ":fontcolor=" + color + ":x=(" + overlayWidth + "-text_w)/2:y=(" + overlayHeight + "-text_h)/2[text" +
-          i + "];[text" + i + "]rotate=" + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + "):c=black@0["+ idName +"];")
-          if (i == sortedStickers.length-1) {
-            if (i == 0) {
-              filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
-            } else {
-              filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y))
-            }
-          } else if (i == 0) {
-            filter.push("[0:v][id0]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v0];")
-          } else {
-            filter.push("[v" + (i-1) + "][id" + i +"]overlay=" + ((originalWidth-rotatedOverlayWidth)/2+x) + ":" + ((originalHeight-rotatedOverlayHeight)/2+y) + "[v" + i +"];")
-          }
-        } 
-      }
-      let ffmpegCommand = ["-i", this.state.currentImage, "-i", "/Users/Jack/Desktop/blank_true.png", ...inputs, "-filter_complex", filter.join(""), imageUri]
-      console.log(ffmpegCommand.join(" "))
-      await RNFFmpeg.executeWithArguments(ffmpegCommand);
+      let imageUri = await this.processImage();
       let uploadUri = ""
       await fetch(FRONT_SERVICE_URL + '/uploadItem', {
         method: 'POST',
@@ -243,6 +296,14 @@ class PictureReviewScreen extends React.Component {
     this.setState({ filtersOpen: true })
   }
 
+  saveImage = async () => {
+    this.setState({savingImage: true});
+    let imageUri = await this.processImage();
+    CameraRoll.saveToCameraRoll("file://" + imageUri).then(() => {
+      this.setState({savingImage: false});
+    })
+  }
+
   stickerUpdate = (scale, rotate, x, y, id) => {
     zIndex = this.state.heighestSticker+1
     idName = "id" + id
@@ -276,8 +337,6 @@ class PictureReviewScreen extends React.Component {
   }
 
   renderStickers = () => {
-    console.log(this.state.stickers)
-    console.log(this.state['id0'])
     if (this.state.stickers.length == 0) {
       return null
     }
@@ -311,7 +370,7 @@ class PictureReviewScreen extends React.Component {
   renderStickersPreview = () => {
     return this.state.stickersPreview.map((url, index)=> (
       <TouchableOpacity key={"sticker_" + index} onPress={() => {this.addSticker(url); this.setState({stickerOpen: false})}}>
-        <Image key={"sticker_" + index} style={{height: Dimensions.get('window').width*0.25, width: Dimensions.get('window').width*0.25, padding: 10}} source={{uri: url}} resizeMode={'contain'}/>
+        <Image key={"sticker_image_" + index} style={{height: Dimensions.get('window').width*0.25, width: Dimensions.get('window').width*0.25, padding: 10}} source={{uri: url}} resizeMode={'contain'}/>
       </TouchableOpacity>
       )
     )
@@ -320,8 +379,8 @@ class PictureReviewScreen extends React.Component {
   renderFiltersPreview = () => {
     return this.state.filters.map((filter, index)=> (
       <TouchableOpacity key={"filter_" + index} onPress={() => {this.setState({filtersOpen: false, currentImage: filter.file_path})}}>
-        <Image key={"filter_" + index} style={{height: Dimensions.get('window').width*0.3, width: Dimensions.get('window').width*0.3}} source={{uri: "file://" + filter.file_path}} resizeMode={'contain'}/>
-        <Text key={"filter_" + index} style={{textAlign: 'center', fontFamily: 'Avenir', fontSize: 18}}>{filter.name}</Text>
+        <Image key={"filter_image_" + index} style={{height: Dimensions.get('window').width*0.3, width: Dimensions.get('window').width*0.3}} source={{uri: "file://" + filter.file_path}} resizeMode={'contain'}/>
+        <Text key={"filter_text_" + index} style={{textAlign: 'center', fontFamily: 'Avenir', fontSize: 18}}>{filter.name}</Text>
       </TouchableOpacity>
       )
     )
@@ -378,6 +437,16 @@ class PictureReviewScreen extends React.Component {
         </View>
       )
     }
+    let saveIcon = (
+      <TouchableOpacity onPress={this.saveImage}>
+        <Icon name="download" size={40} color="white"/>
+      </TouchableOpacity>
+    )
+    if (this.state.savingImage) {
+      saveIcon = (
+        <ActivityIndicator size={'large'}/>
+      )
+    }
     let button = (
       <TouchableOpacity style={[styles.submitButton, {width: Dimensions.get('window').width*0.7}]} onPress={this.submitImage}>
           <Text style={styles.buttonText}>Submit</Text>
@@ -418,15 +487,17 @@ class PictureReviewScreen extends React.Component {
     });
     return (
       <View style={styles.container}>
-
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{height: 100, width: Dimensions.get('window').width}}/>
         </TouchableWithoutFeedback>
-        <View style={[styles.iconContainer, {top: 40, left: 20}]}>
-          <TouchableOpacity style={styles.icon} onPress={() => { this.props.navigation.goBack() }}>
+        <SafeAreaView style={[styles.iconContainer, {top: (50-14.14), left: 20}]}>
+          <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
             <Icon name="close" size={40} color="white"/>
           </TouchableOpacity>
-        </View>
+        </SafeAreaView>
+        <SafeAreaView style={[styles.iconContainer, {top: (50-14.14), right: 20}]}>
+          {saveIcon}
+        </SafeAreaView>
         {image}
         <View style={styles.editBox} >
           <TouchableOpacity onPress={this.openStickers}>
@@ -506,7 +577,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconContainer: {
-    position: 'absolute'
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 43,
+    width: 43
   },
   submitButton: {
     justifyContent: 'center',

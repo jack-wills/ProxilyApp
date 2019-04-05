@@ -145,9 +145,9 @@ export default class MovableTextInput extends React.Component {
   }
 
   renderColors = () => {
-    return this.colors.map((color)=> (
-        <TouchableOpacity onPress={() => {this._changeColor(color)}}>
-          <View style={{marginLeft: 10, width: 25, height: 25, borderRadius: 15, borderWidth: 2, borderColor: "white", backgroundColor: color}}/>
+    return this.colors.map((color, index)=> (
+        <TouchableOpacity key={"touch_" + index} onPress={() => {this._changeColor(color)}}>
+          <View key={"view_" + index} style={{marginLeft: 10, width: 25, height: 25, borderRadius: 15, borderWidth: 2, borderColor: "white", backgroundColor: color}}/>
         </TouchableOpacity>
       )
     )
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     colorBox: {
       height: 5,
       width: 100,
-      marginLeft: 10,
+      marginLeft: 0,
       alignItems: 'flex-end',
       justifyContent: 'center',
       flexDirection: 'row',

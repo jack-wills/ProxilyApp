@@ -28,6 +28,10 @@
     <string/>
     <key>NSCameraUsageDescription</key>
     <string>We need permissions to use your camera</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need permissions to use your photo library</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need permissions to add to your photo library</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>We need permissions to use your microphone</string>
     <key>UILaunchStoryboardName</key>
