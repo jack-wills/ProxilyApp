@@ -33,15 +33,13 @@ class SavedLocationsScreen extends React.Component {
   }
 
   _getSavedLocations = async () => {
-    fetch(FRONT_SERVICE_URL + '/getSavedLocations', {
+    fetch(FRONT_SERVICE_URL + '/service/getSavedLocations', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
-      body: JSON.stringify({
-        jwt: this.props.userToken,
-      }),
     })
     .then((response) => response.json())
     .then(async (responseJson) => {
@@ -79,17 +77,17 @@ class SavedLocationsScreen extends React.Component {
   }
 
   _addSavedLocation = async (latitude, longitude, name) => {
-    await fetch(FRONT_SERVICE_URL + '/putSavedLocation', {
+    await fetch(FRONT_SERVICE_URL + '/service/putSavedLocation', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
         latitude: latitude,
         longitude: longitude,
         name: name,
-        jwt: this.props.userToken,
       }),
     })
     .then((response) => response.json())
@@ -122,15 +120,15 @@ class SavedLocationsScreen extends React.Component {
         break;
       }
     }
-    await fetch(FRONT_SERVICE_URL + '/removeSavedLocation', {
+    await fetch(FRONT_SERVICE_URL + '/service/removeSavedLocation', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
         id: id,
-        jwt: this.props.userToken,
       }),
     })
     .then((response) => response.json())

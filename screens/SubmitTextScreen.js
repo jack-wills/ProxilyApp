@@ -24,16 +24,16 @@ class SubmitTextScreen extends React.Component {
     }
 
     _submitText = () => {
-      fetch(FRONT_SERVICE_URL + '/uploadItem', {
+      fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
           latitude: "51.923187",
           longitude: "-0.226379",
-          jwt: this.props.userToken,
           mediaType: "text",
           media: this.state.text,
         }),

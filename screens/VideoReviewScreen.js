@@ -36,16 +36,16 @@ class VideoReviewScreen extends React.Component {
     this.toggleSubmitButton();
     this.setState({processing: true})
     let uploadUri = ""
-    await fetch(FRONT_SERVICE_URL + '/uploadItem', {
+    await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
           latitude: "51.923147",
           longitude: "-0.226299",
-          jwt: this.props.userToken,
           mediaType: "video",
         }),
       })

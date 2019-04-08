@@ -28,15 +28,13 @@ class AuthLoadingScreen extends React.Component {
   _checkTokenAsync = async (userToken) => {
     this.props.dispatch( async (dispatch) => {
       try {
-        let response = await fetch(FRONT_SERVICE_URL + '/checkToken', {
+        let response = await fetch(FRONT_SERVICE_URL + '/auth/checkToken', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken,
           },
-          body: JSON.stringify({
-            token: userToken,
-          }),
         })
         let responseJson = await response.json();
         if (responseJson.hasOwnProperty('error')) {
@@ -81,7 +79,7 @@ _checkFacebookToken = () => {
         const profile = result;
         AccessToken.getCurrentAccessToken()
         .then((data) => {
-          let accessToken = data.accessToken;
+          let accessToken = "facebook." + data.accessToken;
           dispatch(fetchUserToken(accessToken, profile.name, profile.email, profile.picture.data.url, true));
   
           console.log(accessToken)
@@ -102,8 +100,10 @@ _checkFacebookToken = () => {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const tokenProvider = await AsyncStorage.getItem('tokenProvider');
-    if (tokenProvider === "facebook") {
+    const userToken = await AsyncStorage.getItem('userToken');
+    if (!userToken) {
+      this.props.navigation.navigate('Auth');
+    } else if (userToken === "facebook") {
       AccessToken.getCurrentAccessToken()
       .then((tokenInfo) => {
         console.log(tokenInfo)
@@ -113,7 +113,6 @@ _checkFacebookToken = () => {
         this._checkFacebookToken(tokenInfo.accessToken);
       });
     } else {
-      const userToken = await AsyncStorage.getItem('userToken');
       this._checkTokenAsync(userToken);
     }
   };

@@ -36,14 +36,14 @@ class FeedItem extends React.Component {
     };
 
     async submitComment() {
-      await fetch(FRONT_SERVICE_URL + '/postComment', {
+      await fetch(FRONT_SERVICE_URL + '/service/postComment', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
-          jwt: this.props.userToken,
           postID: this.props.item.postId,
           content: this.state.newComment,
         }),
@@ -69,14 +69,14 @@ class FeedItem extends React.Component {
     };
 
     async registerUserVote(vote) {
-      await fetch(FRONT_SERVICE_URL + '/registerVote', {
+      await fetch(FRONT_SERVICE_URL + '/service/registerVote', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
-          jwt: this.props.userToken,
           postID: this.props.item.postId,
           vote: vote
         }),
@@ -153,14 +153,14 @@ class FeedItem extends React.Component {
 
     _reportItem = async () => {
       this.setState({reporting: true})
-      await fetch(FRONT_SERVICE_URL + '/reportPost', {
+      await fetch(FRONT_SERVICE_URL + '/service/reportPost', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
-          jwt: this.props.userToken,
           postID: this.props.item.postId
         }),
       })

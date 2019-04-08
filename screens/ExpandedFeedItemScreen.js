@@ -27,14 +27,14 @@ class ExpandedFeedItemScreen extends React.Component {
 
   _getComments = async (postID) => {
     this.setState({commentsLoading: true});
-    await fetch(FRONT_SERVICE_URL + '/getComments', {
+    await fetch(FRONT_SERVICE_URL + '/service/getComments', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
-        jwt: this.props.userToken,
         postID: postID,
       }),
     })

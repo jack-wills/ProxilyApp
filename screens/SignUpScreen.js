@@ -83,7 +83,7 @@ _signUpAsync = () => {
   }
   this.props.dispatch( async (dispatch) => {
   try {
-    let response = await fetch(FRONT_SERVICE_URL + '/register', {
+    let response = await fetch(FRONT_SERVICE_URL + '/auth/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -101,7 +101,6 @@ _signUpAsync = () => {
       
     } else {
       await AsyncStorage.setItem('userToken', responseJson.jwt);
-      await AsyncStorage.setItem('tokenProvider', "proxily");
       await AsyncStorage.setItem('userName', responseJson.name);
       await AsyncStorage.setItem('email', responseJson.email);
       await AsyncStorage.setItem('profilePicture', "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg");

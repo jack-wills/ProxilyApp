@@ -59,16 +59,16 @@ class PictureReviewScreen extends React.Component {
   }
 
   getMoreStickers = () => {
-    fetch(FRONT_SERVICE_URL + '/getStickers', {
+    fetch(FRONT_SERVICE_URL + '/service/getStickers', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
         latitude: "51.923147",
         longitude: "-0.226299",
-        jwt: this.props.userToken,
       }),
     })
     .then((response) => response.json())
@@ -230,16 +230,16 @@ class PictureReviewScreen extends React.Component {
       this.setState({processing: true})
       let imageUri = await this.processImage();
       let uploadUri = ""
-      await fetch(FRONT_SERVICE_URL + '/uploadItem', {
+      await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
           latitude: "51.923147",
           longitude: "-0.226299",
-          jwt: this.props.userToken,
           mediaType: "image",
         }),
       })

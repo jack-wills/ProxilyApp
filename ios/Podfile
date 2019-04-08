@@ -32,6 +32,8 @@ target 'Proxily' do
 
   pod 'react-native-ffmpeg-full', :podspec => '../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-full.podspec'
 
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+
 end
 
 

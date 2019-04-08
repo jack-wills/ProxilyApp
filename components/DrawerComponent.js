@@ -45,7 +45,6 @@ class DrawerComponent extends React.Component {
             await this.facebookLogout();
           }
           await AsyncStorage.removeItem('userToken');
-          await AsyncStorage.removeItem('tokenProvider');
         } catch(error) {
             console.log('error: ', error);
         }

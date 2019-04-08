@@ -42,14 +42,14 @@ _onPressDownvote = async () => {
   };
 
   async registerUserVote(vote) {
-    await fetch(FRONT_SERVICE_URL + '/voteComment', {
+    await fetch(FRONT_SERVICE_URL + '/service/voteComment', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
-        jwt: this.props.userToken,
         commentID: this.props.item.commentId,
         vote: vote
       }),

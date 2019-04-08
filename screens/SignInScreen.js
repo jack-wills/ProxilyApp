@@ -58,61 +58,59 @@ class SignInScreen extends React.Component {
     }
 
     async registerFacebookAccount(userToken) {
-    this.props.dispatch( async (dispatch) => {
-      try {
-        let response = await fetch(FRONT_SERVICE_URL + '/registerFacebookAccount', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            token: userToken,
-          }),
-        })
-        let responseJson = await response.json();
-        if (responseJson.hasOwnProperty('error')) {
-          this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
-          console.error(responseJson.error);
-        }
-      } catch (error) {
-        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
-        console.log(error);
-      }
-    });
-  }
+      this.props.dispatch( async (dispatch) => {
+      });
+    }
 
     handleFacebookLogin = async () => {
       this.props.dispatch( async (dispatch) => {
-      this.facebookLoginAPI(async (accessToken) => {
-        this.registerFacebookAccount(accessToken);
-        const request = new GraphRequest(
-          '/me',
-          {
-            parameters: {
-              fields: {
-                string: 'id,name,email,picture.width(100).height(100)',
-              },
+      this.facebookLoginAPI(async (userToken) => {
+        try {
+          let response = await fetch(FRONT_SERVICE_URL + '/auth/signinFacebook', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
             },
-          },
-          async (error, result) => {
-            if (result) {
-              const profile = result
-              console.log(profile);
-              await AsyncStorage.setItem('userToken', accessToken);
-              await AsyncStorage.setItem('tokenProvider', "facebook");
-              await AsyncStorage.setItem('userName', profile.name);
-              await AsyncStorage.setItem('email', profile.email);
-              await AsyncStorage.setItem('profilePicture', profile.picture.data.url);
-              dispatch(fetchUserToken(accessToken, profile.name, profile.email, profile.picture.data.url, true));
-              this.props.navigation.navigate('App');
-            } else {
-              console.log(error);
-            }
+            body: JSON.stringify({
+              token: userToken,
+            }),
+          })
+          let responseJson = await response.json();
+          if (responseJson.hasOwnProperty('error')) {
+            this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+            console.error(responseJson.error);
+          } else {
+            const request = new GraphRequest(
+              '/me',
+              {
+                parameters: {
+                  fields: {
+                    string: 'id,name,email,picture.width(100).height(100)',
+                  },
+                },
+              },
+              async (error, result) => {
+                if (result) {
+                  const profile = result
+                  console.log(profile);
+                  await AsyncStorage.setItem('userToken', "facebook");
+                  await AsyncStorage.setItem('userName', profile.name);
+                  await AsyncStorage.setItem('email', profile.email);
+                  await AsyncStorage.setItem('profilePicture', profile.picture.data.url);
+                  dispatch(fetchUserToken("facebook." + userToken, profile.name, profile.email, profile.picture.data.url, true));
+                  this.props.navigation.navigate('App');
+                } else {
+                  console.log(error);
+                }
+              }
+            )
+            new GraphRequestManager().addRequest(request).start();
           }
-        )
-  
-        new GraphRequestManager().addRequest(request).start();
+        } catch (error) {
+          this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+          console.log(error);
+        }
       });
     });
     }
@@ -168,7 +166,7 @@ class SignInScreen extends React.Component {
     _signInAsync = () => {
       this.props.dispatch( async (dispatch) => {
       try {
-        let response = await fetch(FRONT_SERVICE_URL + '/signin', {
+        let response = await fetch(FRONT_SERVICE_URL + '/auth/signin', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -186,7 +184,6 @@ class SignInScreen extends React.Component {
           this.setState({error: "User token is empty"});
         } else {
           await AsyncStorage.setItem('userToken', responseJson.jwt);
-          await AsyncStorage.setItem('tokenProvider', "proxily");
           await AsyncStorage.setItem('userName', responseJson.name);
           await AsyncStorage.setItem('email', responseJson.email);
           await AsyncStorage.setItem('profilePicture', responseJson.profilePicture);

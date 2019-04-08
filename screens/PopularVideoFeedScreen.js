@@ -25,11 +25,12 @@ class PopularVideoFeedScreen extends React.Component {
 
   _getFeedData = async (continuous = false, callback = () => {}) =>  {
     let postsFrom = continuous ? this.state.feedData.length : 0;
-    await fetch(FRONT_SERVICE_URL + '/getPopularFeedItems', {
+    await fetch(FRONT_SERVICE_URL + '/service/getPopularFeedItems', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
         latitude: this.props.screenProps.latitude,

@@ -3,6 +3,7 @@ package com.proxily;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.arthenica.reactnative.RNFFmpegPackage;
 import cl.json.RNSharePackage;
 import com.rnfs.RNFSPackage;
@@ -45,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
             new RNFFmpegPackage(),
             new RNSharePackage(),
             new RNFSPackage(),

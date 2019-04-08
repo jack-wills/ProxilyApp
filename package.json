@@ -16,6 +16,7 @@
     "plist": "^3.0.1",
     "react": "16.6.3",
     "react-native": "^0.58.5",
+    "react-native-cached-image": "^1.4.3",
     "react-native-camera": "^1.11.1",
     "react-native-fbads": "^6.0.2",
     "react-native-fbsdk": "^0.8.0",
