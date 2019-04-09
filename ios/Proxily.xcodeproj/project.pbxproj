@@ -95,6 +95,7 @@
 		04EB4AE422514EBC0051BB16 /* twolame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4A3A225145650051BB16 /* twolame.framework */; };
 		04EB4AE522514EBC0051BB16 /* wavpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4A2C225145590051BB16 /* wavpack.framework */; };
 		04EB4AEC225665960051BB16 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4AEB2256656F0051BB16 /* libRCTCameraRoll.a */; };
+		04EB4BAD225D0E420051BB16 /* libreact-native-fetch-blob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EB4BAC225D0E420051BB16 /* libreact-native-fetch-blob.a */; };
 		04FB24BE224CEAE100680207 /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF0FFE72056DD460020B375 /* libdouble-conversion.a */; };
 		04FBDDD0224C0F1200680207 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */; };
 		09412F73D76044C899F82488 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD14E807504E49DDAEA7CAAC /* MaterialIcons.ttf */; };
@@ -744,6 +745,7 @@
 		04EB4A4E225145780051BB16 /* gnutls.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gnutls.framework; path = "Pods/mobile-ffmpeg-full/gnutls.framework"; sourceTree = "<group>"; };
 		04EB4A4F225145790051BB16 /* libswresample.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libswresample.framework; path = "Pods/mobile-ffmpeg-full/libswresample.framework"; sourceTree = "<group>"; };
 		04EB4AE62256656D0051BB16 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		04EB4BAC225D0E420051BB16 /* libreact-native-fetch-blob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-fetch-blob.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FB0000224C127300680207 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		04FB0001224C127300680207 /* mutable.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mutable.js; sourceTree = "<group>"; };
 		04FB0002224C127300680207 /* LICENCE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
@@ -16690,6 +16692,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EB4BAD225D0E420051BB16 /* libreact-native-fetch-blob.a in Frameworks */,
 				04EB4AEC225665960051BB16 /* libRCTCameraRoll.a in Frameworks */,
 				04EB4AB422514EBC0051BB16 /* expat.framework in Frameworks */,
 				04EB4AB522514EBC0051BB16 /* fontconfig.framework in Frameworks */,
@@ -50337,6 +50340,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04EB4BAC225D0E420051BB16 /* libreact-native-fetch-blob.a */,
 				04EB4943225053F10051BB16 /* mobile-ffmpeg-video */,
 				04EB48AC2250531E0051BB16 /* libavcodec.framework */,
 				04EB48E8225053220051BB16 /* libavdevice.framework */,

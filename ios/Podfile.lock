@@ -9,6 +9,8 @@ PODS:
   - mobile-ffmpeg-full (4.2.LTS)
   - React (0.58.6):
     - React/Core (= 0.58.6)
+  - react-native-fetch-blob (0.10.6):
+    - React/Core
   - react-native-ffmpeg-full (0.3.1):
     - mobile-ffmpeg-full (= 4.2.LTS)
     - React
@@ -59,12 +61,15 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNShare (1.1.3):
+    - React
   - yoga (0.58.6.React)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - react-native-ffmpeg-full (from `../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-full.podspec`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
@@ -79,6 +84,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNShare (from `../node_modules/react-native-share`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -95,8 +101,12 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
+  react-native-fetch-blob:
+    :path: "../node_modules/react-native-fetch-blob"
   react-native-ffmpeg-full:
     :podspec: "../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg-full.podspec"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -107,9 +117,11 @@ SPEC CHECKSUMS:
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   mobile-ffmpeg-full: 58ec97697d027cdbe6e0f43be6b7e41f2c7703a2
   React: 130b87b2d5e2baac646954282cab87be986d98fc
+  react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
   react-native-ffmpeg-full: 1c2558b5ac713b18ca49543b32f5f90bfe36bd55
+  RNShare: 4f206fa36e384e95a0cbf79f2a92490647e93127
   yoga: 32d7ef1081951e9a35a4c72a7be797598b138a48
 
-PODFILE CHECKSUM: b47426072369a70ef71da0309ba75d93d72f0864
+PODFILE CHECKSUM: 90353f6183b71fdaa3a859a26a8ea10d17284159
 
 COCOAPODS: 1.6.1

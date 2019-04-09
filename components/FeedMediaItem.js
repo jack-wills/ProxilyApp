@@ -13,7 +13,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateVideoPlaying} from '../actions/UpdateVideo';
 
-import VideoComponent from './VideoComponent';
+import CachedImage from './CachedImage';
+import CachedVideo from './CachedVideo';
 
 class FeedMediaItem extends React.Component {
 
@@ -30,7 +31,7 @@ class FeedMediaItem extends React.Component {
           return(
             <View style={[styles.video, {overflow: 'hidden'}]}>
               <TouchableOpacity style={styles.video} onPress={this._onPressVideo}>
-                  <VideoComponent 
+                  <CachedVideo 
                       style={styles.video} 
                       url={this.props.itemInfo.video.url}
                       navigation={this.props.navigation}
@@ -41,7 +42,7 @@ class FeedMediaItem extends React.Component {
       }
       if (this.props.itemInfo.hasOwnProperty('image')) {
           return(
-              <Image 
+              <CachedImage
                   style={styles.image}
                   source={{uri: this.props.itemInfo.image.url}}
               />

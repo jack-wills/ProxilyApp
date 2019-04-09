@@ -23,6 +23,7 @@ import Modal from "react-native-modal";
 import FeedMediaItem from './FeedMediaItem';
 import {FRONT_SERVICE_URL} from '../Constants';
 import CommentFeedItem from './CommentFeedItem';
+import CachedImage from './CachedImage';
 
 class FeedItem extends React.Component {
     state = {
@@ -210,7 +211,7 @@ class FeedItem extends React.Component {
             <FeedMediaItem itemInfo={this.props.item.media} navigation={this.props.navigation}/>
             <View style={styles.info}>
                 <View style={styles.left}>
-                  <Image
+                  <CachedImage
                     style={[styles.profileImage, {marginLeft: -10}]}
                     source={{uri: this.props.item.submitterProfilePicture}} 
                   />

@@ -13,6 +13,8 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
+import CachedImage from './CachedImage';
+
 class DrawerComponent extends React.Component {
   async facebookLogout() {
     var current_access_token = '';
@@ -55,7 +57,7 @@ class DrawerComponent extends React.Component {
     return (
       <SafeAreaView style={{backgroundColor: '#87B7CB', flex:1}}>
       <View style={styles.drawerHeader}>
-          <Image
+          <CachedImage
             style={styles.drawerImage}
             source={{uri: this.props.profilePicture}} />
           <Text style={styles.drawerHeaderText}>{this.props.name}</Text>

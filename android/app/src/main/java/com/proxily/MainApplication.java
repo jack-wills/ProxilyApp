@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
+import com.shahenlibrary.RNVideoProcessingPackage;
+import suraj.tiwari.reactnativefbads.FBAdsPackage;
 import com.arthenica.reactnative.RNFFmpegPackage;
 import cl.json.RNSharePackage;
 import com.rnfs.RNFSPackage;
@@ -47,6 +49,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNFetchBlobPackage(),
+            new RNVideoProcessingPackage(),
+            new FBAdsPackage(),
             new RNFFmpegPackage(),
             new RNSharePackage(),
             new RNFSPackage(),
