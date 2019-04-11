@@ -30,10 +30,8 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 class PictureReviewScreen extends React.Component {
   state = {
     processing: false,
-    success: false,
     error: "",
     currentImage: "",
-    animationFinished: false,
     heighestSticker: 1,
     stickers: [],
     stickersPreview: [
@@ -55,6 +53,8 @@ class PictureReviewScreen extends React.Component {
     filtersOpen: false,
     textOpen: false,
     savingImage: false,
+    submitProgress: new Animated.Value(0),
+    mounted: true,
   }
 
   getMoreStickers = () => {
@@ -227,6 +227,19 @@ class PictureReviewScreen extends React.Component {
     try {
       this.toggleSubmitButton();
       this.setState({processing: true})
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(this.state.submitProgress, {
+            toValue: 0.47,
+            duration: 2000,
+          }),
+          Animated.timing(this.state.submitProgress, {
+            toValue: 0,
+            duration: 0,
+          })
+        ])
+      ).start();
+      await this.sleep(6000);
       let imageUri = await this.processImage();
       let uploadUri = ""
       await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
@@ -246,7 +259,7 @@ class PictureReviewScreen extends React.Component {
       .then((responseJson) => {
         if (responseJson.hasOwnProperty('error')) {
           this.toggleSubmitButton();
-          this.setState({processing: false, success: false, error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+          this.setState({processing: false,  error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
           console.error(responseJson.error);
         } else {
           uploadUri = responseJson.uploadUrl;
@@ -254,7 +267,7 @@ class PictureReviewScreen extends React.Component {
       })
       .catch((error) => {
         this.toggleSubmitButton();
-        this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Check your internet connection."});
+        this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
         console.log(error);
       });
       file = {uri: imageUri, type: "image/jpeg", name: "string"};
@@ -265,21 +278,30 @@ class PictureReviewScreen extends React.Component {
         console.log(e);
         
       }, false);
-      xhr.onreadystatechange = () => {
+      let navigation = this.props.navigation;
+      xhr.onreadystatechange = async () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            // Successfully uploaded the file.
             console.log('successfully uploaded presignedurl');
             console.log(xhr);
-            this.setState({processing: false, success: true})
-            
+            Animated.timing(this.state.submitProgress, {
+              toValue: 1,
+              duration: (1-this.state.submitProgress._value)*4000,
+            }).start();
+            await this.sleep(2800)
+            let resetAction = StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'CameraPicture' })
+              ],
+            });
+            navigation.dispatch(resetAction);
+            navigation.navigate('Feed');
           } else {
-            // The file could not be uploaded.
             this.toggleSubmitButton();
-            this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Check your internet connection."});
+            this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
             console.log('failed to upload presignedurl');
             console.log(xhr);
-            
           }
         }
       };
@@ -287,9 +309,9 @@ class PictureReviewScreen extends React.Component {
       // for text file: text/plain, for binary file: application/octet-stream
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.send(file);
-    } catch {
-      this.toggleSubmitButton();
-      this.setState({processing: false, success: false});
+    } catch (error) {
+      console.log(error)
+      this.setState({processing: false});
     }
   }
   openStickers = () => {
@@ -392,16 +414,6 @@ class PictureReviewScreen extends React.Component {
   }
   
   render() {
-    if (this.state.animationFinished) {
-      let resetAction = StackActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'CameraPicture' })
-        ],
-      });
-      this.props.navigation.dispatch(resetAction);
-      this.props.navigation.navigate('Feed');
-    }
     let image;
     if (this.state.currentImage === "") {
       image = (
@@ -460,28 +472,7 @@ class PictureReviewScreen extends React.Component {
     if (this.state.processing) {
       button = (
         <LottieView
-          ref={animation => {
-            if (animation) {
-              animation.play(0, 44);
-            }
-          }}
-          source={require('../assets/loading.json')}
-        />
-      );
-    }
-    if (this.state.success) {
-      button = (
-        <LottieView
-          ref={animation => {
-            if (animation) {
-              this.animation = animation;
-              animation.play(44, 95);
-            }
-          }}
-          onAnimationFinish={() => {
-            this.setState({animationFinished: true})
-          }}
-          loop={false}
+          progress={this.state.submitProgress}
           source={require('../assets/loading.json')}
         />
       );
