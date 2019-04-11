@@ -32,7 +32,7 @@ export default class CachedImage extends React.Component {
     render() {
         if (!this.state.cachedImage) {
             return (
-                <ActivityIndicator />
+                <ActivityIndicator style={[this.props.style, {justifyContent: 'center', alignSelf: 'center'}]} />
             )
         }
         return (

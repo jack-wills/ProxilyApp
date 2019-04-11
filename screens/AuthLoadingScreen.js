@@ -28,7 +28,7 @@ class AuthLoadingScreen extends React.Component {
   _checkTokenAsync = async (userToken) => {
     this.props.dispatch( async (dispatch) => {
       try {
-        let response = await fetch(FRONT_SERVICE_URL + '/auth/checkToken', {
+        let response = await fetch(FRONT_SERVICE_URL + '/service/checkToken', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -40,13 +40,13 @@ class AuthLoadingScreen extends React.Component {
         if (responseJson.hasOwnProperty('error')) {
           this.setState({error: "Oops, looks like something went wrong."});
           this.setState({error: responseJson});
+          console.log(responseJson.error)
           this.props.navigation.navigate('Auth');
         } else {
           await AsyncStorage.setItem('userName', responseJson.name);
           await AsyncStorage.setItem('email', responseJson.email);
           await AsyncStorage.setItem('profilePicture', responseJson.profilePicture);
           dispatch(fetchUserToken(userToken, responseJson.name, responseJson.email, responseJson.profilePicture, false));
-
           // This will switch to the App screen or Auth screen and this loading
           // screen will be unmounted and thrown away.
           this.props.navigation.navigate(userToken ? 'App' : 'Auth');
@@ -128,26 +128,6 @@ _checkFacebookToken = () => {
         }}>
         <ActivityIndicator  size="large" color={"black"}/>
         <StatusBar barStyle="default" />
-        <Modal
-            isVisible={this.state.error != ""}
-            onBackdropPress={() => this.setState({ error: "" })}>
-            <View style={{alignSelf: 'center',
-                justifySelf: 'center',
-                width: Dimensions.get('window').width*0.6,
-                backgroundColor: '#f2f2f2',
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: 'lightgrey',
-                shadowRadius: 4,
-                shadowColor: 'grey',
-                shadowOffset: {height: 2, width: 0},
-                shadowOpacity: 0.25,
-                overflow: 'hidden',
-                padding: 15,
-            }}>
-            <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
-            </View>
-        </Modal>
       </SafeAreaView>
     );
   }

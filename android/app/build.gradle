@@ -149,7 +149,6 @@ android {
 
 dependencies {
     implementation project(':react-native-fetch-blob')
-    implementation project(':react-native-video-processing')
     implementation project(':react-native-fbads')
     implementation project(':react-native-ffmpeg')
     implementation project(':react-native-share')

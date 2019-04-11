@@ -14,7 +14,8 @@ import {
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
   import {connect} from 'react-redux';
   import LottieView from 'lottie-react-native';
-  import { ProcessingManager } from 'react-native-video-processing';
+  import { RNFFmpeg } from 'react-native-ffmpeg';
+  import FileSystem from 'react-native-fs';
 
 class CameraVideoScreen extends React.Component {
   state = {
@@ -84,7 +85,7 @@ class CameraVideoScreen extends React.Component {
     });
 
     let button = (
-      <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-45}]}>
+      <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-50}]}>
         <TouchableOpacity style={styles.icon} onPress={this.record}>
           <Image source={require('../assets/camera.png')} style={{
           width: 90,
@@ -96,7 +97,7 @@ class CameraVideoScreen extends React.Component {
 
     if (this.state.recording) {
       button = (
-        <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-45}]}>
+        <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-50}]}>
         <TouchableOpacity
           onPress={this.stopRecording.bind(this)}
           style={styles.icon}
@@ -112,7 +113,7 @@ class CameraVideoScreen extends React.Component {
 
     if (this.state.processing) {
       button = (
-        <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-45}]}>
+        <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-50}]}>
           <ActivityIndicator animating  size="large" />
         </View>
       );
@@ -180,34 +181,36 @@ class CameraVideoScreen extends React.Component {
   record = async () => {
     try {
       this.setState({ recording: true });
-      console.log('recording');
-      const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
-      const data = await this.camera.recordAsync(options);
-      console.log('not recording');
+      //const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
+      //const data = await this.camera.recordAsync(options);
+      const data = {uri: 'file:///Users/Jack/Library/Developer/CoreSimulator/Devices/CEFAE35B-B415-4168-87D4-3BC5B71B236E/data/Containers/Data/Application/D4CB25BC-BA8A-47AF-BF02-5C7E2E72DA4A/Documents/proxily/tmp/s.mp4'}
       this.setState({ recording: false, processing: true });
       const height = 720;
       const width = 1280;
-      console.log(height + " " + width)
-      const actualImageWidth = width*Dimensions.get('window').width/Dimensions.get('window').height;
-      console.log(100*actualImageWidth/Dimensions.get('window').height)
-      console.log(100*actualImageWidth/Dimensions.get('window').width)
+      const actualVideoWidth = width*Dimensions.get('window').width/Dimensions.get('window').height;
       const cropOptions = {
-        cropOffsetX: (width-actualImageWidth)/2, 
-        cropOffsetY: 100*actualImageWidth/Dimensions.get('window').width,
-        cropWidth: actualImageWidth, 
-        cropHeight: actualImageWidth*8/7,
+        cropOffsetX: Math.round((width-actualVideoWidth)/2), 
+        cropOffsetY: Math.round(100*actualVideoWidth/Dimensions.get('window').width),
+        cropWidth: Math.round(actualVideoWidth),
+        cropHeight: Math.round(actualVideoWidth*8/7),
+        quality: "1280x720"
       }
-      ProcessingManager.crop(data.uri, cropOptions).then((data) => {
+      console.log(cropOptions);
+      
+      FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
+      const timestamp = new Date().getTime();
+      const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/video_" + timestamp + ".mp4";
+      await RNFFmpeg.executeWithArguments(["-i", 'file:///Users/Jack/Desktop/videoApp/assets/s.mp4', "-b:v", "2M", "-filter:v", "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
+      .then((result) => {
         console.log('Path to video: ' + data);
         this.setState({ processing: false });
-        this.props.navigation.navigate("VideoReview", {videoUri: data, fail: false})
-      }).catch((err) => {
-        console.log("Video couldn't be cropped: " + err);
+        this.props.navigation.navigate("VideoReview", {videoUri: file_path, videoWidth: actualVideoWidth})
+      }).catch((error) => {
+        console.log("Video couldn't be cropped: " + error);
         this.setState({ processing: false });
-        this.props.navigation.navigate("VideoReview", {videoUri: data.uri, fail: true, error: err})
       });
     } catch (err) {
-      // console.log('err: ', err);
+      console.log('err: ', err);
     }
   };
 
@@ -260,7 +263,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   iconContainer: {
-    position: 'absolute'
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+    width: 100
   },
   autoFocusBox: {
     position: 'absolute',

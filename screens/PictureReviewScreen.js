@@ -17,7 +17,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from 'react-redux';
 import { StackActions, NavigationActions } from 'react-navigation';
-import {Buffer} from 'buffer';
 import LottieView from 'lottie-react-native';
 import FileSystem from 'react-native-fs';
 import Modal from 'react-native-modal';
@@ -142,7 +141,7 @@ class PictureReviewScreen extends React.Component {
     }
     let inputs = [];
     let filter = [];
-    const fontFile = FileSystem.DocumentDirectoryPath + "/proxily/assets/Avenir-Medium.ttf";
+    const fontFile = "/Users/Jack/Desktop/Avenir-Medium.ttf";
     let originalHeight = this.props.navigation.state.params.imageWidth*8/7;
     let originalWidth = this.props.navigation.state.params.imageWidth;
     let scaleToOriginal = originalWidth/Dimensions.get('window').width;
@@ -258,30 +257,36 @@ class PictureReviewScreen extends React.Component {
         this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Check your internet connection."});
         console.log(error);
       });
-      await ImageStore.getBase64ForTag(imageUri, async (base64Data) => {
-        const buffer = Buffer.from(base64Data, 'base64')
-        await fetch(uploadUri, {
-          method: 'PUT',
-          headers: {
-          'Content-Type': 'image/jpeg; charset=utf-8',
-        },
-          body: buffer,
-        })
-        .then(async (response) => {
-          console.log(response);
-          await FileSystem.unlink(imageUri);
-          this.setState({processing: false, success: true})
-        })
-        .catch((error) => {
-          this.toggleSubmitButton();
-          console.log(error);
-          this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Check your internet connection."});
-        });
-      }, (error) => {
-        this.toggleSubmitButton();
-        this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Please try again."});
-        console.log(error);
-      });
+      file = {uri: imageUri, type: "image/jpeg", name: "string"};
+      const xhr = new XMLHttpRequest();
+      xhr.upload.addEventListener('progress', (e) => {
+        // handle notifications about upload progress: e.loaded / e.total
+        console.log('progress');
+        console.log(e);
+        
+      }, false);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            // Successfully uploaded the file.
+            console.log('successfully uploaded presignedurl');
+            console.log(xhr);
+            this.setState({processing: false, success: true})
+            
+          } else {
+            // The file could not be uploaded.
+            this.toggleSubmitButton();
+            this.setState({processing: false, success: false, error: "Oops, looks like something went wrong. Check your internet connection."});
+            console.log('failed to upload presignedurl');
+            console.log(xhr);
+            
+          }
+        }
+      };
+      xhr.open('PUT', uploadUri);
+      // for text file: text/plain, for binary file: application/octet-stream
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.send(file);
     } catch {
       this.toggleSubmitButton();
       this.setState({processing: false, success: false});

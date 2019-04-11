@@ -33,7 +33,7 @@ export default class CachedVideo extends React.Component {
     render() {
         if (!this.state.cachedVideo) {
             return (
-                <ActivityIndicator />
+                <ActivityIndicator style={[this.props.style, {justifyContent: 'center', alignSelf: 'center'}]} />
             )
         }
         return (
