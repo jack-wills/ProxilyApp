@@ -129,6 +129,7 @@ class PopularVideoFeedScreen extends React.Component {
           </View>
       );
     } else {
+      console.log(this.state.feedData)
       return (
           <View style={styles.container}>
           <VideoFeed  data={this.state.feedData} navigation={this.props.navigation} getFeedData={this._getFeedData} />

@@ -1,17 +1,36 @@
 import React from 'react';
 import {
-  Button,
+  Dimensions,
   StyleSheet,
   SafeAreaView,
+  FlatList,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   Image,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class SettingsScreen extends React.Component {
+  _renderItem = ({item}) => {
+    return (
+      <TouchableHighlight underlayColor={'#C7D7DD'} onPress={item.function}>
+        <View style={styles.listButton}>
+          <Text style={styles.buttonText}>{item.label}</Text>
+        </View>
+      </TouchableHighlight>
+  )};
   render() {
+    let data = [
+      {
+        label: "Change Profile Picture", 
+        function: ()=>{}
+      },{
+        label: "Test2", 
+        function: ()=>{}
+      }
+    ]
     return (
       <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
         <View style={{flexDirection:'row', 
@@ -35,7 +54,11 @@ export default class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Text>This is notifications settings</Text>
+          <FlatList 
+              data={data}
+              renderItem={this._renderItem}
+              showsHorizontalScrollIndicator={false}
+          />
         </View>
     </SafeAreaView>
     );
@@ -58,4 +81,14 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
   },
+  listButton: {
+    height: 50,
+    justifyContent: 'center',
+    width: Dimensions.get('window').width,
+  },
+  buttonText: {
+    fontFamily: 'Avenir',
+    fontSize: 18,
+    marginLeft: 20
+  }
 });

@@ -1,17 +1,40 @@
 import React from 'react';
 import {
-  Button,
+  Dimensions,
+  FlatList,
   StyleSheet,
   SafeAreaView,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   Image,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import {connect} from 'react-redux';
 
-export default class SettingsScreen extends React.Component {
+import CachedImage from '../components/CachedImage';
+
+class AccountScreen extends React.Component {
+  _renderItem = ({item}) => {
+    return (
+      <TouchableHighlight underlayColor={'#C7D7DD'} onPress={item.function}>
+        <View style={styles.listButton}>
+          <Text style={styles.buttonText}>{item.label}</Text>
+        </View>
+      </TouchableHighlight>
+  )};
+
   render() {
+    let data = [
+      {
+        label: "Change Profile Picture", 
+        function: ()=>{}
+      },{
+        label: "Test2", 
+        function: ()=>{}
+      }
+    ]
     return (
       <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
         <View style={{flexDirection:'row', 
@@ -35,18 +58,40 @@ export default class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Text>This is Account</Text>
+          <View style={styles.accountBar}>
+            <CachedImage
+              style={styles.drawerImage}
+              source={{uri: this.props.profilePicture}} />
+            <Text style={styles.nameText}>{this.props.name}</Text>
+          </View>
+          <View style={styles.lineBreak}/>
+          <View style={styles.feed}> 
+          <FlatList 
+              data={data}
+              renderItem={this._renderItem}
+              showsHorizontalScrollIndicator={false}
+          />
+          </View>
         </View>
     </SafeAreaView>
     );
   }
 }
 
+/*
+
+      await AsyncStorage.setItem('userToken', responseJson.jwt);
+      await AsyncStorage.setItem('userName', responseJson.name);
+      await AsyncStorage.setItem('email', responseJson.email);
+      await AsyncStorage.setItem('profilePicture', "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg");
+      dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
+      
+  */
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#D7E7ED',
   },
@@ -58,4 +103,46 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
   },
+  drawerImage: {
+    height: Dimensions.get('window').height*0.14,
+    width: Dimensions.get('window').height*0.14,
+    borderRadius: Dimensions.get('window').height*0.07,
+  },
+  accountBar: {
+    height: Dimensions.get('window').height*0.25,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  nameText: {
+    fontFamily: 'Avenir',
+    fontSize: 25,
+  },
+  lineBreak: {
+    alignSelf: 'center',
+    backgroundColor: 'black', 
+    height: 1,
+    width: Dimensions.get('window').width*0.85,
+  },
+  feed: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+  },
+  listButton: {
+    height: 50,
+    justifyContent: 'center',
+    width: Dimensions.get('window').width,
+  },
+  buttonText: {
+    fontFamily: 'Avenir',
+    fontSize: 18,
+    marginLeft: 20
+  }
 });
+
+const mapStateToProps = (state) => {
+  const {userToken, name, profilePicture, isFacebook} = state.main;
+  return {userToken, name, profilePicture, isFacebook};
+}
+
+export default connect(mapStateToProps)(AccountScreen);

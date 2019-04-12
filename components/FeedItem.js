@@ -181,8 +181,46 @@ class FeedItem extends React.Component {
       });
       this.props.removeItem(this.props.item)
     };
+
+    _deleteItem = async () => {
+      this.setState({reporting: true})
+      await fetch(FRONT_SERVICE_URL + '/service/deletePost', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
+        },
+        body: JSON.stringify({
+          postID: this.props.item.postId
+        }),
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({reporting: false})
+        if (responseJson.hasOwnProperty('error')) {
+          console.log(responseJson.error);
+          this.setState({reportStatus: "Sorry, the post couldn't be deleted"})
+        } else {
+          this.setState({reportStatus: "Post Deleted"})
+          this.props.removeItem(this.props.item)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
+      });
+    };
     
     renderNormal() {
+      let remove = (
+        <TouchableOpacity onPress={this._deleteItem}>
+          <View style={styles.optionsRow}>
+            <Icon style={{marginLeft: 10, marginRight: 13}} name="trash" color={'#555'} size={17} />
+            <Text>Delete Post</Text>
+          </View>
+        </TouchableOpacity>
+      );
       let report = (
         <TouchableOpacity onPress={this._reportItem}>
           <View style={styles.optionsRow}>
@@ -198,9 +236,20 @@ class FeedItem extends React.Component {
             <Text>{this.state.reportStatus}</Text>
           </View>
         )
+        remove = (
+          <View style={[styles.optionsRow, {justifyContent: 'flex-start'}]}>
+            <Icon style={{marginLeft: 10, marginRight: 13}} name={this.state.reportStatus === "Post Reported" ? "check" : "close"} color={'#555'} size={17} />
+            <Text>{this.state.reportStatus}</Text>
+          </View>
+        )
       }
       if (this.state.reporting) {
         report = (
+          <View style={[styles.optionsRow, {justifyContent: 'center', marginLeft: 10}]}>
+            <ActivityIndicator size="large"/>
+          </View>
+        )
+        remove = (
           <View style={[styles.optionsRow, {justifyContent: 'center', marginLeft: 10}]}>
             <ActivityIndicator size="large"/>
           </View>
@@ -240,7 +289,7 @@ class FeedItem extends React.Component {
                 </View>
                 <Modal
                   isVisible={this.state.optionsVisible}
-                  onBackdropPress={() => this.setState({ optionsVisible: false })}>
+                  onBackdropPress={() => {this.setState({ optionsVisible: false }); this.setState({ reportStatus: "" })}}>
                   <View style={styles.optionsBox}>
                     <TouchableOpacity onPress={this._shareItem}>
                       <View style={styles.optionsRow}>
@@ -249,7 +298,7 @@ class FeedItem extends React.Component {
                       </View>
                     </TouchableOpacity>
                     <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
-                    {report}
+                    {this.props.item.requestersPost ? remove : report}
                   </View>
                 </Modal>
             </View>
