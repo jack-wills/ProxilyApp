@@ -138,5 +138,4 @@ const mapStateToProps = (state) => {
   return {userToken};
 }
 
-
 export default connect(mapStateToProps)(AuthLoadingScreen);

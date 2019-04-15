@@ -50,7 +50,8 @@ class NewVideoFeedScreen extends React.Component {
         await AsyncStorage.setItem('feedData', JSON.stringify(this.state.feedData));
       } else {
         if (!continuous) {
-          this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+          let feedData = JSON.parse(await AsyncStorage.getItem('feedData'));
+          this.setState({feedData: feedData == null ? [] : feedData});
         }
         this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
       }
@@ -58,7 +59,8 @@ class NewVideoFeedScreen extends React.Component {
     })
     .catch(async (error) => {
       if (!continuous) {
-        this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+        let feedData = JSON.parse(await AsyncStorage.getItem('feedData'));
+        this.setState({feedData: feedData == null ? [] : feedData});
       }
       this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
@@ -85,17 +87,18 @@ class NewVideoFeedScreen extends React.Component {
   render() {
     if (!this.state.feedData.length) {
       if (this.state.noData) {
+        let callback = this.callback;
         return (
           <View style={[styles.container, {flex: 1}]}>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
               this.setState({noData: false});
-              this._getFeedData(false, this.callback);
+              this._getFeedData(false, callback);
             }}>
               <Text style={{marginBottom: 10, fontFamily: 'Avenir', fontSize: 17}}>Tap to reload</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
               this.setState({noData: false});
-              this._getFeedData(false, this.callback);
+              this._getFeedData(false, callback);
             }}>
               <Icon name={"reload1"} size={40} color="grey"/>
             </TouchableOpacity>

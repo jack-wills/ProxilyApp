@@ -14,20 +14,50 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class SettingsScreen extends React.Component {
   _renderItem = ({item}) => {
-    return (
-      <TouchableHighlight underlayColor={'#C7D7DD'} onPress={item.function}>
-        <View style={styles.listButton}>
-          <Text style={styles.buttonText}>{item.label}</Text>
-        </View>
-      </TouchableHighlight>
-  )};
+    if (item.hasOwnProperty('function')) {
+      return (
+        <TouchableHighlight underlayColor={'#C7D7DD'} onPress={item.function}>
+          <View style={styles.listButton}>
+            <Text style={styles.buttonText}>{item.label}</Text>
+            <Text style={styles.buttonValue}>{item.value}</Text>
+          </View>
+        </TouchableHighlight>
+      )
+    } else {
+      return (
+          <View style={styles.listButton}>
+            <Text style={styles.buttonText}>{item.label}</Text>
+            <Text style={styles.buttonValue}>{item.value}</Text>
+          </View> 
+      )
+    }
+  };
   render() {
+    let push = true;
     let data = [
       {
-        label: "Change Profile Picture", 
+        label: "How should we notify you?", 
+      },{
+        label: "    Email", 
+        value: "Jackw53519@gmail.com",
         function: ()=>{}
       },{
-        label: "Test2", 
+        label: "    SMS", 
+        value: "07838137764",
+        function: ()=>{}
+      },{
+        label: "    Push Notifications", 
+        value: push ? "Yes" : "No",
+        function: ()=>{}
+      },{
+        label: "What should we notify you about?", 
+      },{
+        label: "    Trending Posts", 
+        value: push ? "Yes" : "No",
+        function: ()=>{}
+      },{
+        label: "    Push Notifications", 
+        value: push ? "Yes" : "No",
         function: ()=>{}
       }
     ]
@@ -83,12 +113,20 @@ const styles = StyleSheet.create({
   },
   listButton: {
     height: 50,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     width: Dimensions.get('window').width,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   buttonText: {
     fontFamily: 'Avenir',
     fontSize: 18,
     marginLeft: 20
+  },
+  buttonValue: {
+    fontFamily: 'Avenir',
+    fontSize: 18,
+    marginRight: 20,
+    color: '#777'
   }
 });

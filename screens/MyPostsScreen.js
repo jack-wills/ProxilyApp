@@ -37,16 +37,18 @@ class MyPostsScreen extends React.Component {
     .then((response) => response.json())
     .then(async (responseJson) => {
       if (!responseJson.hasOwnProperty('error')) {
-          this.setState({feedData: responseJson});
-        await AsyncStorage.setItem('feedData', JSON.stringify(this.state.feedData));
+        this.setState({feedData: responseJson});
+        await AsyncStorage.setItem('myPosts', JSON.stringify(this.state.feedData));
       } else {
-          this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+        let feedData = JSON.parse(await AsyncStorage.getItem('myPosts'));
+        this.setState({feedData: feedData == null ? [] : feedData});
         this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
       }
       callback(responseJson);
     })
     .catch(async (error) => {
-        this.setState({feedData: JSON.parse(await AsyncStorage.getItem('feedData'))});
+      let feedData = JSON.parse(await AsyncStorage.getItem('myPosts'));
+      this.setState({feedData: feedData == null ? [] : feedData});
       this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
     });
@@ -72,17 +74,19 @@ class MyPostsScreen extends React.Component {
   renderFeed() {
     if (!this.state.feedData.length) {
       if (this.state.noData) {
+        let callback = this.callback;
         return (
           <View style={[styles.container, {justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
+            <Text style={{width: Dimensions.get('window').width*0.7, marginBottom: 20, fontFamily: 'Avenir', fontSize: 20, textAlign: 'center'}}>You haven't got any posts at the minute</Text>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
               this.setState({noData: false});
-              this._getFeedData(false, this.callback);
+              this._getFeedData(callback);
             }}>
               <Text style={{marginBottom: 10, fontFamily: 'Avenir', fontSize: 17}}>Tap to reload</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
-              this._getFeedData(false, this.callback);
-              this._getFeedData(false, this.callback);
+              this.setState({noData: false});
+              this._getFeedData(callback);
             }}>
               <Icon name={"reload1"} size={40} color="grey"/>
             </TouchableOpacity>
@@ -148,6 +152,26 @@ class MyPostsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         {this.renderFeed()}
+        <Modal
+          isVisible={this.state.error != "" && this.props.navigation.isFocused()}
+          onBackdropPress={() => this.setState({ error: "" })}>
+          <View style={{alignSelf: 'center',
+              justifySelf: 'center',
+              width: Dimensions.get('window').width*0.6,
+              backgroundColor: '#f2f2f2',
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: 'lightgrey',
+              shadowRadius: 4,
+              shadowColor: 'grey',
+              shadowOffset: {height: 2, width: 0},
+              shadowOpacity: 0.25,
+              overflow: 'hidden',
+              padding: 15,
+          }}>
+          <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+          </View>
+        </Modal>
     </SafeAreaView>
     );
   }

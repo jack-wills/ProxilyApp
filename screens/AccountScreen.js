@@ -31,10 +31,27 @@ class AccountScreen extends React.Component {
         label: "Change Profile Picture", 
         function: ()=>{}
       },{
-        label: "Test2", 
+        label: "Change Name", 
+        function: ()=>{}
+      },{
+        label: "Change Password", 
         function: ()=>{}
       }
     ]
+    let list;
+    if (this.props.isFacebook) {
+      list = (
+        <Text style={styles.buttonText}>You cannot edit your account if signed in with Facebook</Text>
+      )
+    } else {
+      list = (
+        <FlatList 
+            data={data}
+            renderItem={this._renderItem}
+            showsHorizontalScrollIndicator={false}
+        />
+      )
+    }
     return (
       <SafeAreaView style={{backgroundColor: '#02b875', flex: 1}}>
         <View style={{flexDirection:'row', 
@@ -66,11 +83,7 @@ class AccountScreen extends React.Component {
           </View>
           <View style={styles.lineBreak}/>
           <View style={styles.feed}> 
-          <FlatList 
-              data={data}
-              renderItem={this._renderItem}
-              showsHorizontalScrollIndicator={false}
-          />
+            {list}
           </View>
         </View>
     </SafeAreaView>
@@ -122,6 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black', 
     height: 1,
     width: Dimensions.get('window').width*0.85,
+    marginBottom: 10
   },
   feed: {
     flex: 1,

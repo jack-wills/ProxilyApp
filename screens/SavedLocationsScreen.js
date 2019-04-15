@@ -134,6 +134,8 @@ class SavedLocationsScreen extends React.Component {
     .then((response) => response.json())
     .then(async (responseJson) => {
       if (responseJson.hasOwnProperty('error')) {
+        let feedData = JSON.parse(await AsyncStorage.getItem('savedLocations'));
+        this.setState({feedData: feedData == null ? [] : feedData});
         this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
         console.log(responseJson.error)
       } else {
@@ -142,7 +144,9 @@ class SavedLocationsScreen extends React.Component {
         await AsyncStorage.setItem('savedLocations', JSON.stringify(this.state.data));
       }
     })
-    .catch((error) => {
+    .catch(async (error) => {
+      let feedData = JSON.parse(await AsyncStorage.getItem('savedLocations'));
+      this.setState({feedData: feedData == null ? [] : feedData});
       this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
     });
