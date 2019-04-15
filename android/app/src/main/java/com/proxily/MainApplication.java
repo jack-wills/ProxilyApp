@@ -3,6 +3,7 @@ package com.proxily;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.marianhello.bgloc.react.BackgroundGeolocationPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import suraj.tiwari.reactnativefbads.FBAdsPackage;
 import com.arthenica.reactnative.RNFFmpegPackage;
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BackgroundGeolocationPackage(),
             new RNFetchBlobPackage(),
             new FBAdsPackage(),
             new RNFFmpegPackage(),

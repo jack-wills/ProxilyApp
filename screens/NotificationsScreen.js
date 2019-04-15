@@ -11,8 +11,33 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
-export default class SettingsScreen extends React.Component {
+import {updateSettings} from '../actions/UpdateSettings';
+
+class NotificationsScreen extends React.Component {
+  state = {
+    modal: null
+  }
+
+  _renderEnableDisableModal = (settingsName) => {
+    return (
+      <View>
+      <TouchableOpacity onPress={() => {this._updateSettings(settingsName, true); this.setState({modal: null})}}>
+        <View style={styles.optionsRow}>
+          <Text>Enable</Text>
+        </View>
+      </TouchableOpacity>
+      <View style={{borderTopWidth: 1, borderColor: 'lightgrey'}}/>
+      <TouchableOpacity onPress={() => {this._updateSettings(settingsName, false); this.setState({modal: null})}}>
+        <View style={styles.optionsRow}>
+          <Text>Disable</Text>
+        </View>
+      </TouchableOpacity>
+      </View>
+    )
+  }
   _renderItem = ({item}) => {
     if (item.hasOwnProperty('function')) {
       return (
@@ -32,6 +57,12 @@ export default class SettingsScreen extends React.Component {
       )
     }
   };
+
+  _updateSettings = (settingsName, value) => {
+    this.props.dispatch( (dispatch) => {
+      dispatch(updateSettings({...this.props.settings, [settingsName]: value}))
+    })
+  }
   render() {
     let push = true;
     let data = [
@@ -39,26 +70,50 @@ export default class SettingsScreen extends React.Component {
         label: "How should we notify you?", 
       },{
         label: "    Email", 
-        value: "Jackw53519@gmail.com",
-        function: ()=>{}
+        value: this.props.settings.shouldNotifyByEmail ? this.props.email : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyByEmail")})
+        },
       },{
         label: "    SMS", 
-        value: "07838137764",
-        function: ()=>{}
+        value: this.props.settings.shouldNotifyBySMS ? "07838137764" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyBySMS")})
+        },
       },{
         label: "    Push Notifications", 
-        value: push ? "Yes" : "No",
-        function: ()=>{}
+        value: this.props.settings.shouldNotifyByPush ? "Yes" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyByPush")})
+        },
       },{
         label: "What should we notify you about?", 
       },{
         label: "    Trending Posts", 
-        value: push ? "Yes" : "No",
-        function: ()=>{}
+        value: this.props.settings.shouldNotifyAboutTrending ? "Yes" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyAboutTrending")})
+        },
       },{
-        label: "    Push Notifications", 
-        value: push ? "Yes" : "No",
-        function: ()=>{}
+        label: "Where should we send you notifications about?", 
+      },{
+        label: "    Last Known Location", 
+        value: this.props.settings.shouldNotifyForLastLocation ? "Yes" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyForLastLocation")})
+        },
+      },{
+        label: "    Live Location", 
+        value: this.props.settings.shouldNotifyForLiveLocation ? "Yes" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyForLiveLocation")})
+        },
+      },{
+        label: "    Saved Locations", 
+        value: this.props.settings.shouldNotifyForSavedLocations ? "Yes" : "No",
+        function: () => {
+          this.setState({modal: this._renderEnableDisableModal("shouldNotifyForSavedLocations")})
+        },
       }
     ]
     return (
@@ -90,6 +145,25 @@ export default class SettingsScreen extends React.Component {
               showsHorizontalScrollIndicator={false}
           />
         </View>
+        <Modal
+            isVisible={this.state.modal != null}
+            onBackdropPress={() => this.setState({ modal: null })}>
+            <View style={{alignSelf: 'center',
+                justifySelf: 'center',
+                backgroundColor: '#f2f2f2',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: 'lightgrey',
+                shadowRadius: 4,
+                shadowColor: 'grey',
+                shadowOffset: {height: 2, width: 0},
+                shadowOpacity: 0.25,
+                overflow: 'hidden',
+                padding: 15,
+            }}>
+              {this.state.modal}
+            </View>
+        </Modal>
     </SafeAreaView>
     );
   }
@@ -128,5 +202,33 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 20,
     color: '#777'
-  }
+  },
+  optionsBox: {
+    alignSelf: 'center',
+    width: Dimensions.get('window').width*0.6,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    shadowRadius: 4,
+    shadowColor: 'grey',
+    shadowOffset: {height: 2, width: 0},
+    shadowOpacity: 0.25,
+    overflow: 'hidden'
+  },
+  optionsRow: {
+    height: 50,
+    width: Dimensions.get('window').width*0.5,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });
+
+
+const mapStateToProps = (state) => {
+  const {settings, userToken, name, profilePicture, email} = state.main;
+  return {settings, userToken, name, profilePicture, email};
+}
+
+export default connect(mapStateToProps)(NotificationsScreen);

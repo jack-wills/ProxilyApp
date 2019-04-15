@@ -39,7 +39,7 @@ class AccountScreen extends React.Component {
       }
     ]
     let list;
-    if (this.props.isFacebook) {
+    if (this.props.userToken.startsWith("facebook")) {
       list = (
         <Text style={styles.buttonText}>You cannot edit your account if signed in with Facebook</Text>
       )
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const {userToken, name, profilePicture, isFacebook} = state.main;
-  return {userToken, name, profilePicture, isFacebook};
+  const {userToken, name, profilePicture} = state.main;
+  return {userToken, name, profilePicture};
 }
 
 export default connect(mapStateToProps)(AccountScreen);

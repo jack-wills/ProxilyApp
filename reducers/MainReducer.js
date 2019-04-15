@@ -3,11 +3,13 @@ import {
     FETCH_USER_TOKEN,
     UPDATE_VIDEO_TIME,
     UPDATE_VIDEO_PLAYING,
+    UPDATE_SETTINGS
 } from '../Constants'
 
 const INITAL_STATE = {
     userToken: '',
-    video: {}
+    settings: {},
+    currentVideoPlaying: "",
 };
 
 const mainReducer = (state = INITAL_STATE, action) => {
@@ -19,10 +21,8 @@ const mainReducer = (state = INITAL_STATE, action) => {
                 name: action.payload.name,
                 email: action.payload.email,
                 profilePicture: action.payload.picture,
-                isFacebook: action.payload.isFacebook,
             };
         case UPDATE_VIDEO_TIME:
-            state.video
             return {
                 ...state,
                 video: {
@@ -30,10 +30,14 @@ const mainReducer = (state = INITAL_STATE, action) => {
                 }
             };
         case UPDATE_VIDEO_PLAYING:
-            state.video
             return {
                 ...state,
                 currentVideoPlaying: action.payload.videoURL
+            };
+        case UPDATE_SETTINGS:
+            return {
+                ...state,
+                settings: action.payload.settings,
             };
         default:
             return state;

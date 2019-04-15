@@ -181,9 +181,12 @@ class CameraVideoScreen extends React.Component {
   record = async () => {
     try {
       this.setState({ recording: true });
-      //const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
-      //const data = await this.camera.recordAsync(options);
-      const data = {uri: 'file:///Users/Jack/Library/Developer/CoreSimulator/Devices/CEFAE35B-B415-4168-87D4-3BC5B71B236E/data/Containers/Data/Application/D4CB25BC-BA8A-47AF-BF02-5C7E2E72DA4A/Documents/proxily/tmp/s.mp4'}
+      if (__DEV__) {
+        const data = {uri: 'file:///Users/Jack/Library/Developer/CoreSimulator/Devices/CEFAE35B-B415-4168-87D4-3BC5B71B236E/data/Containers/Data/Application/D4CB25BC-BA8A-47AF-BF02-5C7E2E72DA4A/Documents/proxily/tmp/s.mp4'}
+      } else {
+        const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
+        const data = await this.camera.recordAsync(options);
+      }
       this.setState({ recording: false, processing: true });
       const height = 720;
       const width = 1280;

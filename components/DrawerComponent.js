@@ -43,7 +43,7 @@ class DrawerComponent extends React.Component {
   }
     async signOut(navigation) {
         try {
-          if (this.props.isFacebook) {
+          if (this.props.userToken.startsWith("facebook")) {
             await this.facebookLogout();
           }
           await AsyncStorage.removeItem('userToken');
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-  const {userToken, name, profilePicture, isFacebook} = state.main;
-  return {userToken, name, profilePicture, isFacebook};
+  const {userToken, name, profilePicture} = state.main;
+  return {userToken, name, profilePicture};
 }
 
 export default connect(mapStateToProps)(DrawerComponent);

@@ -24,7 +24,7 @@ import Modal from 'react-native-modal';
 import { LoginManager } from 'react-native-fbsdk'
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
-import {FRONT_SERVICE_URL} from '../Constants';
+import {FRONT_SERVICE_URL, DEBUG_MODE} from '../Constants';
 
 class SignInScreen extends React.Component {
     state = {
@@ -173,8 +173,8 @@ class SignInScreen extends React.Component {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email: "jackw53519@gmail.co.uk",
-            password: "test123",
+            email: DEBUG_MODE ? "jackw53519@gmail.co.uk" : this.state.email,
+            password: DEBUG_MODE ? "test123" : this.state.password,
           }),
         })
         let responseJson = await response.json();
