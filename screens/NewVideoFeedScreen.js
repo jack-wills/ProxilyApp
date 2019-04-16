@@ -105,9 +105,19 @@ class NewVideoFeedScreen extends React.Component {
 
   componentDidMount() {
     this._getFeedData(false, this.callback);
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
   }
 
   render() {
+    console.log(this.props.navigation)
+    console.log(this.props.navigation.isFocused())
     if ((this.props.navigation.state.params && 
         this.props.navigation.state.params.hasOwnProperty('refresh') && 
         this.props.navigation.state.params.refresh) || 
@@ -138,7 +148,7 @@ class NewVideoFeedScreen extends React.Component {
           <View style={[styles.container, {height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
           <ActivityIndicator size="large" style={{marginTop: 20}}/>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

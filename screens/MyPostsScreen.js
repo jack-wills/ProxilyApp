@@ -22,7 +22,7 @@ class MyPostsScreen extends React.Component {
   state = {
     feedData: [],
     error: "",
-    noData: false
+    noData: false,
   }
 
   _getFeedData = async (callback = () => {}) =>  {
@@ -69,6 +69,14 @@ class MyPostsScreen extends React.Component {
   
   componentDidMount() {
     this._getFeedData(this.callback);
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
   }
   
   renderFeed() {
@@ -96,26 +104,6 @@ class MyPostsScreen extends React.Component {
       return (
           <View style={[styles.container, {justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
           <ActivityIndicator size="large" style={{marginTop: 20}}/>
-          <Modal
-              isVisible={this.state.error != ""}
-              onBackdropPress={() => this.setState({ error: "" })}>
-              <View style={{alignSelf: 'center',
-                  justifySelf: 'center',
-                  width: Dimensions.get('window').width*0.6,
-                  backgroundColor: '#f2f2f2',
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: 'lightgrey',
-                  shadowRadius: 4,
-                  shadowColor: 'grey',
-                  shadowOffset: {height: 2, width: 0},
-                  shadowOpacity: 0.25,
-                  overflow: 'hidden',
-                  padding: 15,
-              }}>
-              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
-              </View>
-          </Modal>
           </View>
       );
     } else {
@@ -153,7 +141,7 @@ class MyPostsScreen extends React.Component {
         </View>
         {this.renderFeed()}
         <Modal
-          isVisible={this.state.error != "" && this.props.navigation.isFocused()}
+          isVisible={this.state.error != "" && this.state.focused && this.state.focused}
           onBackdropPress={() => this.setState({ error: "" })}>
           <View style={{alignSelf: 'center',
               justifySelf: 'center',

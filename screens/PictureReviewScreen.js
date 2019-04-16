@@ -102,6 +102,10 @@ class PictureReviewScreen extends React.Component {
   }
 
   async componentDidMount() {
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
     this.getMoreStickers()
     FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
     const timestamp = new Date().getTime();
@@ -133,6 +137,10 @@ class PictureReviewScreen extends React.Component {
     }, (error) =>{
       console.log('Get base64 from imagestore,',error);
     })
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
   }
 
   submitButtonWidth = new Animated.Value(1);
@@ -574,7 +582,7 @@ class PictureReviewScreen extends React.Component {
           </Animated.View>
         </View>
         <Modal
-            isVisible={this.state.error != ""}
+            isVisible={this.state.error != "" && this.state.focused}
             onBackdropPress={() => this.setState({ error: "" })}>
             <View style={{alignSelf: 'center',
                 width: Dimensions.get('window').width*0.6,

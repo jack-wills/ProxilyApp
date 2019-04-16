@@ -25,6 +25,17 @@ class ExpandedFeedItemScreen extends React.Component {
     this.setState({videoPlaying: !this.state.videoPlaying});
   }
 
+  componentDidMount() {
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
+  }
+  
   _getComments = async (postID) => {
     this.setState({commentsLoading: true});
     await fetch(FRONT_SERVICE_URL + '/service/getComments', {
@@ -77,7 +88,7 @@ class ExpandedFeedItemScreen extends React.Component {
             navigation={this.props.navigation}
           />
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

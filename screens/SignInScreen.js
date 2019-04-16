@@ -33,6 +33,17 @@ class SignInScreen extends React.Component {
         error: "",
     }
 
+    componentDidMount() {
+      this.subs = [
+        this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+        this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+      ]; 
+    }
+  
+    componentWillUnmount() {
+      this.subs.forEach(sub => sub.remove());
+    }
+
     facebookLoginAPI(callback) {
         LoginManager.logInWithReadPermissions(['public_profile', 'user_friends', 'email'])
         .then((FBloginResult) => {
@@ -139,7 +150,7 @@ class SignInScreen extends React.Component {
             </View>
         </KeyboardAvoidingView>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

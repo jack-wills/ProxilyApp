@@ -24,6 +24,17 @@ class SubmitTextScreen extends React.Component {
         error: "",
     }
 
+    componentDidMount() {
+      this.subs = [
+        this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+        this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+      ]; 
+    }
+  
+    componentWillUnmount() {
+      this.subs.forEach(sub => sub.remove());
+    }
+    
     _submit = () => {
       if (__DEV__) {
         this._submitText("51.923187", "-0.226379");
@@ -98,7 +109,7 @@ class SubmitTextScreen extends React.Component {
             </TouchableOpacity>
           </KeyboardAvoidingView>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

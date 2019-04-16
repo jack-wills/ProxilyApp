@@ -73,7 +73,15 @@ class SavedLocationsScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
     this._getSavedLocations();
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
   }
 
   _addSavedLocation = async (latitude, longitude, name) => {
@@ -204,7 +212,7 @@ class SavedLocationsScreen extends React.Component {
         {feed}
         </View>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

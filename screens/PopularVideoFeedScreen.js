@@ -139,7 +139,7 @@ class PopularVideoFeedScreen extends React.Component {
           <View style={[styles.container, {justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width}]}>
           <ActivityIndicator size="large" style={{marginTop: 20}}/>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',

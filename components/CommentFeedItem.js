@@ -41,6 +41,18 @@ _onPressDownvote = async () => {
     }
   };
 
+  componentDidMount() {
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
+  }
+
+  componentWillUnmount() {
+    this.subs.forEach(sub => sub.remove());
+  }
+  
+
   async registerUserVote(vote) {
     await fetch(FRONT_SERVICE_URL + '/service/voteComment', {
       method: 'POST',
@@ -116,7 +128,7 @@ _onPressDownvote = async () => {
             </View>
           </View>
           <Modal
-              isVisible={this.state.error != ""}
+              isVisible={this.state.error != "" && this.state.focused}
               onBackdropPress={() => this.setState({ error: "" })}>
               <View style={{alignSelf: 'center',
                   justifySelf: 'center',
