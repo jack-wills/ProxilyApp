@@ -61,7 +61,7 @@ class SubmitTextScreen extends React.Component {
           this.setState({error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
           console.log(responseJson.error)
         } else if (responseJson.hasOwnProperty("success") && responseJson.success) {
-          this.props.navigation.navigate('New');
+          this.props.navigation.navigate('New', {refresh:true});
         }
       })
       .catch((error) => {

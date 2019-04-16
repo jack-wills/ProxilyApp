@@ -25,6 +25,7 @@ class NewVideoFeedScreen extends React.Component {
 
   _fetchFeedData = async (continuous, callback, lat, long) =>  {
     let postsFrom = continuous ? this.state.feedData.length : 0;
+    this.setState({lastRefreshed: new Date().getTime()})
     await fetch(FRONT_SERVICE_URL + '/service/getLatestFeedItems', {
       method: 'POST',
       headers: {
@@ -43,7 +44,13 @@ class NewVideoFeedScreen extends React.Component {
     .then(async (responseJson) => {
       if (!responseJson.hasOwnProperty('error')) {
         if (continuous) {
-          this.setState({feedData: this.state.feedData.concat(responseJson)});
+          let newItems = [];
+          for (var newItem in responseJson) {
+            if (this.state.feedData.filter(item => item.postId == newItem.postId).length = 0) {
+              newItems.append(newItem);
+            }
+          }
+          this.setState({feedData: this.state.feedData.concat(newItems)});
         } else {
           this.setState({feedData: responseJson});
         }
@@ -69,10 +76,10 @@ class NewVideoFeedScreen extends React.Component {
 
   _getFeedData = async (continuous = false, callback = () => {}) =>  {
     if (__DEV__) {
-      this._fetchFeedData(continuous, callback, "51.923187", "-0.226379");
+      await this._fetchFeedData(continuous, callback, "51.923187", "-0.226379");
     } else {
       Geolocation.getCurrentPosition( async (position) => {
-          this._fetchFeedData(continuous, callback, position.coords.latitude, position.coords.longitude);
+          await this._fetchFeedData(continuous, callback, position.coords.latitude, position.coords.longitude);
         },
         (error) => {
             // See error code charts below.
@@ -101,6 +108,12 @@ class NewVideoFeedScreen extends React.Component {
   }
 
   render() {
+    if ((this.props.navigation.state.params && 
+        this.props.navigation.state.params.hasOwnProperty('refresh') && 
+        this.props.navigation.state.params.refresh) || 
+        (this.state.lastRefreshed != 0 && this.state.lastRefreshed < (new Date().getTime()) - 7200000)) {
+      this._getFeedData(false, this.callback);
+    }
     if (!this.state.feedData.length) {
       if (this.state.noData) {
         let callback = this.callback;

@@ -319,7 +319,7 @@ class PictureReviewScreen extends React.Component {
             ],
           });
           navigation.dispatch(resetAction);
-          navigation.navigate('Feed');
+          navigation.navigate('New', {refresh:true});
         } else {
           this.toggleSubmitButton();
           this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
@@ -673,8 +673,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height*0.85,
     backgroundColor: '#f2f2f2',
     borderRadius: 20,
-    //borderWidth: 1,
-    //borderColor: 'lightgrey',
     shadowRadius: 4,
     shadowColor: 'grey',
     shadowOffset: {height: 2, width: 0},

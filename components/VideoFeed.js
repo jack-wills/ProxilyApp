@@ -28,7 +28,7 @@ export default class VideoFeed extends React.Component {
     this.onEndReachedCalledDuringMomentum = true;
   }
 
-  _keyExtractor =  (item, index) => index.toString();
+  _keyExtractor =  (item, index) => item.postId;
 
   _onPressItem = (id: string) => {
       // updater functions are preferred for transactional updates
@@ -68,13 +68,13 @@ export default class VideoFeed extends React.Component {
 
   _loadDataCallback = (responseJson) => {
     if (responseJson.hasOwnProperty('error')) {
-      if (responseJson.error === "OBJECT_NOT_FOUND") {
+      console.log("Couldn't get feed data because: " + responseJson.error);
+    } else {
+      if (responseJson.length == 0) {
         this.setState({outOfData: true});
       } else {
-        console.log("Couldn't get feed data because: " + responseJson.error);
+        this.setState({outOfData: false});
       }
-    } else {
-      this.setState({outOfData: false});
     }
   }
 

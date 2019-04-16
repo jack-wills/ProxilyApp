@@ -155,7 +155,7 @@ class FeedScreen extends React.Component {
         </View>
           
       </View>
-      <ExpandedStackNavigator navigation={this.props.navigation} screenProps={{ latitude: "51.923187", longitude: "-0.226379"}}/>
+      <ExpandedStackNavigator navigation={this.props.navigation}/>
     </SafeAreaView>
     );
   }

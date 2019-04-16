@@ -338,7 +338,7 @@ class VideoReviewScreen extends React.Component {
             ],
           });
           navigation.dispatch(resetAction);
-          navigation.navigate('Feed');
+          navigation.navigate('New', {refresh:true});
         } else {
           this.toggleSubmitButton();
           this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
