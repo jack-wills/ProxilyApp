@@ -6,6 +6,7 @@ import {
   Dimensions,
   Keyboard,
   TouchableOpacity,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -177,9 +178,13 @@ class VideoReviewScreen extends React.Component {
 
 
   androidResourcePath = async (resourceName) => {
-    var destinationPath = RNFS.CachesDirectoryPath + '/' + resourceName;
+    var destinationPath = FileSystem.CachesDirectoryPath + '/' + resourceName;
 
-    await RNFS.copyFileAssets(resourceName, destinationPath).catch((err) => {
+    if (await FileSystem.exists(destinationPath)) {
+      return destinationPath;
+    }
+
+    await FileSystem.copyFileAssets(resourceName, destinationPath).catch((err) => {
         console.log('Failed to copy android resource: ' + resourceName + ', err message: ' + err.message + ', err code: ' + err.code);
         return undefined;
     });
@@ -188,14 +193,14 @@ class VideoReviewScreen extends React.Component {
   }
 
   iosResourcePath = (resourceName) => {
-    return RNFS.MainBundlePath + '/' + resourceName;
+    return FileSystem.MainBundlePath + '/' + resourceName;
   }
 
-  resourcePath = (resourceName) => {
+  resourcePath = async (resourceName) => {
     if (Platform.OS === 'ios') {
-        return iosResourcePath(resourceName);
+        return await this.iosResourcePath(resourceName);
     } else {
-        return androidResourcePath(resourceName);
+        return await this.androidResourcePath(resourceName);
     }
   }
 
@@ -208,7 +213,7 @@ class VideoReviewScreen extends React.Component {
     }
     let inputs = [];
     let filter = [];
-    const fontFile = await this.resourcePath("fonts/Avenir-Medium.ttf");
+    const fontFile = await this.resourcePath("Avenir-Medium.ttf");
     let originalHeight = this.props.navigation.state.params.videoWidth*8/7;
     let originalWidth = this.props.navigation.state.params.videoWidth;
     let scaleToOriginal = originalWidth/Dimensions.get('window').width;
