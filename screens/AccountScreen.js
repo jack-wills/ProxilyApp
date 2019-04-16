@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CameraRoll,
   Dimensions,
   FlatList,
   StyleSheet,
@@ -29,7 +30,10 @@ class AccountScreen extends React.Component {
     let data = [
       {
         label: "Change Profile Picture", 
-        function: ()=>{}
+        function: async () => {
+          let photos = await CameraRoll.getPhotos({});
+          console.log(photos)
+        }
       },{
         label: "Change Name", 
         function: ()=>{}

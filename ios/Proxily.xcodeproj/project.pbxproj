@@ -35,6 +35,7 @@
 		0452F37622660F5B00EED7B1 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0452F36722660F5800EED7B1 /* MaterialCommunityIcons.ttf */; };
 		0452F37722660F5B00EED7B1 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0452F36822660F5900EED7B1 /* Octicons.ttf */; };
 		0452F37822660F5B00EED7B1 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0452F36922660F5A00EED7B1 /* Foundation.ttf */; };
+		0452F37A2266551B00EED7B1 /* ProxilyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0452F3792266551800EED7B1 /* ProxilyIcon.png */; };
 		047E2B6B223996F500CF5271 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; };
 		047E2B6C223996F500CF5271 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04BCE6C22235A54D001BBA7E /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04895357223A76A400A7ED87 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04895356223A76A400A7ED87 /* CoreMedia.framework */; };
@@ -560,6 +561,7 @@
 		0452F36722660F5800EED7B1 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		0452F36822660F5900EED7B1 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		0452F36922660F5A00EED7B1 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		0452F3792266551800EED7B1 /* ProxilyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProxilyIcon.png; sourceTree = "<group>"; };
 		04895356223A76A400A7ED87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		04895358223A76AA00A7ED87 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		0489535A223A76B400A7ED87 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -16758,6 +16760,7 @@
 		0452F35622660F0E00EED7B1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0452F3792266551800EED7B1 /* ProxilyIcon.png */,
 				0452F35722660F0F00EED7B1 /* blank.png */,
 				0452F35822660F0F00EED7B1 /* Avenir-Medium.ttf */,
 			);
@@ -51037,6 +51040,7 @@
 				0452F37122660F5B00EED7B1 /* FontAwesome5_Brands.ttf in Resources */,
 				0452F37222660F5B00EED7B1 /* AntDesign.ttf in Resources */,
 				0452F37322660F5B00EED7B1 /* Feather.ttf in Resources */,
+				0452F37A2266551B00EED7B1 /* ProxilyIcon.png in Resources */,
 				0452F37422660F5B00EED7B1 /* Entypo.ttf in Resources */,
 				0452F37522660F5B00EED7B1 /* FontAwesome.ttf in Resources */,
 				0452F37622660F5B00EED7B1 /* MaterialCommunityIcons.ttf in Resources */,
@@ -51278,7 +51282,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C78AFA81D784761A17B8B0A /* Pods-Proxily.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -51324,7 +51328,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F310523F74F7208D131F9E2B /* Pods-Proxily.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8DJHU2P769;
