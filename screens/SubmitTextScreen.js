@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
+import Geolocation from 'react-native-geolocation-service';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 
@@ -23,7 +24,23 @@ class SubmitTextScreen extends React.Component {
         error: "",
     }
 
-    _submitText = () => {
+    _submit = () => {
+      if (__DEV__) {
+        this._submitText("51.923187", "-0.226379");
+      } else {
+        Geolocation.getCurrentPosition( async (position) => {
+            this._submitText(position.coords.latitude, position.coords.longitude);
+          },
+          (error) => {
+              // See error code charts below.
+              console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+      }
+    }
+
+    _submitText = (lat, long) => {
       fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
         method: 'POST',
         headers: {
@@ -32,8 +49,8 @@ class SubmitTextScreen extends React.Component {
           Authorization: 'Bearer ' + this.props.userToken,
         },
         body: JSON.stringify({
-          latitude: "51.923187",
-          longitude: "-0.226379",
+          latitude: lat,
+          longitude: long,
           mediaType: "text",
           media: this.state.text,
         }),
@@ -76,7 +93,7 @@ class SubmitTextScreen extends React.Component {
           </View>
           <KeyboardAvoidingView style={styles.container}>
             <TextInput multiline={true} placeholder="Enter Text.." placeholderTextColor="grey" style={styles.formInput} onChangeText={(text) => this.setState({text: text})}/>
-            <TouchableOpacity style={styles.submitButton} onPress={this._submitText}>
+            <TouchableOpacity style={styles.submitButton} onPress={this._submit}>
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>

@@ -91,17 +91,6 @@ class AccountScreen extends React.Component {
   }
 }
 
-/*
-
-      await AsyncStorage.setItem('userToken', responseJson.jwt);
-      await AsyncStorage.setItem('userName', responseJson.name);
-      await AsyncStorage.setItem('email', responseJson.email);
-      await AsyncStorage.setItem('profilePicture', "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg");
-      dispatch(fetchUserToken(responseJson.jwt, responseJson.name, responseJson.email, "file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg", false));
-      
-  */
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

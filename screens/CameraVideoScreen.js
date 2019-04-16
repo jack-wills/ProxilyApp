@@ -181,11 +181,12 @@ class CameraVideoScreen extends React.Component {
   record = async () => {
     try {
       this.setState({ recording: true });
+      let data;
       if (__DEV__) {
-        const data = {uri: 'file:///Users/Jack/Library/Developer/CoreSimulator/Devices/CEFAE35B-B415-4168-87D4-3BC5B71B236E/data/Containers/Data/Application/D4CB25BC-BA8A-47AF-BF02-5C7E2E72DA4A/Documents/proxily/tmp/s.mp4'}
+        data = {uri: 'file:///Users/Jack/Desktop/videoApp/assets/s.mp4'}
       } else {
         const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};
-        const data = await this.camera.recordAsync(options);
+        data = await this.camera.recordAsync(options);
       }
       this.setState({ recording: false, processing: true });
       const height = 720;
@@ -203,7 +204,7 @@ class CameraVideoScreen extends React.Component {
       FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
       const timestamp = new Date().getTime();
       const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/video_" + timestamp + ".mp4";
-      await RNFFmpeg.executeWithArguments(["-i", 'file:///Users/Jack/Desktop/videoApp/assets/s.mp4', "-b:v", "2M", "-filter:v", "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
+      await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
       .then((result) => {
         console.log('Path to video: ' + data);
         this.setState({ processing: false });

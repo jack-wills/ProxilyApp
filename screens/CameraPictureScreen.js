@@ -153,10 +153,11 @@ class CameraPictureScreen extends React.Component {
       fixOrientation: true,
     };
     try {
+      let data;
       if (__DEV__) {
-        const data = {uri:'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg', height: 2592, width: 4608}
+        data = {uri:'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg', height: 2592, width: 4608}
       } else {
-        const data = await this.camera.takePictureAsync(options);
+        data = await this.camera.takePictureAsync(options);
       }
       const actualImageWidth = data.height*Dimensions.get('window').width/Dimensions.get('window').height;
       const cropData = {
@@ -172,7 +173,7 @@ class CameraPictureScreen extends React.Component {
         });
       
     } catch (err) {
-      // console.log('err: ', err);
+      console.log('err: ', err);
     }
   };
   switchCamera = async () => {

@@ -23,7 +23,7 @@ class PopularVideoFeedScreen extends React.Component {
     noData: false
   }
 
-  _getFeedData = async (continuous = false, callback = () => {}) =>  {
+  _fetchFeedData = async (continuous, callback, lat, long) =>  {
     let postsFrom = continuous ? this.state.feedData.length : 0;
     await fetch(FRONT_SERVICE_URL + '/service/getPopularFeedItems', {
       method: 'POST',
@@ -33,10 +33,9 @@ class PopularVideoFeedScreen extends React.Component {
         Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
-        latitude: this.props.screenProps.latitude,
-        longitude: this.props.screenProps.longitude,
+        latitude: lat,
+        longitude: long,
         getPostsFrom: postsFrom,
-        jwt: this.props.userToken,
         getPostsTo: postsFrom+20
       }),
     })
@@ -66,6 +65,22 @@ class PopularVideoFeedScreen extends React.Component {
       this.setState({error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
     });
+  }
+
+  _getFeedData = async (continuous = false, callback = () => {}) =>  {
+    if (__DEV__) {
+      this._fetchFeedData(continuous, callback, "51.923187", "-0.226379");
+    } else {
+      Geolocation.getCurrentPosition( async (position) => {
+          this._fetchFeedData(continuous, callback, position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
   }
 
   callback = (responseJson) => {

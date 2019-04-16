@@ -21,6 +21,7 @@ import LottieView from 'lottie-react-native';
 import FileSystem from 'react-native-fs';
 import Modal from 'react-native-modal';
 import { RNFFmpeg } from 'react-native-ffmpeg';
+import Geolocation from 'react-native-geolocation-service';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 import Sticker from '../components/Sticker';
@@ -57,7 +58,7 @@ class PictureReviewScreen extends React.Component {
     mounted: true,
   }
 
-  getMoreStickers = () => {
+  fetchStickers = (lat, long) => {
     fetch(FRONT_SERVICE_URL + '/service/getStickers', {
       method: 'POST',
       headers: {
@@ -66,8 +67,8 @@ class PictureReviewScreen extends React.Component {
         Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
-        latitude: "51.923147",
-        longitude: "-0.226299",
+        latitude: lat,
+        longitude: long,
       }),
     })
     .then((response) => response.json())
@@ -83,6 +84,21 @@ class PictureReviewScreen extends React.Component {
     .catch((error) => {
       console.log(error);
     });
+  }
+  getMoreStickers = () => {
+    if (__DEV__) {
+      this.fetchStickers("51.923187", "-0.226379")
+    } else {
+      Geolocation.getCurrentPosition( (position) => {
+            this.fetchStickers(position.coords.latitude, position.coords.longitude)
+        },
+        (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
   }
 
   async componentDidMount() {
@@ -132,6 +148,30 @@ class PictureReviewScreen extends React.Component {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+
+  androidResourcePath = async (resourceName) => {
+    var destinationPath = RNFS.CachesDirectoryPath + '/' + resourceName;
+
+    await RNFS.copyFileAssets(resourceName, destinationPath).catch((err) => {
+        console.log('Failed to copy android resource: ' + resourceName + ', err message: ' + err.message + ', err code: ' + err.code);
+        return undefined;
+    });
+
+    return destinationPath;
+  }
+
+  iosResourcePath = (resourceName) => {
+    return RNFS.MainBundlePath + '/' + resourceName;
+  }
+
+  resourcePath = async (resourceName) => {
+    if (Platform.OS === 'ios') {
+        return await iosResourcePath(resourceName);
+    } else {
+        return await androidResourcePath(resourceName);
+    }
+  }
+
   processImage = async () => {
     const timestamp = new Date().getTime();
     let imageUri = FileSystem.DocumentDirectoryPath + "/proxily/tmp/output_" + timestamp + ".png";
@@ -141,7 +181,7 @@ class PictureReviewScreen extends React.Component {
     }
     let inputs = [];
     let filter = [];
-    const fontFile = "/Users/Jack/Desktop/Avenir-Medium.ttf";
+    const fontFile = await this.resourcePath("fonts/Avenir-Medium.ttf");
     let originalHeight = this.props.navigation.state.params.imageWidth*8/7;
     let originalWidth = this.props.navigation.state.params.imageWidth;
     let scaleToOriginal = originalWidth/Dimensions.get('window').width;
@@ -214,13 +254,84 @@ class PictureReviewScreen extends React.Component {
         }
       } 
     }
-    let ffmpegCommand = ["-i", this.state.currentImage, "-i", "/Users/Jack/Desktop/blank_true.png", ...inputs, "-filter_complex", filter.join(""), imageUri]
+    let ffmpegCommand = ["-i", this.state.currentImage, "-i", await this.resourcePath("blank.png"), ...inputs, "-filter_complex", filter.join(""), imageUri]
     console.log(ffmpegCommand.join(" "))
     while(!this.state.filtersFinished) {
       await this.sleep(100)
     }
     await RNFFmpeg.executeWithArguments(ffmpegCommand);
     return imageUri
+  }
+
+  uploadImage = async (imageUri, lat, long) => {
+    let uploadUri = ""
+    await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
+      },
+      body: JSON.stringify({
+        latitude: lat,
+        longitude: long,
+        mediaType: "image",
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        this.toggleSubmitButton();
+        this.setState({processing: false,  error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+        console.error(responseJson.error);
+      } else {
+        uploadUri = responseJson.uploadUrl;
+      }
+    })
+    .catch((error) => {
+      this.toggleSubmitButton();
+      this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
+    });
+    file = {uri: imageUri, type: "image/jpeg", name: "string"};
+    const xhr = new XMLHttpRequest();
+    xhr.upload.addEventListener('progress', (e) => {
+      // handle notifications about upload progress: e.loaded / e.total
+      console.log('progress');
+      console.log(e);
+      
+    }, false);
+    let navigation = this.props.navigation;
+    xhr.onreadystatechange = async () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log('successfully uploaded presignedurl');
+          console.log(xhr);
+          Animated.timing(this.state.submitProgress, {
+            toValue: 1,
+            duration: (1-this.state.submitProgress._value)*4000,
+          }).start();
+          await this.sleep(2800)
+          let resetAction = StackActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'CameraPicture' })
+            ],
+          });
+          navigation.dispatch(resetAction);
+          navigation.navigate('Feed');
+        } else {
+          this.toggleSubmitButton();
+          this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
+          console.log('failed to upload presignedurl');
+          console.log(xhr);
+        }
+      }
+    };
+    xhr.open('PUT', uploadUri);
+    // for text file: text/plain, for binary file: application/octet-stream
+    xhr.setRequestHeader('Content-Type', file.type);
+    xhr.send(file);
   }
 
   submitImage = async () => {
@@ -241,74 +352,19 @@ class PictureReviewScreen extends React.Component {
       ).start();
       await this.sleep(6000);
       let imageUri = await this.processImage();
-      let uploadUri = ""
-      await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.props.userToken,
-        },
-        body: JSON.stringify({
-          latitude: "51.923147",
-          longitude: "-0.226299",
-          mediaType: "image",
-        }),
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.hasOwnProperty('error')) {
-          this.toggleSubmitButton();
-          this.setState({processing: false,  error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
-          console.error(responseJson.error);
-        } else {
-          uploadUri = responseJson.uploadUrl;
-        }
-      })
-      .catch((error) => {
-        this.toggleSubmitButton();
-        this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
-        console.log(error);
-      });
-      file = {uri: imageUri, type: "image/jpeg", name: "string"};
-      const xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener('progress', (e) => {
-        // handle notifications about upload progress: e.loaded / e.total
-        console.log('progress');
-        console.log(e);
-        
-      }, false);
-      let navigation = this.props.navigation;
-      xhr.onreadystatechange = async () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log('successfully uploaded presignedurl');
-            console.log(xhr);
-            Animated.timing(this.state.submitProgress, {
-              toValue: 1,
-              duration: (1-this.state.submitProgress._value)*4000,
-            }).start();
-            await this.sleep(2800)
-            let resetAction = StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'CameraPicture' })
-              ],
-            });
-            navigation.dispatch(resetAction);
-            navigation.navigate('Feed');
-          } else {
-            this.toggleSubmitButton();
-            this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
-            console.log('failed to upload presignedurl');
-            console.log(xhr);
-          }
-        }
-      };
-      xhr.open('PUT', uploadUri);
-      // for text file: text/plain, for binary file: application/octet-stream
-      xhr.setRequestHeader('Content-Type', file.type);
-      xhr.send(file);
+      if (__DEV__) {
+        this.uploadImage(imageUri, "51.923187", "-0.226379");
+      } else {
+        Geolocation.getCurrentPosition( async (position) => {
+            this.uploadImage(imageUri, position.coords.latitude, position.coords.longitude);
+          },
+          (error) => {
+              // See error code charts below.
+              console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+      }
     } catch (error) {
       console.log(error)
       this.setState({processing: false});

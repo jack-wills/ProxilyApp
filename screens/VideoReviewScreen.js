@@ -20,6 +20,7 @@ import Video from 'react-native-video'
 import Modal from 'react-native-modal';
 import { RNFFmpeg } from 'react-native-ffmpeg';
 import FileSystem from 'react-native-fs';
+import Geolocation from 'react-native-geolocation-service';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 import Sticker from '../components/Sticker';
@@ -55,7 +56,8 @@ class VideoReviewScreen extends React.Component {
     savingVideo: false,
     submitProgress: new Animated.Value(0),
   }
-  getMoreStickers = () => {
+
+  fetchStickers = (lat, long) => {
     fetch(FRONT_SERVICE_URL + '/service/getStickers', {
       method: 'POST',
       headers: {
@@ -64,8 +66,8 @@ class VideoReviewScreen extends React.Component {
         Authorization: 'Bearer ' + this.props.userToken,
       },
       body: JSON.stringify({
-        latitude: "51.923147",
-        longitude: "-0.226299",
+        latitude: lat,
+        longitude: long,
       }),
     })
     .then((response) => response.json())
@@ -81,6 +83,21 @@ class VideoReviewScreen extends React.Component {
     .catch((error) => {
       console.log(error);
     });
+  }
+  getMoreStickers = () => {
+    if (__DEV__) {
+      this.fetchStickers("51.923187", "-0.226379")
+    } else {
+      Geolocation.getCurrentPosition( (position) => {
+            this.fetchStickers(position.coords.latitude, position.coords.longitude)
+        },
+        (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
   }
 
   applyFilter = async (filter_index) => {
@@ -150,6 +167,30 @@ class VideoReviewScreen extends React.Component {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+
+  androidResourcePath = async (resourceName) => {
+    var destinationPath = RNFS.CachesDirectoryPath + '/' + resourceName;
+
+    await RNFS.copyFileAssets(resourceName, destinationPath).catch((err) => {
+        console.log('Failed to copy android resource: ' + resourceName + ', err message: ' + err.message + ', err code: ' + err.code);
+        return undefined;
+    });
+
+    return destinationPath;
+  }
+
+  iosResourcePath = (resourceName) => {
+    return RNFS.MainBundlePath + '/' + resourceName;
+  }
+
+  resourcePath = (resourceName) => {
+    if (Platform.OS === 'ios') {
+        return iosResourcePath(resourceName);
+    } else {
+        return androidResourcePath(resourceName);
+    }
+  }
+
   processVideo = async () => {
     const timestamp = new Date().getTime();
     let videoUri = FileSystem.DocumentDirectoryPath + "/proxily/tmp/output_" + timestamp + ".mp4";
@@ -159,7 +200,7 @@ class VideoReviewScreen extends React.Component {
     }
     let inputs = [];
     let filter = [];
-    const fontFile = "/Users/Jack/Desktop/Avenir-Medium.ttf";
+    const fontFile = await this.resourcePath("fonts/Avenir-Medium.ttf");
     let originalHeight = this.props.navigation.state.params.videoWidth*8/7;
     let originalWidth = this.props.navigation.state.params.videoWidth;
     let scaleToOriginal = originalWidth/Dimensions.get('window').width;
@@ -232,13 +273,84 @@ class VideoReviewScreen extends React.Component {
         }
       } 
     }
-    let ffmpegCommand = ["-i", this.state.currentVideo, "-i", "/Users/Jack/Desktop/blank_true.png", ...inputs, "-b:v", "2M", "-filter_complex:v", filter.join(""), videoUri]
+    let ffmpegCommand = ["-i", this.state.currentVideo, "-i", await this.resourcePath("blank.png"), ...inputs, "-b:v", "2M", "-filter_complex:v", filter.join(""), videoUri]
     console.log(ffmpegCommand.join(" "))
     while(!this.state.filtersFinished && !this.state.filtersFinished) {
       await this.sleep(100)
     }
     await RNFFmpeg.executeWithArguments(ffmpegCommand);
     return videoUri
+  }
+
+  uploadVideo = async (videoUri, lat, long) => {
+    let uploadUri = ""
+    await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.userToken,
+      },
+      body: JSON.stringify({
+        latitude: lat,
+        longitude: long,
+        mediaType: "video",
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.hasOwnProperty('error')) {
+        this.toggleSubmitButton();
+        this.setState({processing: false, error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
+        console.error(responseJson.error);
+      } else {
+        uploadUri = responseJson.uploadUrl;
+      }
+    })
+    .catch((error) => {
+      this.toggleSubmitButton();
+      this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
+      console.log(error);
+    });
+    file = {uri: videoUri, type: "video/mp4", name: "string"};
+    const xhr = new XMLHttpRequest();
+    xhr.upload.addEventListener('progress', (e) => {
+      // handle notifications about upload progress: e.loaded / e.total
+      console.log('progress');
+      console.log(e);
+      
+    }, false);
+    let navigation = this.props.navigation;
+    xhr.onreadystatechange = async () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log('successfully uploaded presignedurl');
+          console.log(xhr);
+          Animated.timing(this.state.submitProgress, {
+            toValue: 1,
+            duration: (1-this.state.submitProgress._value)*4000,
+          }).start();
+          await this.sleep(2800)
+          let resetAction = StackActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'CameraVideo' })
+            ],
+          });
+          navigation.dispatch(resetAction);
+          navigation.navigate('Feed');
+        } else {
+          this.toggleSubmitButton();
+          this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
+          console.log('failed to upload presignedurl');
+          console.log(xhr);
+        }
+      }
+    };
+    xhr.open('PUT', uploadUri);
+    // for text file: text/plain, for binary file: application/octet-stream
+    xhr.setRequestHeader('Content-Type', file.type);
+    xhr.send(file);
   }
 
   submitVideo = async () => {
@@ -258,74 +370,19 @@ class VideoReviewScreen extends React.Component {
         ])
       ).start();
       let videoUri = await this.processVideo();
-      let uploadUri = ""
-      await fetch(FRONT_SERVICE_URL + '/service/uploadItem', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.props.userToken,
+      if (__DEV__) {
+        this.uploadVideo(videoUri, "51.923187", "-0.226379");
+      } else {
+        Geolocation.getCurrentPosition( async (position) => {
+            this.uploadVideo(videoUri, position.coords.latitude, position.coords.longitude);
           },
-          body: JSON.stringify({
-            latitude: "51.923147",
-            longitude: "-0.226299",
-            mediaType: "video",
-          }),
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.hasOwnProperty('error')) {
-            this.toggleSubmitButton();
-            this.setState({processing: false, error: "Oops, looks like something went wrong on our end. We'll look into it right away, sorry about that."});
-            console.error(responseJson.error);
-          } else {
-            uploadUri = responseJson.uploadUrl;
-          }
-        })
-        .catch((error) => {
-          this.toggleSubmitButton();
-          this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
-          console.log(error);
-        });
-        file = {uri: videoUri, type: "video/mp4", name: "string"};
-        const xhr = new XMLHttpRequest();
-        xhr.upload.addEventListener('progress', (e) => {
-          // handle notifications about upload progress: e.loaded / e.total
-          console.log('progress');
-          console.log(e);
-          
-        }, false);
-        let navigation = this.props.navigation;
-        xhr.onreadystatechange = async () => {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              console.log('successfully uploaded presignedurl');
-              console.log(xhr);
-              Animated.timing(this.state.submitProgress, {
-                toValue: 1,
-                duration: (1-this.state.submitProgress._value)*4000,
-              }).start();
-              await this.sleep(2800)
-              let resetAction = StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'CameraVideo' })
-                ],
-              });
-              navigation.dispatch(resetAction);
-              navigation.navigate('Feed');
-            } else {
-              this.toggleSubmitButton();
-              this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});      
-              console.log('failed to upload presignedurl');
-              console.log(xhr);
-            }
-          }
-        };
-        xhr.open('PUT', uploadUri);
-        // for text file: text/plain, for binary file: application/octet-stream
-        xhr.setRequestHeader('Content-Type', file.type);
-        xhr.send(file);
+          (error) => {
+              // See error code charts below.
+              console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+      }
     } catch {
       this.toggleSubmitButton();
       this.setState({processing: false});

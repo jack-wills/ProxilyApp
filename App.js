@@ -17,6 +17,7 @@ import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNaviga
 import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
+import RNFS from 'react-native-fs';
   
 import SavedLocationsScreen from './screens/SavedLocationsScreen';
 import SavedLocationsAddScreen from './screens/SavedLocationsAddScreen';
