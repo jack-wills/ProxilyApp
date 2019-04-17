@@ -85,21 +85,6 @@ class VideoReviewScreen extends React.Component {
       console.log(error);
     });
   }
-  getMoreStickers = () => {
-    if (__DEV__) {
-      this.fetchStickers("51.923187", "-0.226379")
-    } else {
-      Geolocation.getCurrentPosition( (position) => {
-            this.fetchStickers(position.coords.latitude, position.coords.longitude)
-        },
-        (error) => {
-            // See error code charts below.
-            console.log(error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-      );
-    }
-  }
 
   applyFilter = async (filter_index) => {
     let filters = [...this.state.filters]
@@ -129,7 +114,20 @@ class VideoReviewScreen extends React.Component {
       this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
       this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
     ]; 
-    this.getMoreStickers()
+    if (__DEV__) {
+      this.setState({latitude: "51.923187", longitude: "-0.226379"})
+    } else {
+      Geolocation.getCurrentPosition( (position) => {
+        this.setState({latitude: position.coords.latitude, longitude: position.coords.longitude})
+        },
+        (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+    this.fetchStickers(this.state.latitude, this.state.longitude);
     const timestamp = new Date().getTime();
     const file_path = this.props.navigation.state.params.videoUri;
     this.setState({timestamp, currentVideo: file_path});
@@ -288,7 +286,7 @@ class VideoReviewScreen extends React.Component {
     }
     let ffmpegCommand = ["-i", this.state.currentVideo, "-i", await this.resourcePath("blank.png"), ...inputs, "-b:v", "2M", "-filter_complex:v", filter.join(""), videoUri]
     console.log(ffmpegCommand.join(" "))
-    while(!this.state.filtersFinished && !this.state.filtersFinished) {
+    while(!this.state.filtersFinished) {
       await this.sleep(100)
     }
     await RNFFmpeg.executeWithArguments(ffmpegCommand);
@@ -382,20 +380,11 @@ class VideoReviewScreen extends React.Component {
           })
         ])
       ).start();
-      let videoUri = await this.processVideo();
-      if (__DEV__) {
-        this.uploadVideo(videoUri, "51.923187", "-0.226379");
-      } else {
-        Geolocation.getCurrentPosition( async (position) => {
-            this.uploadVideo(videoUri, position.coords.latitude, position.coords.longitude);
-          },
-          (error) => {
-              // See error code charts below.
-              console.log(error.code, error.message);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
+      while(this.state.savingVideo) {
+        await this.sleep(100)
       }
+      let videoUri = await this.processVideo();
+      this.uploadVideo(videoUri, this.state.latitude, this.state.longitude);
     } catch {
       this.toggleSubmitButton();
       this.setState({processing: false});
@@ -527,21 +516,16 @@ class VideoReviewScreen extends React.Component {
           </TouchableWithoutFeedback>
       )
     }
-    let saveIcon = (
-      <TouchableOpacity onPress={this.saveVideo}>
-        <Icon name="download" size={40} color="white"/>
-      </TouchableOpacity>
-    )
-    if (this.state.savingVideo) {
-      saveIcon = (
-        <ActivityIndicator size={'large'}/>
-      )
-    }
     let button = (
         <TouchableOpacity style={[styles.submitButton, {width: Dimensions.get('window').width*0.7}]} onPress={this.submitVideo}>
             <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
     );
+    let saveIcon = (
+      <TouchableOpacity onPress={this.saveVideo}>
+        <Icon name="download" size={40} color="white"/>
+      </TouchableOpacity>
+    )
     if (this.state.processing) {
       button = (
         <LottieView
@@ -549,6 +533,14 @@ class VideoReviewScreen extends React.Component {
           source={require('../assets/loading.json')}
         />
       );
+      saveIcon = (
+        <View/>
+      );
+    }
+    if (this.state.savingVideo) {
+      saveIcon = (
+        <ActivityIndicator size={'large'}/>
+      )
     }
     const buttonWidth = this.submitButtonWidth.interpolate({
         inputRange: [0, 1],

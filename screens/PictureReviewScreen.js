@@ -87,11 +87,19 @@ class PictureReviewScreen extends React.Component {
     });
   }
   getMoreStickers = () => {
+    this.fetchStickers(this.state.latitude, this.state.longitude)
+  }
+
+  async componentDidMount() {
+    this.subs = [
+      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
+      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
+    ]; 
     if (__DEV__) {
-      this.fetchStickers("51.923187", "-0.226379")
+      this.setState({latitude: "51.923187", longitude: "-0.226379"})
     } else {
       Geolocation.getCurrentPosition( (position) => {
-            this.fetchStickers(position.coords.latitude, position.coords.longitude)
+        this.setState({latitude: position.coords.latitude, longitude: position.coords.longitude})
         },
         (error) => {
             // See error code charts below.
@@ -100,13 +108,6 @@ class PictureReviewScreen extends React.Component {
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
     }
-  }
-
-  async componentDidMount() {
-    this.subs = [
-      this.props.navigation.addListener('didFocus', () => {this.setState({focused: true})}),
-      this.props.navigation.addListener('willBlur', () => {this.setState({focused: false})}),
-    ]; 
     this.getMoreStickers()
     FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
     const timestamp = new Date().getTime();
@@ -363,21 +364,11 @@ class PictureReviewScreen extends React.Component {
           })
         ])
       ).start();
-      await this.sleep(6000);
-      let imageUri = await this.processImage();
-      if (__DEV__) {
-        this.uploadImage(imageUri, "51.923187", "-0.226379");
-      } else {
-        Geolocation.getCurrentPosition( async (position) => {
-            this.uploadImage(imageUri, position.coords.latitude, position.coords.longitude);
-          },
-          (error) => {
-              // See error code charts below.
-              console.log(error.code, error.message);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
+      while(this.state.savingImage) {
+        await this.sleep(100)
       }
+      let imageUri = await this.processImage();
+      this.uploadImage(imageUri, this.state.latitude, this.state.longitude);
     } catch (error) {
       console.log(error)
       this.setState({processing: false});
@@ -523,21 +514,32 @@ class PictureReviewScreen extends React.Component {
         </View>
       )
     }
-    let saveIcon = (
-      <TouchableOpacity onPress={this.saveImage}>
-        <Icon name="download" size={40} color="white"/>
-      </TouchableOpacity>
-    )
-    if (this.state.savingImage) {
-      saveIcon = (
-        <ActivityIndicator size={'large'}/>
-      )
-    }
     let button = (
       <TouchableOpacity style={[styles.submitButton, {width: Dimensions.get('window').width*0.7}]} onPress={this.submitImage}>
           <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     );
+    let saveIcon = (
+      <TouchableOpacity onPress={this.saveImage}>
+        <Icon name="download" size={40} color="white"/>
+      </TouchableOpacity>
+    )
+    if (this.state.processing) {
+      button = (
+        <LottieView
+          progress={this.state.submitProgress}
+          source={require('../assets/loading.json')}
+        />
+      );
+      saveIcon = (
+        <View/>
+      );
+    }
+    if (this.state.savingImage) {
+      saveIcon = (
+        <ActivityIndicator size={'large'}/>
+      )
+    }
     if (this.state.processing) {
       button = (
         <LottieView
