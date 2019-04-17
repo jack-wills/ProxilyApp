@@ -231,11 +231,12 @@ class VideoReviewScreen extends React.Component {
       let index = stickersInfoArray[i].key.replace("id", "")
       sortedStickers[i] = stickers[index]
     }
+    let stickerCount = 0;
     for (var i = 0; i < sortedStickers.length; i++) {
       const {scale, rotate, x, y, zIndex, text, color} = stickersInfoArray[i].value;
       if (sortedStickers[i].type === "sticker") {
-        let overlayHeight = 260*scaleToOriginal*scale; 
-        let overlayWidth = 325*scaleToOriginal*scale;
+        let overlayHeight = 250*260/365*scaleToOriginal*scale; 
+        let overlayWidth = 250*scaleToOriginal*scale;
         let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
         let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
         x *= scaleToOriginal;
@@ -244,8 +245,9 @@ class VideoReviewScreen extends React.Component {
         inputs.push(sortedStickers[i].url)
         idName = "id" + i;
         console.log(inputs)
-        filter.push("[" + (i+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
+        filter.push("[" + (stickerCount+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
         + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + ") ["+ idName +"];")
+        stickerCount++;
         console.log(filter) 
         if (i == sortedStickers.length-1) {
           if (i == 0) {
@@ -401,10 +403,15 @@ class VideoReviewScreen extends React.Component {
 
   saveVideo = async () => {
     this.setState({savingVideo: true});
-    let videoUri = await this.processVideo();
-    CameraRoll.saveToCameraRoll("file://" + videoUri).then(() => {
+    try {
+      let videoUri = await this.processVideo();
+      CameraRoll.saveToCameraRoll("file://" + videoUri).then(() => {
+        this.setState({savingVideo: false});
+      })
+    } catch (error) {
+      console.log(error)
       this.setState({savingVideo: false});
-    })
+    }
   }
 
   stickerUpdate = (scale, rotate, x, y, id) => {

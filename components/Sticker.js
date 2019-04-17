@@ -24,12 +24,28 @@ export default class Sticker extends React.Component {
     pinchRef = React.createRef();
     constructor(props) {
       super(props);
+      this.active = false;
   
       /* Pinching */
       this._baseScale = new Animated.Value(1);
       this._pinchScale = new Animated.Value(1);
-  
-      this._scale = Animated.multiply(this._baseScale, this._pinchScale);
+
+      this._scaleRaw = Animated.multiply(this._baseScale, this._pinchScale);
+      this.minScale = 0.7;
+      let inputRangeScale = [], outputRangeScale = [];
+      for (var i = 0; i < 100; i++) {
+        let num = i/10
+        inputRangeScale.push(num);
+        if (num < this.minScale) {
+          outputRangeScale.push(this.minScale);
+        } else {
+          outputRangeScale.push(num);
+        }
+      }
+      this._scale = this._scaleRaw.interpolate({
+        inputRange: inputRangeScale,
+        outputRange: outputRangeScale,
+      });
       this._lastScale = 1;
       this._onPinchGestureEvent = Animated.event(
         [{ nativeEvent: { scale: this._pinchScale } }],
@@ -102,12 +118,21 @@ export default class Sticker extends React.Component {
     _onPinchHandlerStateChange = event => {
       if (event.nativeEvent.oldState === State.ACTIVE) {
         this._lastScale *= event.nativeEvent.scale;
+        if (this._lastScale < this.minScale) {
+          this._lastScale = this.minScale;
+        }
+        console.log(this._scaleRaw._value + " " + this._scale._value + " " + this._lastScale)
         this._baseScale.setValue(this._lastScale);
         this._pinchScale.setValue(1);
       }
       this.props.passInfo(this._lastScale, this._lastRotate, this._lastOffset.x, this._lastOffset.y, this.props.id);
     };
     _onMoveGestureStateChange = event => {
+      if (event.nativeEvent.state === State.ACTIVE) {
+        this.active = true;
+      } else {
+        this.active = false;
+      }
       if (event.nativeEvent.oldState === State.ACTIVE) {
         this._panning.setValue(0)
         this._lastOffset.x += (event.nativeEvent.translationX*Math.cos(this._lastRotate)-event.nativeEvent.translationY*Math.sin(this._lastRotate))*this._lastScale
@@ -125,16 +150,16 @@ export default class Sticker extends React.Component {
         this.props.passInfo(this._lastScale, this._lastRotate, this._lastOffset.x, this._lastOffset.y, this.props.id);
     }
     render() {
-        const cos = Animated.add(Animated.multiply(Animated.subtract(this._rotateCos, 1), this._panning), 1);
-        const sin = Animated.add(Animated.multiply(Animated.subtract(this._rotateSin, 1), this._panning), 1);
-        const scaleTranslate = Animated.add(Animated.multiply(Animated.subtract(this._scale, 1), this._panning), 1);
-        const translateX = Animated.add(Animated.multiply(Animated.subtract(Animated.multiply(this._translateXValue, cos), Animated.multiply(this._translateYValue, sin)), scaleTranslate), this._translateXOffset);
-        const translateY = Animated.add(Animated.multiply(Animated.add(Animated.multiply(this._translateYValue, cos), Animated.multiply(this._translateXValue, sin)), scaleTranslate), this._translateYOffset);
-        const scale = this._scale;
-        const rotate = this._rotateStr;
-        const panStyle = {
-          transform: [{ translateX }, { translateY }, { scale }, { rotate }],
-        };
+      const cos = Animated.add(Animated.multiply(Animated.subtract(this._rotateCos, 1), this._panning), 1);
+      const sin = Animated.add(Animated.multiply(Animated.subtract(this._rotateSin, 1), this._panning), 1);
+      const scaleTranslate = Animated.add(Animated.multiply(Animated.subtract(this._scale, 1), this._panning), 1);
+      const translateX = Animated.add(Animated.multiply(Animated.subtract(Animated.multiply(this._translateXValue, cos), Animated.multiply(this._translateYValue, sin)), scaleTranslate), this._translateXOffset);
+      const translateY = Animated.add(Animated.multiply(Animated.add(Animated.multiply(this._translateYValue, cos), Animated.multiply(this._translateXValue, sin)), scaleTranslate), this._translateYOffset);
+      const scale = this._scale;
+      const rotate = this._rotateStr;
+      const panStyle = {
+        transform: [{ translateX }, { translateY }, { scale }, { rotate }],
+      };
       return (
         <TapGestureHandler
           onHandlerStateChange={this._onSingleTap}>
@@ -158,10 +183,10 @@ export default class Sticker extends React.Component {
               onGestureEvent={this._onPinchGestureEvent}
               onHandlerStateChange={this._onPinchHandlerStateChange}
             >
-              <Animated.View
-                style={[panStyle, styles.stickerContainer, {zIndex: this.props.zIndex}]}
-                collapsable={false}
-              >
+            <Animated.View
+              style={[panStyle, styles.stickerContainer, {zIndex: this.props.zIndex, width: this.active ? 2000 : 250, height: this.active ? 2000 : 250}]}
+              collapsable={false}
+            >
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Animated.Image
                   style={[
@@ -178,7 +203,7 @@ export default class Sticker extends React.Component {
                   resizeMode={'contain'}
                 />
               </TouchableWithoutFeedback>
-              </Animated.View>
+            </Animated.View>
             </PinchGestureHandler>
           </RotationGestureHandler>
         </PanGestureHandler>
@@ -190,13 +215,13 @@ export default class Sticker extends React.Component {
 const styles = StyleSheet.create({
     stickerContainer: {
       position: 'absolute',
-      width: '100%',
+      width: 250,
       height: 250,
       alignItems: 'center',
       justifyContent: 'center',
     },
     pinchableImage: {
-      width: '100%',
+      width: 250,
       height: 250,
     },
   });

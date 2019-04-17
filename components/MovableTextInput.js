@@ -33,12 +33,28 @@ export default class MovableTextInput extends React.Component {
   pinchRef = React.createRef();
   constructor(props) {
     super(props);
+    this.active = false;
 
     /* Pinching */
     this._baseScale = new Animated.Value(1);
     this._pinchScale = new Animated.Value(1);
 
-    this._scale = Animated.multiply(this._baseScale, this._pinchScale);
+    this._scaleRaw = Animated.multiply(this._baseScale, this._pinchScale);
+    this.minScale = 0.7;
+    let inputRangeScale = [], outputRangeScale = [];
+    for (var i = 0; i < 100; i++) {
+      let num = i/10
+      inputRangeScale.push(num);
+      if (num < this.minScale) {
+        outputRangeScale.push(this.minScale);
+      } else {
+        outputRangeScale.push(num);
+      }
+    }
+    this._scale = this._scaleRaw.interpolate({
+      inputRange: inputRangeScale,
+      outputRange: outputRangeScale,
+    });
     this._lastScale = 1;
     this._onPinchGestureEvent = Animated.event(
       [{ nativeEvent: { scale: this._pinchScale } }],
@@ -117,12 +133,20 @@ export default class MovableTextInput extends React.Component {
   _onPinchHandlerStateChange = event => {
     if (event.nativeEvent.oldState === State.ACTIVE) {
       this._lastScale *= event.nativeEvent.scale;
+      if (this._lastScale < this.minScale) {
+        this._lastScale = this.minScale;
+      }
       this._baseScale.setValue(this._lastScale);
       this._pinchScale.setValue(1);
     }
     this.props.passInfo(this._lastScale, this._lastRotate, this._lastOffset.x, this._lastOffset.y, this.props.id);
   };
   _onMoveGestureStateChange = event => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      this.active = true;
+    } else {
+      this.active = false;
+    }
     if (event.nativeEvent.oldState === State.ACTIVE) {
       this._panning.setValue(0)
       this._lastOffset.x += (event.nativeEvent.translationX*Math.cos(this._lastRotate)-event.nativeEvent.translationY*Math.sin(this._lastRotate))*this._lastScale
@@ -158,11 +182,11 @@ export default class MovableTextInput extends React.Component {
     const scaleTranslate = Animated.add(Animated.multiply(Animated.subtract(this._scale, 1), this._panning), 1);
     const translateX = Animated.add(Animated.multiply(Animated.subtract(Animated.multiply(this._translateXValue, cos), Animated.multiply(this._translateYValue, sin)), scaleTranslate), this._translateXOffset);
     const translateY = Animated.add(Animated.multiply(Animated.add(Animated.multiply(this._translateYValue, cos), Animated.multiply(this._translateXValue, sin)), scaleTranslate), this._translateYOffset);
-      const scale = this._scale;
-      const rotate = this._rotateStr;
-      const panStyle = {
-        transform: [{ translateX }, { translateY }, { scale }, { rotate }],
-      };
+    const scale = this._scale;
+    const rotate = this._rotateStr;
+    const panStyle = {
+      transform: [{ translateX }, { translateY }, { scale }, { rotate }],
+    };
     let color, colorTop = null;
     if (this.state.focused) {
       color = (
@@ -203,10 +227,10 @@ export default class MovableTextInput extends React.Component {
             onGestureEvent={this._onPinchGestureEvent}
             onHandlerStateChange={this._onPinchHandlerStateChange}
           >
-            <Animated.View
-              style={[panStyle, styles.stickerContainer, {zIndex: this.props.zIndex}]}
-              collapsable={false}
-            >
+          <Animated.View
+            style={[panStyle, styles.stickerContainer, {zIndex: this.props.zIndex, width: this.active ? 2000 : null, height: this.active ? 2000 : null}]}
+            collapsable={false}
+          >
               {colorTop}
               <TextInput 
               ref={(component) => this._textInput = component}
@@ -226,8 +250,8 @@ export default class MovableTextInput extends React.Component {
                 style={{transform: [{ scale: Animated.divide(1,scale) }]}}
                 collapsable={false}
               >
-              {color}
-            </Animated.View>
+                {color}
+              </Animated.View>
             </Animated.View>
           </PinchGestureHandler>
         </RotationGestureHandler>

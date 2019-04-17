@@ -86,9 +86,6 @@ class PictureReviewScreen extends React.Component {
       console.log(error);
     });
   }
-  getMoreStickers = () => {
-    this.fetchStickers(this.state.latitude, this.state.longitude)
-  }
 
   async componentDidMount() {
     this.subs = [
@@ -108,7 +105,7 @@ class PictureReviewScreen extends React.Component {
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
     }
-    this.getMoreStickers()
+    this.fetchStickers(this.state.latitude, this.state.longitude)
     FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
     const timestamp = new Date().getTime();
     const uri = this.props.navigation.state.params.imageUri;
@@ -215,11 +212,12 @@ class PictureReviewScreen extends React.Component {
       let index = stickersInfoArray[i].key.replace("id", "")
       sortedStickers[i] = stickers[index]
     }
+    let stickerCount = 0;
     for (var i = 0; i < sortedStickers.length; i++) {
       const {scale, rotate, x, y, zIndex, text, color} = stickersInfoArray[i].value;
       if (sortedStickers[i].type === "sticker") {
-        let overlayHeight = 260*scaleToOriginal*scale; 
-        let overlayWidth = 325*scaleToOriginal*scale;
+        let overlayHeight = 250*260/365*scaleToOriginal*scale; 
+        let overlayWidth = 250*scaleToOriginal*scale;
         let rotatedOverlayHeight = Math.abs(Math.cos(rotate))*overlayHeight + Math.abs(Math.sin(rotate))*overlayWidth;
         let rotatedOverlayWidth = Math.abs(Math.cos(rotate))*overlayWidth + Math.abs(Math.sin(rotate))*overlayHeight;
         x *= scaleToOriginal;
@@ -228,8 +226,9 @@ class PictureReviewScreen extends React.Component {
         inputs.push(sortedStickers[i].url)
         idName = "id" + i;
         console.log(inputs)
-        filter.push("[" + (i+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
+        filter.push("[" + (stickerCount+2) + ":v]scale=" + overlayWidth + ":-1,pad=iw+4:ih+4:color=black@0[scale];[scale]rotate=" 
         + rotate + ":c=none:ow=rotw(" + rotate + "):oh=roth(" + rotate + ") ["+ idName +"];")
+        stickerCount++;
         console.log(filter) 
         if (i == sortedStickers.length-1) {
           if (i == 0) {
@@ -385,10 +384,15 @@ class PictureReviewScreen extends React.Component {
 
   saveImage = async () => {
     this.setState({savingImage: true});
-    let imageUri = await this.processImage();
-    CameraRoll.saveToCameraRoll("file://" + imageUri).then(() => {
-      this.setState({savingImage: false});
-    })
+    try {
+      let imageUri = await this.processImage();
+      CameraRoll.saveToCameraRoll("file://" + imageUri).then(() => {
+        this.setState({savingImage: false});
+      })
+    } catch (error) {
+      console.log(error)
+      this.setState({savingVideo: false});
+    }
   }
 
   stickerUpdate = (scale, rotate, x, y, id) => {
