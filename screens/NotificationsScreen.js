@@ -141,6 +141,7 @@ class NotificationsScreen extends React.Component {
         <View style={styles.container}>
           <FlatList 
               data={data}
+              keyExtractor={(item, index) => item.label}
               renderItem={this._renderItem}
               showsHorizontalScrollIndicator={false}
           />

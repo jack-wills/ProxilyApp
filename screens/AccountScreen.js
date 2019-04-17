@@ -51,6 +51,7 @@ class AccountScreen extends React.Component {
       list = (
         <FlatList 
             data={data}
+            keyExtractor={(item, index) => item.label}
             renderItem={this._renderItem}
             showsHorizontalScrollIndicator={false}
         />

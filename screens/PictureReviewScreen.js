@@ -108,34 +108,28 @@ class PictureReviewScreen extends React.Component {
     this.fetchStickers(this.state.latitude, this.state.longitude)
     FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
     const timestamp = new Date().getTime();
-    const uri = this.props.navigation.state.params.imageUri;
-    const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image_" + timestamp + ".png";
-    await ImageStore.getBase64ForTag(uri, async (data) => {
-      await FileSystem.writeFile(file_path, data, 'base64').then(() => this.setState({currentImage: file_path}));
-      ImageStore.removeImageForTag(uri)
-      let filters = [...this.state.filters]
-      filters[0].file_path = file_path;
-      
-      for (var i = 1; i < filters.length; i++) {
-        let filter = filters[i]
-        filter.file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/filter_" + filter.name + "_" + timestamp + ".png";
-        await RNFFmpeg.executeWithArguments(["-i", file_path, "-filter_complex", "colorchannelmixer=" + filter.ffmpeg, filter.file_path])
-        .then((result) => {
-          this.setState({ filters })
-          console.log(result)
-          if (i == filters.length-1) {
-            this.setState({filtersFinished: true})
-          }
-        }).catch((error) => {
-          console.log(error)
-          if (i == filters.length-1) {
-            this.setState({filtersFinished: true})
-          }
-        });
-      }
-    }, (error) =>{
-      console.log('Get base64 from imagestore,',error);
-    })
+    const file_path = this.props.navigation.state.params.imageUri;
+    this.setState({currentImage: file_path})
+    let filters = [...this.state.filters]
+    filters[0].file_path = file_path;
+    
+    for (var i = 1; i < filters.length; i++) {
+      let filter = filters[i]
+      filter.file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/filter_" + filter.name + "_" + timestamp + ".png";
+      await RNFFmpeg.executeWithArguments(["-i", file_path, "-filter_complex", "colorchannelmixer=" + filter.ffmpeg, filter.file_path])
+      .then((result) => {
+        this.setState({ filters })
+        console.log(result)
+        if (i == filters.length-1) {
+          this.setState({filtersFinished: true})
+        }
+      }).catch((error) => {
+        console.log(error)
+        if (i == filters.length-1) {
+          this.setState({filtersFinished: true})
+        }
+      });
+    }
   }
 
   componentWillUnmount() {

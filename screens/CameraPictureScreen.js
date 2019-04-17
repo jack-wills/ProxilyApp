@@ -13,6 +13,8 @@ import {
   import { RNCamera } from 'react-native-camera';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
   import LottieView from 'lottie-react-native';
+  import { RNFFmpeg } from 'react-native-ffmpeg';
+  import FileSystem from 'react-native-fs';
   import {connect} from 'react-redux';
 
 class CameraPictureScreen extends React.Component {
@@ -111,6 +113,13 @@ class CameraPictureScreen extends React.Component {
                     style={{height: 200}}
                     ref={animation => {
                       this.animation = animation;
+                      if (this.animation) {
+                        if (this.state.frontCamera) {
+                          this.animation.play(130, 130);
+                        } else {
+                          this.animation.play(60, 60);
+                        }
+                      }
                     }}
                     loop={false}
                     source={require('../assets/switchCamera.json')}
@@ -153,6 +162,7 @@ class CameraPictureScreen extends React.Component {
       fixOrientation: true,
     };
     try {
+      this.setState({ processing: true });
       let data;
       if (__DEV__) {
         data = {uri:'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg', height: 2592, width: 4608}
@@ -160,17 +170,25 @@ class CameraPictureScreen extends React.Component {
         data = await this.camera.takePictureAsync(options);
       }
       const actualImageWidth = data.height*Dimensions.get('window').width/Dimensions.get('window').height;
-      const cropData = {
-        offset: {x: (data.width-actualImageWidth)/2, y: 100*actualImageWidth/Dimensions.get('window').width},
-        size: {width: actualImageWidth, height: actualImageWidth*8/7},
-      };
-      ImageEditor.cropImage(data.uri, 
-        cropData, (croppedUri) => {
-          console.log('Path to image: ' + croppedUri);
-          this.props.navigation.navigate("PictureReview", {imageUri: croppedUri, imageWidth:actualImageWidth})
-        }, (error) =>{
-          console.log('cropImage,',error);
-        });
+      const cropOptions = {
+        cropOffsetX: Math.round((data.width-actualImageWidth)/2), 
+        cropOffsetY: Math.round(100*actualImageWidth/Dimensions.get('window').width),
+        cropWidth: Math.round(actualImageWidth),
+        cropHeight: Math.round(actualImageWidth*8/7),
+      }
+      FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
+      const timestamp = new Date().getTime();
+      const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image_" + timestamp + ".png";
+      let flip = this.state.frontCamera ? "hflip[flipped];[flipped]" : "";
+      await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", flip + "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
+      .then((result) => {
+        console.log('Path to image: ' + file_path);
+        this.setState({ processing: false });
+        this.props.navigation.navigate("PictureReview", {imageUri: file_path, imageWidth: actualImageWidth})
+      }).catch((error) => {
+        console.log("Video couldn't be cropped: " + error);
+        this.setState({ processing: false });
+      });
       
     } catch (err) {
       console.log('err: ', err);

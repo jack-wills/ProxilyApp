@@ -57,6 +57,7 @@ export default class SettingsScreen extends React.Component {
         <View style={styles.container}>
           <FlatList 
               data={data}
+              keyExtractor={(item, index) => item.label}
               renderItem={this._renderItem}
               showsHorizontalScrollIndicator={false}
           />
@@ -65,7 +66,6 @@ export default class SettingsScreen extends React.Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

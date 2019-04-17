@@ -158,6 +158,13 @@ class CameraVideoScreen extends React.Component {
                     style={{height: 200}}
                     ref={animation => {
                       this.animation = animation;
+                      if (this.animation) {
+                        if (this.state.frontCamera) {
+                          this.animation.play(130, 130);
+                        } else {
+                          this.animation.play(60, 60);
+                        }
+                      }
                     }}
                     loop={false}
                     source={require('../assets/switchCamera.json')}
@@ -197,16 +204,16 @@ class CameraVideoScreen extends React.Component {
         cropOffsetY: Math.round(100*actualVideoWidth/Dimensions.get('window').width),
         cropWidth: Math.round(actualVideoWidth),
         cropHeight: Math.round(actualVideoWidth*8/7),
-        quality: "1280x720"
       }
       console.log(cropOptions);
       
       FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
       const timestamp = new Date().getTime();
       const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/video_" + timestamp + ".mp4";
-      await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
+      let flip = this.state.frontCamera ? "hflip[flipped];[flipped]" : "";
+      await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", flip + "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
       .then((result) => {
-        console.log('Path to video: ' + data);
+        console.log('Path to video: ' + file_path);
         this.setState({ processing: false });
         this.props.navigation.navigate("VideoReview", {videoUri: file_path, videoWidth: actualVideoWidth})
       }).catch((error) => {

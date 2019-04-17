@@ -28,7 +28,7 @@ export default class VideoFeed extends React.Component {
     this.onEndReachedCalledDuringMomentum = true;
   }
 
-  _keyExtractor =  (item, index) => item.postId;
+  _keyExtractor =  (item, index) => item.postId + "";
 
   _onPressItem = (id: string) => {
       // updater functions are preferred for transactional updates
