@@ -25,7 +25,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
-import com.shahenlibrary.RNVideoProcessingPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 
 import java.util.Arrays;
@@ -63,7 +62,6 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RNCameraPackage(),
             new ReactVideoPackage(),
-            new RNVideoProcessingPackage(),
             new RNFusedLocationPackage()
       );
     }
@@ -82,6 +80,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    FacebookSdk.sdkInitialize(getApplicationContext());
     AppEventsLogger.activateApp(this);
     SoLoader.init(this, /* native exopackage */ false);
   }

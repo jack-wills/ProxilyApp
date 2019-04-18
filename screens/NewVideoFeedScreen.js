@@ -13,6 +13,7 @@ import VideoFeed from '../components/VideoFeed';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
+import Geolocation from 'react-native-geolocation-service';
 
 import {FRONT_SERVICE_URL} from '../Constants';
 

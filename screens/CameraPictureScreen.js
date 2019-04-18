@@ -8,6 +8,7 @@ import {
   StyleSheet, 
   Text, 
   ImageEditor,
+  Platform,
   Image,
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
@@ -164,7 +165,7 @@ class CameraPictureScreen extends React.Component {
     try {
       this.setState({ processing: true });
       let data;
-      if (__DEV__) {
+      if (__DEV__ && Platform.OS === "ios") {
         data = {uri:'file:///Users/Jack/Desktop/videoApp/assets/mountains.jpg', height: 2592, width: 4608}
       } else {
         data = await this.camera.takePictureAsync(options);

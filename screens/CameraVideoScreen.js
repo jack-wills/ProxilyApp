@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet, 
   Image,
+  Platform,
   Text, 
   View} from 'react-native';
   import { RNCamera } from 'react-native-camera';
@@ -189,7 +190,7 @@ class CameraVideoScreen extends React.Component {
     try {
       this.setState({ recording: true });
       let data;
-      if (__DEV__) {
+      if (__DEV__ && Platform.OS === "ios") {
         data = {uri: 'file:///Users/Jack/Desktop/videoApp/assets/s.mp4'}
       } else {
         const options = { quality: RNCamera.Constants.VideoQuality["720p"], orientation: "portrait"};

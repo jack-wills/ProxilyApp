@@ -13,10 +13,15 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
 import CachedImage from '../components/CachedImage';
 
 class AccountScreen extends React.Component {
+  state = {
+    modal: null
+  }
+
   _renderItem = ({item}) => {
     return (
       <TouchableHighlight underlayColor={'#C7D7DD'} onPress={item.function}>
@@ -31,7 +36,7 @@ class AccountScreen extends React.Component {
       {
         label: "Change Profile Picture", 
         function: async () => {
-          let photos = await CameraRoll.getPhotos({});
+          let photos = await CameraRoll.getPhotos({first: 10});
           console.log(photos)
         }
       },{
@@ -91,6 +96,25 @@ class AccountScreen extends React.Component {
             {list}
           </View>
         </View>
+        <Modal
+            isVisible={this.state.modal != null}
+            onBackdropPress={() => this.setState({ modal: null })}>
+            <View style={{alignSelf: 'center',
+                justifySelf: 'center',
+                backgroundColor: '#f2f2f2',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: 'lightgrey',
+                shadowRadius: 4,
+                shadowColor: 'grey',
+                shadowOffset: {height: 2, width: 0},
+                shadowOpacity: 0.25,
+                overflow: 'hidden',
+                padding: 15,
+            }}>
+              {this.state.modal}
+            </View>
+        </Modal>
     </SafeAreaView>
     );
   }
