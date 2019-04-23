@@ -45,7 +45,7 @@ export default class SavedLocationsAddScreen extends React.Component {
   }
 
   render() {
-    let circleSize = (Dimensions.get('window').height*0.0724)/this.state.region.latitudeDelta;
+    let circleSize = (Dimensions.get('window').height*0.0724*3)/this.state.region.latitudeDelta;
     console.log(this.state.region.latitudeDelta)
     return (
         <View style={styles.container}>

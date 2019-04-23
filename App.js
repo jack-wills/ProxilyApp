@@ -15,9 +15,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import { createAppContainer } from 'react-navigation'
-import Icon from 'react-native-vector-icons/Ionicons'
-import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
-import RNFS from 'react-native-fs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
   
 import SavedLocationsScreen from './screens/SavedLocationsScreen';
@@ -42,7 +40,6 @@ import CameraPictureScreen from './screens/CameraPictureScreen'
 import MainReducer from './reducers/MainReducer'
 import PictureReviewScreen from './screens/PictureReviewScreen';
 import VideoReviewScreen from './screens/VideoReviewScreen';
-import {DEBUG_MODE} from './Constants';
 
 const store = createStore(MainReducer, applyMiddleware(thunk, logger));
 
@@ -405,45 +402,6 @@ const AppContainer = createAppContainer(createSwitchNavigator(
 ));
 
 export default class App extends React.Component {
-
-  componentWillMount() {
-    BackgroundGeolocation.configure({
-      desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
-      distanceFilter: 100,
-      debug: DEBUG_MODE,
-      startOnBoot: false,
-      stopOnTerminate: true,
-      locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-    });
-
-    BackgroundGeolocation.checkStatus(status => {
-      console.log('[INFO] BackgroundGeolocation service is running', status.isRunning);
-      console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled);
-      console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization);
-
-      // you don't need to check status before start (this is just the example)
-      if (!status.isRunning) {
-        BackgroundGeolocation.start(); //triggers start on start event
-      }
-    });
-
-    BackgroundGeolocation.on('location', (location) => {
-      console.log(location)
-      // handle your locations here
-      // to perform long running operation on iOS
-      // you need to create background task
-      BackgroundGeolocation.startTask(taskKey => {
-        // execute long running task
-        // eg. ajax post location
-        // IMPORTANT: task has to be ended by endTask
-        BackgroundGeolocation.endTask(taskKey);
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    BackgroundGeolocation.removeAllListeners();
-  }
   render() {
       return (
       
