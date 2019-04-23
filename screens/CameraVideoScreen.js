@@ -200,11 +200,24 @@ class CameraVideoScreen extends React.Component {
       const height = 720;
       const width = 1280;
       const actualVideoWidth = width*Dimensions.get('window').width/Dimensions.get('window').height;
-      const cropOptions = {
-        cropOffsetX: Math.round((width-actualVideoWidth)/2), 
-        cropOffsetY: Math.round(100*actualVideoWidth/Dimensions.get('window').width),
-        cropWidth: Math.round(actualVideoWidth),
-        cropHeight: Math.round(actualVideoWidth*8/7),
+      let cropOptions;
+      let videoWidth;
+      if (actualVideoWidth*8/7 > height) {
+        videoWidth = height * 7/8;
+        cropOptions = {
+          cropOffsetX: Math.round((width-height*7/8)/2), 
+          cropOffsetY: Math.round(100*height*7/8/Dimensions.get('window').width),
+          cropWidth: Math.round(height*7/8),
+          cropHeight: height,
+        }
+      } else {
+        videoWidth = actualVideoWidth;
+        cropOptions = {
+          cropOffsetX: Math.round((width-actualVideoWidth)/2), 
+          cropOffsetY: Math.round(100*actualVideoWidth/Dimensions.get('window').width),
+          cropWidth: Math.round(actualVideoWidth),
+          cropHeight: Math.round(actualVideoWidth*8/7),
+        }
       }
       console.log(cropOptions);
       
@@ -212,11 +225,12 @@ class CameraVideoScreen extends React.Component {
       const timestamp = new Date().getTime();
       const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/video_" + timestamp + ".mp4";
       let flip = this.state.frontCamera ? "hflip[flipped];[flipped]" : "";
+      console.log(cropOptions);
       await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", flip + "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
       .then((result) => {
         console.log('Path to video: ' + file_path);
         this.setState({ processing: false });
-        this.props.navigation.navigate("VideoReview", {videoUri: file_path, videoWidth: actualVideoWidth})
+        this.props.navigation.navigate("VideoReview", {videoUri: file_path, videoWidth: videoWidth})
       }).catch((error) => {
         console.log("Video couldn't be cropped: " + error);
         this.setState({ processing: false });
@@ -243,7 +257,7 @@ class CameraVideoScreen extends React.Component {
     if (this.state.frontCamera) {
       this.animation.play(130, 145);
     } else {
-      this.animation.play(60, 70);
+      this.animation.play(0, 0);
     }
     this.setState({frontCamera: !this.state.frontCamera})
   };
@@ -298,7 +312,10 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: 'rgba(20,20,20,0.7)',
     width: Dimensions.get('window').width,
-    height: 100
+    height: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   blackoutBottom: {
     position: 'absolute',

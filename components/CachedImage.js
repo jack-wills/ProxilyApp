@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -25,7 +26,7 @@ export default class CachedImage extends React.Component {
             this.setState({ cachedImage: res })
         })
         .catch(err => {
-
+            console.log(err + this.props.source.uri)
         })
         
     }
@@ -35,10 +36,11 @@ export default class CachedImage extends React.Component {
                 <ActivityIndicator style={[this.props.style, {justifyContent: 'center', alignSelf: 'center'}]} />
             )
         }
+        let prefix = (Platform.OS === 'android') ? 'file://' : '';
         return (
             <Image 
                 {...this.props}
-                source={{uri: this.state.cachedImage}}
+                source={{uri: prefix + this.state.cachedImage}}
             />
         )
     }

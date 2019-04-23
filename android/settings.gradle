@@ -8,7 +8,7 @@ project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir
 include ':react-native-fbads'
 project(':react-native-fbads').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbads/android/app')
 include ':react-native-ffmpeg'
-project(':react-native-ffmpeg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ffmpeg/android/full')
+project(':react-native-ffmpeg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ffmpeg/android/https')
 include ':react-native-share'
 project(':react-native-share').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share/android')
 include ':react-native-fs'

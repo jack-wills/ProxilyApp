@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -26,7 +27,7 @@ export default class CachedVideo extends React.Component {
             this.setState({ cachedVideo: res })
         })
         .catch(err => {
-
+            console.log(err)
         })
         
     }
@@ -36,10 +37,11 @@ export default class CachedVideo extends React.Component {
                 <ActivityIndicator style={[this.props.style, {justifyContent: 'center', alignSelf: 'center'}]} />
             )
         }
+        let prefix = (Platform.OS === 'android') ? 'file://' : '';
         return (
             <VideoComponent 
                 {...this.props}
-                url={this.state.cachedVideo}
+                url={prefix + this.state.cachedVideo}
             />
         )
     }

@@ -18,6 +18,7 @@ import { createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import RNFS from 'react-native-fs';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
   
 import SavedLocationsScreen from './screens/SavedLocationsScreen';
 import SavedLocationsAddScreen from './screens/SavedLocationsAddScreen';
@@ -293,7 +294,7 @@ const SubmitImageStackNavigator = createStackNavigator({
     })
   },
   PictureReview: {
-    screen: PictureReviewScreen,
+    screen: gestureHandlerRootHOC(PictureReviewScreen),
     navigationOptions: ({ navigation }) => ({
       headerStyle: { 
         marginTop: -40,
@@ -321,7 +322,7 @@ const SubmitVideoStackNavigator = createStackNavigator({
     })
   },
   VideoReview: {
-    screen: VideoReviewScreen,
+    screen: gestureHandlerRootHOC(VideoReviewScreen),
     navigationOptions: ({ navigation }) => ({
       headerStyle: { 
         marginTop: -40,

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  ActivityIndicator,
   Animated,
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -81,6 +82,21 @@ class CameraPictureScreen extends React.Component {
         inputRange: [0, 0.35, 0.65, 1],
         outputRange: [0, 0.7, 0.7, 0]
     });
+    let button = (
+      <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
+        <Image source={require('../assets/camera.png')} style={{
+        width: 90,
+        height: 90}} 
+        resizeMode="contain"/>
+      </TouchableOpacity>
+    )
+    if (this.state.processing) {
+      button = (
+        <View style={[styles.iconContainer, {bottom: (styles.blackoutBottom.height/2)-50}]}>
+          <ActivityIndicator animating  size="large" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <RNCamera
@@ -135,12 +151,7 @@ class CameraPictureScreen extends React.Component {
             </SafeAreaView>
           </View>
           <View style={styles.blackoutBottom}>
-            <TouchableOpacity style={styles.icon} onPress={this.takePicture}>
-              <Image source={require('../assets/camera.png')} style={{
-              width: 90,
-              height: 90}} 
-              resizeMode="contain"/>
-            </TouchableOpacity>
+            {button}
           </View>
         </RNCamera>
       </View>
@@ -163,6 +174,7 @@ class CameraPictureScreen extends React.Component {
       fixOrientation: true,
     };
     try {
+      console.log("test")
       this.setState({ processing: true });
       let data;
       if (__DEV__ && Platform.OS === "ios") {
@@ -177,10 +189,12 @@ class CameraPictureScreen extends React.Component {
         cropWidth: Math.round(actualImageWidth),
         cropHeight: Math.round(actualImageWidth*8/7),
       }
+      console.log("test")
       FileSystem.mkdir(FileSystem.DocumentDirectoryPath + "/proxily/tmp")
       const timestamp = new Date().getTime();
       const file_path = FileSystem.DocumentDirectoryPath + "/proxily/tmp/image_" + timestamp + ".png";
       let flip = this.state.frontCamera ? "hflip[flipped];[flipped]" : "";
+      console.log("test")
       await RNFFmpeg.executeWithArguments(["-i", data.uri, "-b:v", "2M", "-filter:v", flip + "crop=" + cropOptions.cropWidth + ":" + cropOptions.cropHeight + ":" + cropOptions.cropOffsetX + ":" + cropOptions.cropOffsetY, "-c:a", "copy", file_path])
       .then((result) => {
         console.log('Path to image: ' + file_path);
@@ -228,7 +242,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   iconContainer: {
-    position: 'absolute'
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+    width: 100
   },
   blackoutTop: {
     position: 'absolute',

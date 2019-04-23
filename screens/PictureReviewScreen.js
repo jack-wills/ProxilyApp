@@ -300,7 +300,7 @@ class PictureReviewScreen extends React.Component {
       this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
     });
-    file = {uri: imageUri, type: "image/jpeg", name: "string"};
+    file = {uri: "file://" + imageUri, type: "image/jpeg", name: "string"};
     const xhr = new XMLHttpRequest();
     xhr.upload.addEventListener('progress', (e) => {
       // handle notifications about upload progress: e.loaded / e.total
@@ -538,14 +538,6 @@ class PictureReviewScreen extends React.Component {
         <ActivityIndicator size={'large'}/>
       )
     }
-    if (this.state.processing) {
-      button = (
-        <LottieView
-          progress={this.state.submitProgress}
-          source={require('../assets/loading.json')}
-        />
-      );
-    }
     const buttonWidth = this.submitButtonWidth.interpolate({
         inputRange: [0, 1],
         outputRange: [60, Dimensions.get('window').width*0.7]
@@ -657,11 +649,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   buttonText: {
-      fontFamily: 'Avenir',
-      color: 'white',
-      fontSize: 20,
-      padding: 13,
-      textAlign: 'center',
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontSize: 20,
+    padding: 13,
+    textAlign: 'center',
   },
   editBox: {
     width: Dimensions.get('window').width,
