@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-  ActivityIndicator,
   AsyncStorage,
-  Button,
   Dimensions,
   KeyboardAvoidingView,
   Image,
-  UserInput,
-  StatusBar,
   StyleSheet,
   SafeAreaView,
   TextInput,
@@ -20,6 +16,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUserToken} from '../actions/UpdateUserToken';
 import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import { LoginManager } from 'react-native-fbsdk'
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
@@ -130,44 +127,48 @@ class SignInScreen extends React.Component {
       return (
       <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 1}} colors={['#02b875', '#70C1B3', '#247BA0']} style={styles.linearGradient}>
         <SafeAreaView style={{flex:1}}>
-        <View style={{flex: 0.3, justifyContent: 'center', alignItems: 'center'}}>
-          <Image style={{height: Dimensions.get('window').height*0.1}} source={require('../assets/logo7.png')} resizeMode={'contain'}/>
-        </View>
-        <KeyboardAvoidingView style={styles.container}>
-            <Text style={styles.formText}>Email</Text>
-            <TextInput style={styles.formInput} onChangeText={(text) => this.setState({email: text})}/>
-            <Text style={styles.formText}>Password</Text>
-            <TextInput style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
+          <View style={{height: Dimensions.get('window').height*0.5-170, width: Dimensions.get('window').width, justifyContent: 'center', alignItems: 'center'}}>
+            <Image style={{height: Dimensions.get('window').height*0.11}} source={require('../assets/logo.png')} resizeMode={'contain'}/>
+          </View>
+          <View style={styles.container}>
+            <View style={styles.formBox}>
+              <Icon style={styles.formIcon} name="envelope" color={'#555'} size={25} />
+              <TextInput placeholder="Email" placeholderTextColor="#555" style={styles.formInput} onChangeText={(text) => this.setState({email: text})}/>
+            </View>
+            <View style={styles.formBox}>
+              <Icon style={styles.formIcon} name="lock" color={'#555'} size={25} />
+              <TextInput placeholder="Password" secureTextEntry autoCorrect={false} placeholderTextColor="#555" style={styles.formInput} onChangeText={(text) => this.setState({password: text})}/>
+            </View>
             <TouchableOpacity style={styles.submitButton} onPress={this._signInAsync}>
                 <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleFacebookLogin} style={[styles.submitButton, {backgroundColor: '#4267b2', fontFamily: 'Helvetica Neue'}]}>
+            <TouchableOpacity onPress={this.handleFacebookLogin} style={[styles.submitButton, {backgroundColor: '#4267b2', fontFamily: 'Helvetica Neue', marginTop: 0}]}>
                 <Text style={styles.buttonText}>Sign in with Facebook</Text>
             </TouchableOpacity>
             <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={[styles.signUpText, {color: 'black'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Don't have an account? </Text>
             <Text style={[styles.signUpText, {color: '#e74c3c'}]} onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up.</Text>
             </View>
-        </KeyboardAvoidingView>
+          </View>
           <Modal
-              isVisible={this.state.error != "" && this.state.focused}
-              onBackdropPress={() => this.setState({ error: "" })}>
-              <View style={{alignSelf: 'center',
-                  justifySelf: 'center',
-                  width: Dimensions.get('window').width*0.6,
-                  backgroundColor: '#f2f2f2',
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: 'lightgrey',
-                  shadowRadius: 4,
-                  shadowColor: 'grey',
-                  shadowOffset: {height: 2, width: 0},
-                  shadowOpacity: 0.25,
-                  overflow: 'hidden',
-                  padding: 15,
-              }}>
-              <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
-              </View>
+            isVisible={this.state.error != "" && this.state.focused}
+            onBackdropPress={() => this.setState({ error: "" })}>
+            <View style={{alignSelf: 'center',
+                justifySelf: 'center',
+                width: Dimensions.get('window').width*0.6,
+                backgroundColor: '#f2f2f2',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: 'lightgrey',
+                shadowRadius: 4,
+                shadowColor: 'grey',
+                shadowOffset: {height: 2, width: 0},
+                shadowOpacity: 0.25,
+                overflow: 'hidden',
+                padding: 15,
+            }}>
+            <Text style={{fontFamily: 'Avenir'}}>{this.state.error}</Text>
+            </View>
           </Modal>
         </SafeAreaView>
       </LinearGradient>
@@ -227,18 +228,18 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir',
     },
     formInput: {
-        width: Dimensions.get('window').width*0.58,
-        textAlign: 'center',
-        fontSize: 20,
-        borderBottomWidth: 3,
-        borderRadius: 4,
-        margin: 15,
+      flex: 1,
+      fontSize: 15,
+      height: 55,
+      paddingLeft: 10,
     },
     submitButton: {
         backgroundColor: '#e74c3c',
         borderRadius: 35,
         width: Dimensions.get('window').width*0.7,
         margin: 15,
+        justifyContent: 'center',
+        height: 55,
     },
     buttonText: {
         fontFamily: 'Avenir',
@@ -251,6 +252,19 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir',
         fontSize: 15,
         textAlign: 'center',
+    },
+    formBox: {
+      backgroundColor: "rgba(215, 215, 225, 0.45)",
+      borderRadius: 35,
+      width: Dimensions.get('window').width*0.7,
+      margin: 8,
+      height: 55,
+      flexDirection: 'row',
+      alignItems: 'center',
+      overflow: 'hidden'
+    },
+    formIcon: {
+      marginLeft: 20,
     }
   })
 
