@@ -325,7 +325,7 @@ class VideoReviewScreen extends React.Component {
       this.setState({processing: false, error: "Oops, looks like something went wrong. Check your internet connection."});
       console.log(error);
     });
-    file = {uri: videoUri, type: "video/mp4", name: "string"};
+    file = {uri: "file://" + videoUri, type: "video/mp4", name: "string"};
     const xhr = new XMLHttpRequest();
     xhr.upload.addEventListener('progress', (e) => {
       // handle notifications about upload progress: e.loaded / e.total

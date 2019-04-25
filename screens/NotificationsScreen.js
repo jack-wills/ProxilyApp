@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
 
+import {FRONT_SERVICE_URL} from '../Constants';
 import {updateSettings} from '../actions/UpdateSettings';
 
 class NotificationsScreen extends React.Component {
@@ -60,6 +61,18 @@ class NotificationsScreen extends React.Component {
 
   _updateSettings = (settingsName, value) => {
     this.props.dispatch( (dispatch) => {
+      fetch(FRONT_SERVICE_URL + '/service/updateSettings', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.props.userToken,
+        },
+        body: JSON.stringify({
+          ...this.props.settings,
+          [settingsName]: value
+        }),
+      });
       dispatch(updateSettings({...this.props.settings, [settingsName]: value}))
     })
   }
